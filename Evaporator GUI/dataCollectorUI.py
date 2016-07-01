@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'dataCollectorUIv3.ui'
+# Form implementation generated from reading ui file 'dataCollectorUI.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -25,7 +25,7 @@ except AttributeError:
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(1368, 768)
+        Form.resize(1294, 674)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -119,7 +119,7 @@ class Ui_Form(object):
         self.rateInput.setGeometry(QtCore.QRect(180, 180, 113, 21))
         self.rateInput.setObjectName(_fromUtf8("rateInput"))
         self.textEdit = QtGui.QTextEdit(self.collectorBackground)
-        self.textEdit.setGeometry(QtCore.QRect(690, 540, 250, 141))
+        self.textEdit.setGeometry(QtCore.QRect(510, 380, 250, 141))
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.thicknessStartButton = QtGui.QPushButton(self.collectorBackground)
         self.thicknessStartButton.setGeometry(QtCore.QRect(590, 140, 135, 21))

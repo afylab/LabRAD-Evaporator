@@ -6,13 +6,9 @@ import EvaporatorUI
 
 class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     """
-    Overall computer interface for Evaporator.  
-    
-    TO DO: Start and stop buttons for data collector.
-    TO DO: Print to GUI screen when something happens. Ie: Successfully connect to server. 
-           Or: failed to connect because x y z. WORK IN PROGRESS
-    TO DO ON GUI: Add area on main page for buttons to run
-    common scripts. 
+    Computer interface for Evaporator.  
+   
+    TO DO ON GUI: Add ability to run common scripts. 
     """
     
     #----------------------------------------------------------------------------------------------#

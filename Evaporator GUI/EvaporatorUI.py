@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'EvaporatorUIv3.ui'
+# Form implementation generated from reading ui file 'EvaporatorUI.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -27,14 +27,14 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.setWindowModality(QtCore.Qt.NonModal)
         MainWindow.setEnabled(True)
-        MainWindow.resize(1366, 768)
+        MainWindow.resize(1300, 700)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMinimumSize(QtCore.QSize(1366, 768))
-        MainWindow.setMaximumSize(QtCore.QSize(1366, 768))
+        MainWindow.setMinimumSize(QtCore.QSize(1300, 700))
+        MainWindow.setMaximumSize(QtCore.QSize(1300, 700))
         MainWindow.setStyleSheet(_fromUtf8(""))
         MainWindow.setIconSize(QtCore.QSize(24, 24))
         MainWindow.setDockOptions(QtGui.QMainWindow.AllowTabbedDocks|QtGui.QMainWindow.AnimatedDocks)
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setSizePolicy(sizePolicy)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1366, 768))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1300, 700))
         self.tabWidget.setStyleSheet(_fromUtf8(""))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.GraphicalInterface = QtGui.QWidget()
@@ -54,7 +54,7 @@ class Ui_MainWindow(object):
         self.GraphicalInterface.setObjectName(_fromUtf8("GraphicalInterface"))
         self.graphBackground = QtGui.QFrame(self.GraphicalInterface)
         self.graphBackground.setEnabled(True)
-        self.graphBackground.setGeometry(QtCore.QRect(0, 0, 1360, 742))
+        self.graphBackground.setGeometry(QtCore.QRect(0, 0, 1294, 674))
         self.graphBackground.setStyleSheet(_fromUtf8("#graphBackground{\n"
 "background: black\n"
 "}"))
@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
         self.graphBackground.setFrameShadow(QtGui.QFrame.Raised)
         self.graphBackground.setObjectName(_fromUtf8("graphBackground"))
         self.line = QtGui.QFrame(self.graphBackground)
-        self.line.setGeometry(QtCore.QRect(100, 520, 20, 50))
+        self.line.setGeometry(QtCore.QRect(90, 460, 20, 50))
         self.line.setStyleSheet(_fromUtf8("#line{\n"
 "color:white;\n"
 "}"))
@@ -71,14 +71,14 @@ class Ui_MainWindow(object):
         self.line.setFrameShape(QtGui.QFrame.VLine)
         self.line.setObjectName(_fromUtf8("line"))
         self.scrollPumpLabel = QtGui.QLabel(self.graphBackground)
-        self.scrollPumpLabel.setGeometry(QtCore.QRect(50, 580, 121, 41))
+        self.scrollPumpLabel.setGeometry(QtCore.QRect(40, 520, 121, 41))
         self.scrollPumpLabel.setStyleSheet(_fromUtf8("#scrollPumpLabel{\n"
 "color: white;\n"
 "font: 16pt \"MS Shell Dlg 2\";\n"
 "}"))
         self.scrollPumpLabel.setObjectName(_fromUtf8("scrollPumpLabel"))
         self.scrollValveButton = QtGui.QPushButton(self.graphBackground)
-        self.scrollValveButton.setGeometry(QtCore.QRect(86, 470, 50, 50))
+        self.scrollValveButton.setGeometry(QtCore.QRect(76, 410, 50, 50))
         self.scrollValveButton.setStyleSheet(_fromUtf8("#scrollValveButton{\n"
 "  border-color: rgb(255, 255, 255);\n"
 "  border-width: 4px;        \n"
@@ -89,7 +89,7 @@ class Ui_MainWindow(object):
         self.scrollValveButton.setText(_fromUtf8(""))
         self.scrollValveButton.setObjectName(_fromUtf8("scrollValveButton"))
         self.line_2 = QtGui.QFrame(self.graphBackground)
-        self.line_2.setGeometry(QtCore.QRect(100, 420, 20, 50))
+        self.line_2.setGeometry(QtCore.QRect(90, 360, 20, 50))
         self.line_2.setStyleSheet(_fromUtf8("#line_2{\n"
 "color: white\n"
 "}"))
@@ -98,7 +98,7 @@ class Ui_MainWindow(object):
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setObjectName(_fromUtf8("line_2"))
         self.scrollValveStatus = QtGui.QLabel(self.graphBackground)
-        self.scrollValveStatus.setGeometry(QtCore.QRect(30, 470, 50, 50))
+        self.scrollValveStatus.setGeometry(QtCore.QRect(20, 406, 50, 50))
         self.scrollValveStatus.setStyleSheet(_fromUtf8("#scrollValveStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
 "}"))
         self.scrollValveStatus.setObjectName(_fromUtf8("scrollValveStatus"))
         self.line_3 = QtGui.QFrame(self.graphBackground)
-        self.line_3.setGeometry(QtCore.QRect(300, 520, 20, 50))
+        self.line_3.setGeometry(QtCore.QRect(290, 460, 20, 50))
         self.line_3.setStyleSheet(_fromUtf8("#line_3{\n"
 "color: white;\n"
 "}"))
@@ -116,7 +116,7 @@ class Ui_MainWindow(object):
         self.line_3.setFrameShape(QtGui.QFrame.VLine)
         self.line_3.setObjectName(_fromUtf8("line_3"))
         self.line_4 = QtGui.QFrame(self.graphBackground)
-        self.line_4.setGeometry(QtCore.QRect(300, 420, 20, 50))
+        self.line_4.setGeometry(QtCore.QRect(290, 360, 20, 50))
         self.line_4.setStyleSheet(_fromUtf8("#line_4{\n"
 "color: white\n"
 "}"))
@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
         self.line_4.setFrameShape(QtGui.QFrame.VLine)
         self.line_4.setObjectName(_fromUtf8("line_4"))
         self.turboValveButton = QtGui.QPushButton(self.graphBackground)
-        self.turboValveButton.setGeometry(QtCore.QRect(286, 470, 50, 50))
+        self.turboValveButton.setGeometry(QtCore.QRect(276, 410, 50, 50))
         self.turboValveButton.setStyleSheet(_fromUtf8("#turboValveButton{\n"
 "  border-color: rgb(255, 255, 255);\n"
 "  border-width: 4px;        \n"
@@ -136,7 +136,7 @@ class Ui_MainWindow(object):
         self.turboValveButton.setText(_fromUtf8(""))
         self.turboValveButton.setObjectName(_fromUtf8("turboValveButton"))
         self.turboValveStatus = QtGui.QLabel(self.graphBackground)
-        self.turboValveStatus.setGeometry(QtCore.QRect(350, 470, 50, 50))
+        self.turboValveStatus.setGeometry(QtCore.QRect(340, 406, 50, 50))
         self.turboValveStatus.setStyleSheet(_fromUtf8("#turboValveStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -145,14 +145,14 @@ class Ui_MainWindow(object):
 "}"))
         self.turboValveStatus.setObjectName(_fromUtf8("turboValveStatus"))
         self.turboPumpLabel = QtGui.QLabel(self.graphBackground)
-        self.turboPumpLabel.setGeometry(QtCore.QRect(250, 580, 121, 41))
+        self.turboPumpLabel.setGeometry(QtCore.QRect(240, 520, 121, 41))
         self.turboPumpLabel.setStyleSheet(_fromUtf8("#turboPumpLabel{\n"
 "color: white;\n"
 "font: 16pt \"MS Shell Dlg 2\";\n"
 "}"))
         self.turboPumpLabel.setObjectName(_fromUtf8("turboPumpLabel"))
         self.line_5 = QtGui.QFrame(self.graphBackground)
-        self.line_5.setGeometry(QtCore.QRect(110, 420, 75, 3))
+        self.line_5.setGeometry(QtCore.QRect(100, 360, 75, 3))
         self.line_5.setStyleSheet(_fromUtf8("#line_5{\n"
 "color: white\n"
 "}"))
@@ -161,7 +161,7 @@ class Ui_MainWindow(object):
         self.line_5.setFrameShape(QtGui.QFrame.HLine)
         self.line_5.setObjectName(_fromUtf8("line_5"))
         self.line_6 = QtGui.QFrame(self.graphBackground)
-        self.line_6.setGeometry(QtCore.QRect(235, 420, 75, 3))
+        self.line_6.setGeometry(QtCore.QRect(225, 360, 75, 3))
         self.line_6.setStyleSheet(_fromUtf8("#line_6{\n"
 "color: white\n"
 "}"))
@@ -170,7 +170,7 @@ class Ui_MainWindow(object):
         self.line_6.setFrameShape(QtGui.QFrame.HLine)
         self.line_6.setObjectName(_fromUtf8("line_6"))
         self.gateValveButton = QtGui.QPushButton(self.graphBackground)
-        self.gateValveButton.setGeometry(QtCore.QRect(185, 396, 50, 50))
+        self.gateValveButton.setGeometry(QtCore.QRect(175, 336, 50, 50))
         self.gateValveButton.setStyleSheet(_fromUtf8("#gateValveButton{\n"
 "  border-color: rgb(255, 255, 255);\n"
 "  border-width: 4px;        \n"
@@ -181,7 +181,7 @@ class Ui_MainWindow(object):
         self.gateValveButton.setText(_fromUtf8(""))
         self.gateValveButton.setObjectName(_fromUtf8("gateValveButton"))
         self.gateValveStatus = QtGui.QLabel(self.graphBackground)
-        self.gateValveStatus.setGeometry(QtCore.QRect(185, 350, 50, 50))
+        self.gateValveStatus.setGeometry(QtCore.QRect(175, 286, 50, 50))
         self.gateValveStatus.setStyleSheet(_fromUtf8("#gateValveStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -191,14 +191,14 @@ class Ui_MainWindow(object):
 "}"))
         self.gateValveStatus.setObjectName(_fromUtf8("gateValveStatus"))
         self.gateValveLabel = QtGui.QLabel(self.graphBackground)
-        self.gateValveLabel.setGeometry(QtCore.QRect(175, 442, 100, 50))
+        self.gateValveLabel.setGeometry(QtCore.QRect(165, 378, 100, 50))
         self.gateValveLabel.setStyleSheet(_fromUtf8("#gateValveLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
 "}"))
         self.gateValveLabel.setObjectName(_fromUtf8("gateValveLabel"))
         self.line_7 = QtGui.QFrame(self.graphBackground)
-        self.line_7.setGeometry(QtCore.QRect(310, 420, 250, 3))
+        self.line_7.setGeometry(QtCore.QRect(300, 360, 250, 3))
         self.line_7.setStyleSheet(_fromUtf8("#line_7{\n"
 "color: white\n"
 "}"))
@@ -207,7 +207,7 @@ class Ui_MainWindow(object):
         self.line_7.setFrameShape(QtGui.QFrame.HLine)
         self.line_7.setObjectName(_fromUtf8("line_7"))
         self.line_8 = QtGui.QFrame(self.graphBackground)
-        self.line_8.setGeometry(QtCore.QRect(550, 520, 20, 50))
+        self.line_8.setGeometry(QtCore.QRect(540, 460, 20, 50))
         self.line_8.setStyleSheet(_fromUtf8("#line_8{\n"
 "color: white;\n"
 "}"))
@@ -216,7 +216,7 @@ class Ui_MainWindow(object):
         self.line_8.setFrameShape(QtGui.QFrame.VLine)
         self.line_8.setObjectName(_fromUtf8("line_8"))
         self.line_9 = QtGui.QFrame(self.graphBackground)
-        self.line_9.setGeometry(QtCore.QRect(550, 420, 20, 50))
+        self.line_9.setGeometry(QtCore.QRect(540, 360, 20, 50))
         self.line_9.setStyleSheet(_fromUtf8("#line_9{\n"
 "color: white\n"
 "}"))
@@ -225,7 +225,7 @@ class Ui_MainWindow(object):
         self.line_9.setFrameShape(QtGui.QFrame.VLine)
         self.line_9.setObjectName(_fromUtf8("line_9"))
         self.boatShutterButton = QtGui.QPushButton(self.graphBackground)
-        self.boatShutterButton.setGeometry(QtCore.QRect(536, 470, 50, 50))
+        self.boatShutterButton.setGeometry(QtCore.QRect(526, 410, 50, 50))
         self.boatShutterButton.setStyleSheet(_fromUtf8("#boatShutterButton{\n"
 "  border-color: rgb(255, 255, 255);\n"
 "  border-width: 4px;        \n"
@@ -236,7 +236,7 @@ class Ui_MainWindow(object):
         self.boatShutterButton.setText(_fromUtf8(""))
         self.boatShutterButton.setObjectName(_fromUtf8("boatShutterButton"))
         self.boatShutterStatus = QtGui.QLabel(self.graphBackground)
-        self.boatShutterStatus.setGeometry(QtCore.QRect(470, 470, 50, 50))
+        self.boatShutterStatus.setGeometry(QtCore.QRect(460, 406, 50, 50))
         self.boatShutterStatus.setStyleSheet(_fromUtf8("#boatShutterStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -245,14 +245,14 @@ class Ui_MainWindow(object):
 "}"))
         self.boatShutterStatus.setObjectName(_fromUtf8("boatShutterStatus"))
         self.powerSupplyLabel = QtGui.QLabel(self.graphBackground)
-        self.powerSupplyLabel.setGeometry(QtCore.QRect(500, 580, 140, 41))
+        self.powerSupplyLabel.setGeometry(QtCore.QRect(490, 520, 140, 41))
         self.powerSupplyLabel.setStyleSheet(_fromUtf8("#powerSupplyLabel{\n"
 "color: white;\n"
 "font: 16pt \"MS Shell Dlg 2\";\n"
 "}"))
         self.powerSupplyLabel.setObjectName(_fromUtf8("powerSupplyLabel"))
         self.pressureStatus = QtGui.QLabel(self.graphBackground)
-        self.pressureStatus.setGeometry(QtCore.QRect(840, 520, 100, 51))
+        self.pressureStatus.setGeometry(QtCore.QRect(1060, 50, 100, 51))
         self.pressureStatus.setStyleSheet(_fromUtf8("#pressureStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -261,7 +261,7 @@ class Ui_MainWindow(object):
 "}"))
         self.pressureStatus.setObjectName(_fromUtf8("pressureStatus"))
         self.pressureLabel = QtGui.QLabel(self.graphBackground)
-        self.pressureLabel.setGeometry(QtCore.QRect(670, 520, 150, 50))
+        self.pressureLabel.setGeometry(QtCore.QRect(890, 50, 150, 50))
         self.pressureLabel.setStyleSheet(_fromUtf8("#pressureLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -270,7 +270,7 @@ class Ui_MainWindow(object):
 "}"))
         self.pressureLabel.setObjectName(_fromUtf8("pressureLabel"))
         self.powerSupplyButton = QtGui.QPushButton(self.graphBackground)
-        self.powerSupplyButton.setGeometry(QtCore.QRect(531, 620, 55, 55))
+        self.powerSupplyButton.setGeometry(QtCore.QRect(521, 560, 55, 55))
         self.powerSupplyButton.setStyleSheet(_fromUtf8("#powerSupplyButton{\n"
 "\n"
 "image:url(:/OnOff/Off2.png);\n"
@@ -280,7 +280,7 @@ class Ui_MainWindow(object):
         self.powerSupplyButton.setText(_fromUtf8(""))
         self.powerSupplyButton.setObjectName(_fromUtf8("powerSupplyButton"))
         self.turboPumpButton = QtGui.QPushButton(self.graphBackground)
-        self.turboPumpButton.setGeometry(QtCore.QRect(281, 620, 56, 56))
+        self.turboPumpButton.setGeometry(QtCore.QRect(271, 560, 56, 56))
         self.turboPumpButton.setStyleSheet(_fromUtf8("#turboPumpButton{\n"
 "image:url(:/OnOff/Off2.png);\n"
 "background: black;\n"
@@ -288,7 +288,7 @@ class Ui_MainWindow(object):
         self.turboPumpButton.setText(_fromUtf8(""))
         self.turboPumpButton.setObjectName(_fromUtf8("turboPumpButton"))
         self.scrollPumpButton = QtGui.QPushButton(self.graphBackground)
-        self.scrollPumpButton.setGeometry(QtCore.QRect(81, 620, 55, 55))
+        self.scrollPumpButton.setGeometry(QtCore.QRect(71, 560, 55, 55))
         self.scrollPumpButton.setStyleSheet(_fromUtf8("#scrollPumpButton{\n"
 "image:url(:/OnOff/Off2.png);\n"
 "background: black;\n"
@@ -296,14 +296,14 @@ class Ui_MainWindow(object):
         self.scrollPumpButton.setText(_fromUtf8(""))
         self.scrollPumpButton.setObjectName(_fromUtf8("scrollPumpButton"))
         self.cryoAngleLabel = QtGui.QLabel(self.graphBackground)
-        self.cryoAngleLabel.setGeometry(QtCore.QRect(860, 350, 140, 41))
+        self.cryoAngleLabel.setGeometry(QtCore.QRect(680, 420, 171, 41))
         self.cryoAngleLabel.setStyleSheet(_fromUtf8("#cryoAngleLabel{\n"
 "color: white;\n"
 "font: 16pt \"MS Shell Dlg 2\";\n"
 "}"))
         self.cryoAngleLabel.setObjectName(_fromUtf8("cryoAngleLabel"))
         self.line_10 = QtGui.QFrame(self.graphBackground)
-        self.line_10.setGeometry(QtCore.QRect(560, 420, 125, 3))
+        self.line_10.setGeometry(QtCore.QRect(550, 360, 125, 3))
         self.line_10.setStyleSheet(_fromUtf8("#line_10{\n"
 "color: white\n"
 "}"))
@@ -312,7 +312,7 @@ class Ui_MainWindow(object):
         self.line_10.setFrameShape(QtGui.QFrame.HLine)
         self.line_10.setObjectName(_fromUtf8("line_10"))
         self.rateLabel = QtGui.QLabel(self.graphBackground)
-        self.rateLabel.setGeometry(QtCore.QRect(670, 575, 150, 50))
+        self.rateLabel.setGeometry(QtCore.QRect(890, 105, 150, 50))
         self.rateLabel.setStyleSheet(_fromUtf8("#rateLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -321,7 +321,7 @@ class Ui_MainWindow(object):
 "}"))
         self.rateLabel.setObjectName(_fromUtf8("rateLabel"))
         self.thicknessLabel = QtGui.QLabel(self.graphBackground)
-        self.thicknessLabel.setGeometry(QtCore.QRect(670, 630, 150, 50))
+        self.thicknessLabel.setGeometry(QtCore.QRect(890, 160, 150, 50))
         self.thicknessLabel.setStyleSheet(_fromUtf8("#thicknessLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -331,7 +331,7 @@ class Ui_MainWindow(object):
         self.thicknessLabel.setObjectName(_fromUtf8("thicknessLabel"))
         self.heliumFlowButton = QtGui.QPushButton(self.graphBackground)
         self.heliumFlowButton.setEnabled(True)
-        self.heliumFlowButton.setGeometry(QtCore.QRect(680, 396, 50, 50))
+        self.heliumFlowButton.setGeometry(QtCore.QRect(670, 336, 50, 50))
         self.heliumFlowButton.setStyleSheet(_fromUtf8("#heliumFlowButton{\n"
 "  border-color: rgb(255, 255, 255);\n"
 "  border-width: 4px;        \n"
@@ -342,7 +342,7 @@ class Ui_MainWindow(object):
         self.heliumFlowButton.setText(_fromUtf8(""))
         self.heliumFlowButton.setObjectName(_fromUtf8("heliumFlowButton"))
         self.line_11 = QtGui.QFrame(self.graphBackground)
-        self.line_11.setGeometry(QtCore.QRect(730, 420, 125, 3))
+        self.line_11.setGeometry(QtCore.QRect(720, 360, 125, 3))
         self.line_11.setStyleSheet(_fromUtf8("#line_11{\n"
 "color: white\n"
 "}"))
@@ -351,7 +351,7 @@ class Ui_MainWindow(object):
         self.line_11.setFrameShape(QtGui.QFrame.HLine)
         self.line_11.setObjectName(_fromUtf8("line_11"))
         self.heliumFlowStatus = QtGui.QLabel(self.graphBackground)
-        self.heliumFlowStatus.setGeometry(QtCore.QRect(655, 350, 100, 50))
+        self.heliumFlowStatus.setGeometry(QtCore.QRect(645, 286, 100, 50))
         self.heliumFlowStatus.setStyleSheet(_fromUtf8("#heliumFlowStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -366,7 +366,7 @@ class Ui_MainWindow(object):
         self.pushConnect.setGeometry(QtCore.QRect(100, 40, 139, 23))
         self.pushConnect.setObjectName(_fromUtf8("pushConnect"))
         self.line_12 = QtGui.QFrame(self.graphBackground)
-        self.line_12.setGeometry(QtCore.QRect(690, 520, 300, 3))
+        self.line_12.setGeometry(QtCore.QRect(900, 50, 300, 3))
         self.line_12.setStyleSheet(_fromUtf8("#line_12{\n"
 "color: white\n"
 "}"))
@@ -375,7 +375,7 @@ class Ui_MainWindow(object):
         self.line_12.setFrameShape(QtGui.QFrame.HLine)
         self.line_12.setObjectName(_fromUtf8("line_12"))
         self.line_13 = QtGui.QFrame(self.graphBackground)
-        self.line_13.setGeometry(QtCore.QRect(690, 680, 300, 3))
+        self.line_13.setGeometry(QtCore.QRect(900, 210, 300, 3))
         self.line_13.setStyleSheet(_fromUtf8("#line_13{\n"
 "color: white\n"
 "}"))
@@ -384,7 +384,7 @@ class Ui_MainWindow(object):
         self.line_13.setFrameShape(QtGui.QFrame.HLine)
         self.line_13.setObjectName(_fromUtf8("line_13"))
         self.line_14 = QtGui.QFrame(self.graphBackground)
-        self.line_14.setGeometry(QtCore.QRect(690, 521, 1, 160))
+        self.line_14.setGeometry(QtCore.QRect(900, 50, 1, 160))
         self.line_14.setStyleSheet(_fromUtf8("#line_14{\n"
 "color: white;\n"
 "}"))
@@ -393,7 +393,7 @@ class Ui_MainWindow(object):
         self.line_14.setFrameShape(QtGui.QFrame.VLine)
         self.line_14.setObjectName(_fromUtf8("line_14"))
         self.line_15 = QtGui.QFrame(self.graphBackground)
-        self.line_15.setGeometry(QtCore.QRect(990, 521, 1, 160))
+        self.line_15.setGeometry(QtCore.QRect(1200, 50, 1, 160))
         self.line_15.setStyleSheet(_fromUtf8("#line_15{\n"
 "color: white;\n"
 "}"))
@@ -402,7 +402,7 @@ class Ui_MainWindow(object):
         self.line_15.setFrameShape(QtGui.QFrame.VLine)
         self.line_15.setObjectName(_fromUtf8("line_15"))
         self.rateStatus = QtGui.QLabel(self.graphBackground)
-        self.rateStatus.setGeometry(QtCore.QRect(840, 575, 100, 51))
+        self.rateStatus.setGeometry(QtCore.QRect(1060, 105, 100, 51))
         self.rateStatus.setStyleSheet(_fromUtf8("#rateStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -411,7 +411,7 @@ class Ui_MainWindow(object):
 "}"))
         self.rateStatus.setObjectName(_fromUtf8("rateStatus"))
         self.thicknessStatus = QtGui.QLabel(self.graphBackground)
-        self.thicknessStatus.setGeometry(QtCore.QRect(840, 630, 100, 51))
+        self.thicknessStatus.setGeometry(QtCore.QRect(1060, 160, 100, 51))
         self.thicknessStatus.setStyleSheet(_fromUtf8("#thicknessStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -437,7 +437,7 @@ class Ui_MainWindow(object):
         self.sliderLCD.setGeometry(QtCore.QRect(740, 60, 70, 40))
         self.sliderLCD.setObjectName(_fromUtf8("sliderLCD"))
         self.detailsBackground = QtGui.QFrame(self.Plotting)
-        self.detailsBackground.setGeometry(QtCore.QRect(0, 0, 1360, 742))
+        self.detailsBackground.setGeometry(QtCore.QRect(0, 0, 1294, 674))
         self.detailsBackground.setStyleSheet(_fromUtf8("#detailsBackground{\n"
 "background: rgb(0,0, 0)\n"
 "}\n"
@@ -456,7 +456,7 @@ class Ui_MainWindow(object):
 ""))
         self.numPointsLabel.setObjectName(_fromUtf8("numPointsLabel"))
         self.comboGraph = QtGui.QComboBox(self.detailsBackground)
-        self.comboGraph.setGeometry(QtCore.QRect(40, 70, 141, 22))
+        self.comboGraph.setGeometry(QtCore.QRect(40, 100, 141, 22))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -464,7 +464,7 @@ class Ui_MainWindow(object):
         self.comboGraph.setSizePolicy(sizePolicy)
         self.comboGraph.setObjectName(_fromUtf8("comboGraph"))
         self.comboGraph2 = QtGui.QComboBox(self.detailsBackground)
-        self.comboGraph2.setGeometry(QtCore.QRect(40, 410, 141, 22))
+        self.comboGraph2.setGeometry(QtCore.QRect(40, 380, 141, 22))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -472,7 +472,7 @@ class Ui_MainWindow(object):
         self.comboGraph2.setSizePolicy(sizePolicy)
         self.comboGraph2.setObjectName(_fromUtf8("comboGraph2"))
         self.plot2 = PlotWidget(self.detailsBackground)
-        self.plot2.setGeometry(QtCore.QRect(40, 440, 1280, 300))
+        self.plot2.setGeometry(QtCore.QRect(40, 380, 1200, 275))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -489,7 +489,7 @@ class Ui_MainWindow(object):
 "}"))
         self.Live_Plotter.setObjectName(_fromUtf8("Live_Plotter"))
         self.plot = PlotWidget(self.detailsBackground)
-        self.plot.setGeometry(QtCore.QRect(40, 100, 1280, 300))
+        self.plot.setGeometry(QtCore.QRect(40, 100, 1200, 275))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -503,13 +503,169 @@ class Ui_MainWindow(object):
         self.DataCollector = QtGui.QWidget()
         self.DataCollector.setObjectName(_fromUtf8("DataCollector"))
         self.dataCollectorWidget = dataCollectorWidget(self.DataCollector)
-        self.dataCollectorWidget.setGeometry(QtCore.QRect(0, 0, 1360, 742))
+        self.dataCollectorWidget.setGeometry(QtCore.QRect(0, 0, 1294, 674))
         self.dataCollectorWidget.setObjectName(_fromUtf8("dataCollectorWidget"))
         self.tabWidget.addTab(self.DataCollector, _fromUtf8(""))
+        self.EvapControl = QtGui.QWidget()
+        self.EvapControl.setObjectName(_fromUtf8("EvapControl"))
+        self.evapBackground = QtGui.QFrame(self.EvapControl)
+        self.evapBackground.setGeometry(QtCore.QRect(0, 0, 1294, 674))
+        self.evapBackground.setStyleSheet(_fromUtf8("#evapBackground{\n"
+"background: rgb(0,0, 0)\n"
+"}\n"
+""))
+        self.evapBackground.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.evapBackground.setFrameShadow(QtGui.QFrame.Raised)
+        self.evapBackground.setObjectName(_fromUtf8("evapBackground"))
+        self.setPointInput = QtGui.QLineEdit(self.evapBackground)
+        self.setPointInput.setGeometry(QtCore.QRect(230, 90, 113, 21))
+        self.setPointInput.setObjectName(_fromUtf8("setPointInput"))
+        self.setpointButton = QtGui.QPushButton(self.evapBackground)
+        self.setpointButton.setGeometry(QtCore.QRect(360, 90, 101, 21))
+        self.setpointButton.setObjectName(_fromUtf8("setpointButton"))
+        self.evapStartButton = QtGui.QPushButton(self.evapBackground)
+        self.evapStartButton.setGeometry(QtCore.QRect(640, 90, 100, 21))
+        self.evapStartButton.setObjectName(_fromUtf8("evapStartButton"))
+        self.setPointLabel = QtGui.QLabel(self.evapBackground)
+        self.setPointLabel.setGeometry(QtCore.QRect(480, 90, 47, 21))
+        self.setPointLabel.setStyleSheet(_fromUtf8("#setPointLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.setPointLabel.setObjectName(_fromUtf8("setPointLabel"))
+        self.Feedback = QtGui.QLabel(self.evapBackground)
+        self.Feedback.setGeometry(QtCore.QRect(180, 300, 291, 31))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.Feedback.setFont(font)
+        self.Feedback.setStyleSheet(_fromUtf8("#Feedback{\n"
+"color: rgb(212, 212, 212)\n"
+"}"))
+        self.Feedback.setObjectName(_fromUtf8("Feedback"))
+        self.units = QtGui.QLabel(self.evapBackground)
+        self.units.setGeometry(QtCore.QRect(560, 90, 47, 21))
+        self.units.setStyleSheet(_fromUtf8("#units{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignLeft\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.units.setObjectName(_fromUtf8("units"))
+        self.propInput = QtGui.QLineEdit(self.evapBackground)
+        self.propInput.setGeometry(QtCore.QRect(220, 390, 113, 21))
+        self.propInput.setObjectName(_fromUtf8("propInput"))
+        self.propButton = QtGui.QPushButton(self.evapBackground)
+        self.propButton.setGeometry(QtCore.QRect(360, 390, 101, 21))
+        self.propButton.setObjectName(_fromUtf8("propButton"))
+        self.propStatus = QtGui.QLabel(self.evapBackground)
+        self.propStatus.setGeometry(QtCore.QRect(486, 390, 71, 21))
+        self.propStatus.setStyleSheet(_fromUtf8("#propStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignCenter\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.propStatus.setObjectName(_fromUtf8("propStatus"))
+        self.propLabel = QtGui.QLabel(self.evapBackground)
+        self.propLabel.setGeometry(QtCore.QRect(40, 390, 150, 21))
+        self.propLabel.setStyleSheet(_fromUtf8("#propLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.propLabel.setObjectName(_fromUtf8("propLabel"))
+        self.intStatus = QtGui.QLabel(self.evapBackground)
+        self.intStatus.setGeometry(QtCore.QRect(486, 470, 71, 21))
+        self.intStatus.setStyleSheet(_fromUtf8("#intStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignCenter\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.intStatus.setObjectName(_fromUtf8("intStatus"))
+        self.intButton = QtGui.QPushButton(self.evapBackground)
+        self.intButton.setGeometry(QtCore.QRect(360, 470, 101, 21))
+        self.intButton.setObjectName(_fromUtf8("intButton"))
+        self.intLabel = QtGui.QLabel(self.evapBackground)
+        self.intLabel.setGeometry(QtCore.QRect(40, 470, 150, 21))
+        self.intLabel.setStyleSheet(_fromUtf8("#intLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.intLabel.setObjectName(_fromUtf8("intLabel"))
+        self.intInput = QtGui.QLineEdit(self.evapBackground)
+        self.intInput.setGeometry(QtCore.QRect(220, 470, 113, 21))
+        self.intInput.setObjectName(_fromUtf8("intInput"))
+        self.derivStatus = QtGui.QLabel(self.evapBackground)
+        self.derivStatus.setGeometry(QtCore.QRect(486, 550, 71, 21))
+        self.derivStatus.setStyleSheet(_fromUtf8("#derivStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignCenter\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.derivStatus.setObjectName(_fromUtf8("derivStatus"))
+        self.derivButton = QtGui.QPushButton(self.evapBackground)
+        self.derivButton.setGeometry(QtCore.QRect(360, 550, 101, 21))
+        self.derivButton.setObjectName(_fromUtf8("derivButton"))
+        self.derivLabel = QtGui.QLabel(self.evapBackground)
+        self.derivLabel.setGeometry(QtCore.QRect(40, 550, 150, 21))
+        self.derivLabel.setStyleSheet(_fromUtf8("#derivLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.derivLabel.setObjectName(_fromUtf8("derivLabel"))
+        self.derivInput = QtGui.QLineEdit(self.evapBackground)
+        self.derivInput.setGeometry(QtCore.QRect(220, 550, 113, 21))
+        self.derivInput.setObjectName(_fromUtf8("derivInput"))
+        self.line_31 = QtGui.QFrame(self.EvapControl)
+        self.line_31.setGeometry(QtCore.QRect(80, 359, 500, 3))
+        self.line_31.setStyleSheet(_fromUtf8("#line_31{\n"
+"color: white\n"
+"}"))
+        self.line_31.setFrameShadow(QtGui.QFrame.Plain)
+        self.line_31.setLineWidth(1)
+        self.line_31.setFrameShape(QtGui.QFrame.HLine)
+        self.line_31.setObjectName(_fromUtf8("line_31"))
+        self.line_32 = QtGui.QFrame(self.EvapControl)
+        self.line_32.setGeometry(QtCore.QRect(80, 360, 1, 242))
+        self.line_32.setStyleSheet(_fromUtf8("#line_32{\n"
+"color: white;\n"
+"}"))
+        self.line_32.setFrameShadow(QtGui.QFrame.Plain)
+        self.line_32.setLineWidth(1)
+        self.line_32.setFrameShape(QtGui.QFrame.VLine)
+        self.line_32.setObjectName(_fromUtf8("line_32"))
+        self.line_33 = QtGui.QFrame(self.EvapControl)
+        self.line_33.setGeometry(QtCore.QRect(580, 360, 1, 242))
+        self.line_33.setStyleSheet(_fromUtf8("#line_33{\n"
+"color: white;\n"
+"}"))
+        self.line_33.setFrameShadow(QtGui.QFrame.Plain)
+        self.line_33.setLineWidth(1)
+        self.line_33.setFrameShape(QtGui.QFrame.VLine)
+        self.line_33.setObjectName(_fromUtf8("line_33"))
+        self.line_34 = QtGui.QFrame(self.EvapControl)
+        self.line_34.setGeometry(QtCore.QRect(80, 600, 500, 3))
+        self.line_34.setStyleSheet(_fromUtf8("#line_34{\n"
+"color: white\n"
+"}"))
+        self.line_34.setFrameShadow(QtGui.QFrame.Plain)
+        self.line_34.setLineWidth(1)
+        self.line_34.setFrameShape(QtGui.QFrame.HLine)
+        self.line_34.setObjectName(_fromUtf8("line_34"))
+        self.tabWidget.addTab(self.EvapControl, _fromUtf8(""))
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -524,7 +680,7 @@ class Ui_MainWindow(object):
         self.powerSupplyLabel.setText(_translate("MainWindow", "Power Supply", None))
         self.pressureStatus.setText(_translate("MainWindow", "Not Initialized", None))
         self.pressureLabel.setText(_translate("MainWindow", "Pressure:", None))
-        self.cryoAngleLabel.setText(_translate("MainWindow", "Cryostat Angle:", None))
+        self.cryoAngleLabel.setText(_translate("MainWindow", "Cryostat Position:", None))
         self.rateLabel.setText(_translate("MainWindow", "Deposition Rate:", None))
         self.thicknessLabel.setText(_translate("MainWindow", "Thickness:", None))
         self.heliumFlowStatus.setText(_translate("MainWindow", "Not Flowing", None))
@@ -537,6 +693,21 @@ class Ui_MainWindow(object):
         self.Live_Plotter.setText(_translate("MainWindow", "Live Plotter", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Plotting), _translate("MainWindow", "Plotting", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.DataCollector), _translate("MainWindow", "Data Collector", None))
+        self.setpointButton.setText(_translate("MainWindow", "Change Setpoint", None))
+        self.evapStartButton.setText(_translate("MainWindow", "Start Evaporating", None))
+        self.setPointLabel.setText(_translate("MainWindow", "0", None))
+        self.Feedback.setText(_translate("MainWindow", "Feedback PID Settings", None))
+        self.units.setText(_translate("MainWindow", "Å/s", None))
+        self.propButton.setText(_translate("MainWindow", "Set Proportional", None))
+        self.propStatus.setText(_translate("MainWindow", "0", None))
+        self.propLabel.setText(_translate("MainWindow", "Proportional:", None))
+        self.intStatus.setText(_translate("MainWindow", "0", None))
+        self.intButton.setText(_translate("MainWindow", "Set Integral", None))
+        self.intLabel.setText(_translate("MainWindow", "Integral:", None))
+        self.derivStatus.setText(_translate("MainWindow", "0", None))
+        self.derivButton.setText(_translate("MainWindow", "Set Derivative", None))
+        self.derivLabel.setText(_translate("MainWindow", "Derivative:", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.EvapControl), _translate("MainWindow", "Evaporation Controls", None))
 
 from dataCollectorWidget import dataCollectorWidget
 from labradWidgets import dataVaultFileSelectWidget
