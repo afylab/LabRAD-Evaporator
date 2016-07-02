@@ -3,12 +3,15 @@ from PyQt4 import QtGui, QtCore
 from twisted.internet.defer import inlineCallbacks
 import numpy as np
 import EvaporatorUI
+from PID import PID
 
 class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     """
     Computer interface for Evaporator.  
    
     TO DO ON GUI: Add ability to run common scripts. 
+    TO DO: Appropriate message errors for what servers are not connected or cannot detect devices. 
+    TO DO: Modify PID to take voltage AND time of points. 
     """
     
     #----------------------------------------------------------------------------------------------#
@@ -30,12 +33,13 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         super(MainWindow, self).__init__(parent)
         self.reactor = reactor
         self.setupUi(self)
-        #self.setFixedSize(1366,768)
 
         self.directory_path = ""
         self.num_points = 50
         
-        self.DataCollector = None
+        #initialize PID
+        self.PID = PID()
+        self.evaporating = False
         
         #initalize plots
         self.initPlots()
@@ -61,17 +65,29 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.scrollPumpButton.clicked.connect(self.toggleScrollPump)
         self.turboPumpButton.clicked.connect(self.toggleTurboPump)
         self.heliumFlowButton.clicked.connect(self.toggleHeliumFlow)
-                   
+        
+        self.setPointButton.clicked.connect(self.setPoint)
+        self.propButton.clicked.connect(self.setProp)
+        self.intButton.clicked.connect(self.setInt)
+        self.intMaxButton.clicked.connect(self.setIntMax)
+        self.intMinButton.clicked.connect(self.setIntMin)
+        self.derivButton.clicked.connect(self.setDeriv)
+        
+        self.evapStartButton.clicked.connect(self.toggleEvap)
     @inlineCallbacks
     def connect(self, cntx):
         """ Each connection can only monitor one dataset at a time. This function creates 
-        a connection and signals for each dataset that needs to be simultaneously monitored.
-        Then, it runs the data collector connect function."""
+        a connection and signals for each dataset that needs to be simultaneously monitored. 
+        We need to monitor pressure, deposition rate, and thickness for the graphical interface
+        and two data sets for each of the graphs. After initalizing those connections, it runs
+        the data collector connect function. Finally, it makes a connection with the servers 
+        to the equipment that needs to be controlled
+        which acti"""
+        
         try:
             from labrad.wrappers import connectAsync
             
-            #This connect is used for updating the graph 1 on the Details tab. 
-            
+            #This connect is used for updating graph 1 
             self.cxn_gph = yield connectAsync(name = 'Evaporator GUI')
             self.dv_gph = self.cxn_gph.data_vault
             #Set signal ID for creation of new dataset
@@ -79,31 +95,39 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.dv_gph.addListener(listener=self.add_dataset_gph, source=None, ID=self.ID_NEWSET)
             yield self.dv_gph.signal__data_available(self.ID_NEWDATA)
             yield self.dv_gph.addListener(listener=self.update_gph, source=None, ID=self.ID_NEWDATA)
-            yield self.dv_gph.signal__new_parameter(self.ID_NEWPARAM)
-            yield self.dv_gph.addListener(listener=self.update_params_gph, source=None, ID=self.ID_NEWPARAM)
             
-            #This connect is used for updating the graph 2 on the Details tab. 
+            #This connect is used for updating graph 2 
             self.cxn_gph2 = yield connectAsync(name = 'Evaporator GUI')
             self.dv_gph2 = self.cxn_gph2.data_vault
             #No need to signal ID for creation of new dataset since first graph will documents all the creations. 
-            #yield self.dv_gph2.signal__new_dataset(self.ID_NEWSET)
-            #yield self.dv_gph2.addListener(listener=self.add_dataset_gph, source=None, ID=self.ID_NEWSET)
             yield self.dv_gph2.signal__data_available(self.ID_NEWDATA)
             yield self.dv_gph2.addListener(listener=self.update_gph2, source=None, ID=self.ID_NEWDATA)
-            yield self.dv_gph2.signal__new_parameter(self.ID_NEWPARAM)
-            yield self.dv_gph2.addListener(listener=self.update_params_gph2, source=None, ID=self.ID_NEWPARAM)
                  
             #Next, create a connection for connecting to each server from which we want constant updates. 
-            #Ie, create a cxn_prs for monitoring pressure for front pannel. 
+            #Create a cxn_prs for monitoring pressure for front pannel. 
             self.cxn_prs = yield connectAsync(name = 'Evaporator GUI')
             self.dv_prs = self.cxn_prs.data_vault
-            
             yield self.dv_prs.signal__new_dataset(self.ID_NEWSET)
             yield self.dv_prs.addListener(listener=self.add_dataset_prs, source=None, ID=self.ID_NEWSET)
             yield self.dv_prs.signal__data_available(self.ID_NEWDATA)
             yield self.dv_prs.addListener(listener=self.update_prs, source=None, ID=self.ID_NEWDATA)
-            yield self.dv_prs.signal__new_parameter(self.ID_NEWPARAM)
-            yield self.dv_prs.addListener(listener=self.update_params_prs, source=None, ID=self.ID_NEWPARAM)
+            
+            #Create a cxn_dep for monitoring deposition rate
+            self.cxn_dep = yield connectAsync(name = 'Evaporator GUI')
+            self.dv_dep = self.cxn_dep.data_vault
+            yield self.dv_dep.signal__new_dataset(self.ID_NEWSET)
+            yield self.dv_dep.addListener(listener=self.add_dataset_prs, source=None, ID=self.ID_NEWSET)
+            yield self.dv_dep.signal__data_available(self.ID_NEWDATA)
+            yield self.dv_dep.addListener(listener=self.update_prs, source=None, ID=self.ID_NEWDATA)
+            
+            #Create a cxn_thk for monitoring thickness
+            self.cxn_thk = yield connectAsync(name = 'Evaporator GUI')
+            self.dv_thk = self.cxn_thk.data_vault
+            
+            yield self.dv_thk.signal__new_dataset(self.ID_NEWSET)
+            yield self.dv_thk.addListener(listener=self.add_dataset_prs, source=None, ID=self.ID_NEWSET)
+            yield self.dv_thk.signal__data_available(self.ID_NEWDATA)
+            yield self.dv_thk.addListener(listener=self.update_prs, source=None, ID=self.ID_NEWDATA)
             
             #Have the data collector connect
             self.dataCollectorWidget.connect()
@@ -188,26 +212,11 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.plot2.plot(data[-self.num_points:,0],data[-self.num_points:,1])   
         #Could be re-written in a more memory efficient way if it ends up mattering. 
         # Can also look into pyqt graph 
-            
-    @inlineCallbacks
-    def update_params_gph(self, cntx, signal):
-        #Currently not used
-        print signal
-        print "params updated"
-        params = yield self.dv_gph.get_parameters()
-        
-    @inlineCallbacks
-    def update_params_gph2(self, cntx, signal):
-        #Currently not used
-        print signal
-        print "params updated"
-        params = yield self.dv_gph.get_parameters()
         
     def set_num_points(self,num_points):
         #AT SOME POINT UPDATE THIS TO BE NOT NUMBER OF POINTS, BUT NUMBER OF SECONDS
         self.num_points = int(50 + num_points**1.4922)
         self.sliderLCD.display(self.num_points)
-        #self.update(cntx = None, )
           
     @inlineCallbacks
     def selectData(self,data_name):
@@ -238,8 +247,9 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.plot2.setLabel('bottom', 'Time','s') 
         
 #----------------------------------------------------------------------------------------------#   
-    """ The following section has functions for creating and updating the pressure on the 
-    graphical interface """
+    """ The following section has functions for creating and updating the pressure, deposition
+        rate, and thickness on the graphical interface. Also sets voltages based on discrete
+        PID if evaporating."""
         
     def add_dataset_prs(self, cntx, signal):
         if signal[8:] == 'Pressure vs. Time':
@@ -253,13 +263,37 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         data_string = str(data[0,1])
         self.pressureStatus.setText(data_string[0:6])
         
+    def add_dataset_dep(self, cntx, signal):
+        if signal[8:] == 'Deposition Rate vs. Time':
+            self.dv_dep.open(signal)
+            print 'Deposition Rate is now being monitored'
+        
     @inlineCallbacks
-    def update_params_prs(self, cntx, signal):
-        #Currently not used
-        print signal
-        print "params updated"
-        params = yield self.dv_prs.get_parameters()
+    def update_dep(self, cntx, signal):
+        #Get new data point
+        data = yield self.dv_dep.get()
+        data_string = str(data[0,1])
+        self.rateStatus.setText(data_string[0:6])
+        
+        if self.evaporating:
+            voltage  = self.PID.update(data)
+            yield self.tdk.volt_set(voltage)
+        
+    def add_dataset_thk(self, cntx, signal):
+        if signal[8:] == 'Thickness vs. Time':
+            self.dv_thk.open(signal)
+            print 'Thickness is now being monitored'
+        
+    @inlineCallbacks
+    def update_thk(self, cntx, signal):
+        # Get new data point
+        data = yield self.dv_thk.get()
+        data_string = str(data[0,1])
+        self.thicknessStatus.setText(data_string[0:6])
 
+        # Probably add some functionality for when reached final thickness, close 
+        # shutter or something
+        
 #----------------------------------------------------------------------------------------------#
             
     """ The following section specifies the actions of all the buttons in the Graphical
@@ -366,7 +400,84 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             "rgb(255, 255, 255); border-width: 4px;border-style: solid;  " +
             "border-radius: 25px;background: white;}")   
 #----------------------------------------------------------------------------------------------#
-            
+    """ The following section defines all the connections for the Evaporation Controls tab."""
+  
+    def setPoint(self):
+        try:
+            self.textEdit2.clear()
+            point = float(self.setPointInput.text())
+            self.PID.setPoint(point)
+            self.setPointLabel.setText(self.setPointInput.text())
+        except:
+            self.textEdit2.setPlainText("Man, that aint a number")
+        self.setPointInput.clear()
+          
+    def setProp(self):
+        try:
+            self.textEdit2.clear()
+            Kp = float(self.propInput.text())
+            self.PID.setKp(Kp)
+            self.propStatus.setText(self.propInput.text())
+        except:
+            self.textEdit2.setPlainText("Man, that aint a number")
+        self.propInput.clear()
+
+    def setInt(self):
+        try:
+            self.textEdit2.clear()
+            Ki = float(self.intInput.text())
+            self.PID.setKi(Ki)
+            self.intStatus.setText(self.intInput.text())
+        except:
+            self.textEdit2.setPlainText("Man, that aint a number")
+        self.intInput.clear()
+        
+    def setIntMax(self):
+        try:
+            self.textEdit2.clear()
+            intMax = float(self.intMaxInput.text())
+            self.PID.setIntMax(intMax)
+            self.intMaxStatus.setText(self.intMaxInput.text())
+        except:
+            self.textEdit2.setPlainText("Man, that aint a number")
+        self.intMaxInput.clear()
+        
+    def setIntMin(self):
+        try:
+            self.textEdit2.clear()
+            intMin = float(self.intMinInput.text())
+            self.PID.setIntMin(intMin)
+            self.intMinStatus.setText(self.intMinInput.text())
+        except:
+            self.textEdit2.setPlainText("Man, that aint a number")
+        self.intMinInput.clear()
+        
+    def setDeriv(self):
+        try:
+            self.textEdit2.clear()
+            Kd = float(self.derivInput.text())
+            self.PID.setKd(Kd)
+            self.derivStatus.setText(self.derivInput.text())
+        except:
+            self.textEdit2.setPlainText("Man, that aint a number")
+        self.derivInput.clear()
+    
+    #@inlineCallbacks
+    def toggleEvap(self):
+        if self.evapStartButton.text() == 'Start Evaporating':
+            self.evapStartButton.setText("Stop Evaporating")
+            self.evaporating = True
+            self.evapStatus.setText("Evaporating!")
+        else: 
+            self.evapStartButton.setText("Start Evaporating")
+            self.evaporating = False
+            self.evapStatus.setText("Standby")
+            #Add functions to stop all evaporating from happening. 
+            #yield self.tdk.volt_set(0)
+            #yield self.steppers.close_shutter()
+            # etc...
+#----------------------------------------------------------------------------------------------#
+        
     """ The following section specifies closing actions taken by the GUI when disconnecting.
     Probably not necessary. """
     '''

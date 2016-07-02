@@ -257,8 +257,8 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>380</y>
+      <x>270</x>
+      <y>300</y>
       <width>250</width>
       <height>141</height>
      </rect>
@@ -496,6 +496,27 @@ qproperty-wordWrap: false;
     </property>
     <property name="text">
      <string>Set Sampling Rate</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="note">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>150</y>
+      <width>271</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#note{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignLeft';
+qproperty-wordWrap: true;
+}</string>
+    </property>
+    <property name="text">
+     <string>Note: the deposition rate sampling rate determines the speed at which the PID updates the voltage. </string>
     </property>
    </widget>
   </widget>

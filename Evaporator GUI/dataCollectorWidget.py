@@ -236,10 +236,7 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
     """ The following section has functions for prompting data points."""   
      
     @inlineCallbacks    
-    def update_prs(self):
-        # currently adding random values. Eventually should actually connect to RVC controller. 
-        # yield self.dv_prs.add(time.clock() - self.zero_prs, np.random.rand())
-        
+    def update_prs(self):        
         prs = yield self.rvc.get_prs()
         num = float(prs[4:8])*(10**float(prs[9:12]))
         yield self.dv_prs.add(time.clock() - self.zero_prs, num)

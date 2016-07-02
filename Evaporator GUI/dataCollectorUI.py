@@ -119,7 +119,7 @@ class Ui_Form(object):
         self.rateInput.setGeometry(QtCore.QRect(180, 180, 113, 21))
         self.rateInput.setObjectName(_fromUtf8("rateInput"))
         self.textEdit = QtGui.QTextEdit(self.collectorBackground)
-        self.textEdit.setGeometry(QtCore.QRect(510, 380, 250, 141))
+        self.textEdit.setGeometry(QtCore.QRect(270, 300, 250, 141))
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.thicknessStartButton = QtGui.QPushButton(self.collectorBackground)
         self.thicknessStartButton.setGeometry(QtCore.QRect(590, 140, 135, 21))
@@ -204,6 +204,15 @@ class Ui_Form(object):
         self.voltButton = QtGui.QPushButton(self.collectorBackground)
         self.voltButton.setGeometry(QtCore.QRect(310, 220, 101, 21))
         self.voltButton.setObjectName(_fromUtf8("voltButton"))
+        self.note = QtGui.QLabel(self.collectorBackground)
+        self.note.setGeometry(QtCore.QRect(900, 150, 271, 91))
+        self.note.setStyleSheet(_fromUtf8("#note{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignLeft\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.note.setObjectName(_fromUtf8("note"))
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -233,4 +242,5 @@ class Ui_Form(object):
         self.voltLabel.setText(_translate("Form", "Voltage:", None))
         self.voltStartButton.setText(_translate("Form", "Start Sampling Voltage", None))
         self.voltButton.setText(_translate("Form", "Set Sampling Rate", None))
+        self.note.setText(_translate("Form", "Note: the deposition rate sampling rate determines the speed at which the PID updates the voltage. ", None))
 

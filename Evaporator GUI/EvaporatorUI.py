@@ -496,6 +496,12 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.plot.sizePolicy().hasHeightForWidth())
         self.plot.setSizePolicy(sizePolicy)
         self.plot.setObjectName(_fromUtf8("plot"))
+        self.plot2.raise_()
+        self.plot.raise_()
+        self.numPointsLabel.raise_()
+        self.comboGraph.raise_()
+        self.comboGraph2.raise_()
+        self.Live_Plotter.raise_()
         self.detailsBackground.raise_()
         self.sliderGraph.raise_()
         self.sliderLCD.raise_()
@@ -520,11 +526,11 @@ class Ui_MainWindow(object):
         self.setPointInput = QtGui.QLineEdit(self.evapBackground)
         self.setPointInput.setGeometry(QtCore.QRect(230, 90, 113, 21))
         self.setPointInput.setObjectName(_fromUtf8("setPointInput"))
-        self.setpointButton = QtGui.QPushButton(self.evapBackground)
-        self.setpointButton.setGeometry(QtCore.QRect(360, 90, 101, 21))
-        self.setpointButton.setObjectName(_fromUtf8("setpointButton"))
+        self.setPointButton = QtGui.QPushButton(self.evapBackground)
+        self.setPointButton.setGeometry(QtCore.QRect(360, 90, 101, 21))
+        self.setPointButton.setObjectName(_fromUtf8("setPointButton"))
         self.evapStartButton = QtGui.QPushButton(self.evapBackground)
-        self.evapStartButton.setGeometry(QtCore.QRect(640, 90, 100, 21))
+        self.evapStartButton.setGeometry(QtCore.QRect(960, 90, 100, 21))
         self.evapStartButton.setObjectName(_fromUtf8("evapStartButton"))
         self.setPointLabel = QtGui.QLabel(self.evapBackground)
         self.setPointLabel.setGeometry(QtCore.QRect(480, 90, 47, 21))
@@ -578,7 +584,7 @@ class Ui_MainWindow(object):
 "}"))
         self.propLabel.setObjectName(_fromUtf8("propLabel"))
         self.intStatus = QtGui.QLabel(self.evapBackground)
-        self.intStatus.setGeometry(QtCore.QRect(486, 470, 71, 21))
+        self.intStatus.setGeometry(QtCore.QRect(486, 430, 71, 21))
         self.intStatus.setStyleSheet(_fromUtf8("#intStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -587,10 +593,10 @@ class Ui_MainWindow(object):
 "}"))
         self.intStatus.setObjectName(_fromUtf8("intStatus"))
         self.intButton = QtGui.QPushButton(self.evapBackground)
-        self.intButton.setGeometry(QtCore.QRect(360, 470, 101, 21))
+        self.intButton.setGeometry(QtCore.QRect(360, 430, 101, 21))
         self.intButton.setObjectName(_fromUtf8("intButton"))
         self.intLabel = QtGui.QLabel(self.evapBackground)
-        self.intLabel.setGeometry(QtCore.QRect(40, 470, 150, 21))
+        self.intLabel.setGeometry(QtCore.QRect(40, 430, 150, 21))
         self.intLabel.setStyleSheet(_fromUtf8("#intLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -599,7 +605,7 @@ class Ui_MainWindow(object):
 "}"))
         self.intLabel.setObjectName(_fromUtf8("intLabel"))
         self.intInput = QtGui.QLineEdit(self.evapBackground)
-        self.intInput.setGeometry(QtCore.QRect(220, 470, 113, 21))
+        self.intInput.setGeometry(QtCore.QRect(220, 430, 113, 21))
         self.intInput.setObjectName(_fromUtf8("intInput"))
         self.derivStatus = QtGui.QLabel(self.evapBackground)
         self.derivStatus.setGeometry(QtCore.QRect(486, 550, 71, 21))
@@ -625,6 +631,84 @@ class Ui_MainWindow(object):
         self.derivInput = QtGui.QLineEdit(self.evapBackground)
         self.derivInput.setGeometry(QtCore.QRect(220, 550, 113, 21))
         self.derivInput.setObjectName(_fromUtf8("derivInput"))
+        self.intMaxInput = QtGui.QLineEdit(self.evapBackground)
+        self.intMaxInput.setGeometry(QtCore.QRect(220, 470, 113, 21))
+        self.intMaxInput.setObjectName(_fromUtf8("intMaxInput"))
+        self.intMaxStatus = QtGui.QLabel(self.evapBackground)
+        self.intMaxStatus.setGeometry(QtCore.QRect(486, 470, 71, 21))
+        self.intMaxStatus.setStyleSheet(_fromUtf8("#intMaxStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignCenter\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.intMaxStatus.setObjectName(_fromUtf8("intMaxStatus"))
+        self.intMaxLabel = QtGui.QLabel(self.evapBackground)
+        self.intMaxLabel.setGeometry(QtCore.QRect(40, 470, 150, 21))
+        self.intMaxLabel.setStyleSheet(_fromUtf8("#intMaxLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.intMaxLabel.setObjectName(_fromUtf8("intMaxLabel"))
+        self.intMaxButton = QtGui.QPushButton(self.evapBackground)
+        self.intMaxButton.setGeometry(QtCore.QRect(360, 470, 101, 21))
+        self.intMaxButton.setObjectName(_fromUtf8("intMaxButton"))
+        self.intMinInput = QtGui.QLineEdit(self.evapBackground)
+        self.intMinInput.setGeometry(QtCore.QRect(220, 510, 113, 21))
+        self.intMinInput.setObjectName(_fromUtf8("intMinInput"))
+        self.intMinStatus = QtGui.QLabel(self.evapBackground)
+        self.intMinStatus.setGeometry(QtCore.QRect(486, 510, 71, 21))
+        self.intMinStatus.setStyleSheet(_fromUtf8("#intMinStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignCenter\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.intMinStatus.setObjectName(_fromUtf8("intMinStatus"))
+        self.intMinLabel = QtGui.QLabel(self.evapBackground)
+        self.intMinLabel.setGeometry(QtCore.QRect(40, 510, 150, 21))
+        self.intMinLabel.setStyleSheet(_fromUtf8("#intMinLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.intMinLabel.setObjectName(_fromUtf8("intMinLabel"))
+        self.intMinButton = QtGui.QPushButton(self.evapBackground)
+        self.intMinButton.setGeometry(QtCore.QRect(360, 510, 101, 21))
+        self.intMinButton.setObjectName(_fromUtf8("intMinButton"))
+        self.textEdit2 = QtGui.QTextEdit(self.evapBackground)
+        self.textEdit2.setGeometry(QtCore.QRect(870, 420, 271, 131))
+        self.textEdit2.setObjectName(_fromUtf8("textEdit2"))
+        self.deposRate = QtGui.QLabel(self.evapBackground)
+        self.deposRate.setGeometry(QtCore.QRect(9, 90, 201, 21))
+        self.deposRate.setStyleSheet(_fromUtf8("#deposRate{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.deposRate.setObjectName(_fromUtf8("deposRate"))
+        self.note = QtGui.QLabel(self.evapBackground)
+        self.note.setGeometry(QtCore.QRect(180, 170, 271, 91))
+        self.note.setStyleSheet(_fromUtf8("#note{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignLeft\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.note.setObjectName(_fromUtf8("note"))
+        self.evapStatus = QtGui.QLabel(self.evapBackground)
+        self.evapStatus.setGeometry(QtCore.QRect(960, 150, 171, 31))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.evapStatus.setFont(font)
+        self.evapStatus.setStyleSheet(_fromUtf8("#evapStatus{\n"
+"color: rgb(212, 212, 212)\n"
+"}"))
+        self.evapStatus.setObjectName(_fromUtf8("evapStatus"))
         self.line_31 = QtGui.QFrame(self.EvapControl)
         self.line_31.setGeometry(QtCore.QRect(80, 359, 500, 3))
         self.line_31.setStyleSheet(_fromUtf8("#line_31{\n"
@@ -693,20 +777,29 @@ class Ui_MainWindow(object):
         self.Live_Plotter.setText(_translate("MainWindow", "Live Plotter", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Plotting), _translate("MainWindow", "Plotting", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.DataCollector), _translate("MainWindow", "Data Collector", None))
-        self.setpointButton.setText(_translate("MainWindow", "Change Setpoint", None))
+        self.setPointButton.setText(_translate("MainWindow", "Change Setpoint", None))
         self.evapStartButton.setText(_translate("MainWindow", "Start Evaporating", None))
         self.setPointLabel.setText(_translate("MainWindow", "0", None))
         self.Feedback.setText(_translate("MainWindow", "Feedback PID Settings", None))
         self.units.setText(_translate("MainWindow", "Å/s", None))
-        self.propButton.setText(_translate("MainWindow", "Set Proportional", None))
+        self.propButton.setText(_translate("MainWindow", "Set Kp", None))
         self.propStatus.setText(_translate("MainWindow", "0", None))
         self.propLabel.setText(_translate("MainWindow", "Proportional:", None))
         self.intStatus.setText(_translate("MainWindow", "0", None))
-        self.intButton.setText(_translate("MainWindow", "Set Integral", None))
+        self.intButton.setText(_translate("MainWindow", "Set Ki", None))
         self.intLabel.setText(_translate("MainWindow", "Integral:", None))
         self.derivStatus.setText(_translate("MainWindow", "0", None))
-        self.derivButton.setText(_translate("MainWindow", "Set Derivative", None))
+        self.derivButton.setText(_translate("MainWindow", "Set Kd", None))
         self.derivLabel.setText(_translate("MainWindow", "Derivative:", None))
+        self.intMaxStatus.setText(_translate("MainWindow", "500", None))
+        self.intMaxLabel.setText(_translate("MainWindow", "Integral Max:", None))
+        self.intMaxButton.setText(_translate("MainWindow", "Set Max", None))
+        self.intMinStatus.setText(_translate("MainWindow", "-500", None))
+        self.intMinLabel.setText(_translate("MainWindow", "Integral Min:", None))
+        self.intMinButton.setText(_translate("MainWindow", "Set Min", None))
+        self.deposRate.setText(_translate("MainWindow", "Desired Deposition Rate:", None))
+        self.note.setText(_translate("MainWindow", "Note: the deposition rate sampling rate (from data collector) determines the speed at which the PID updates the voltage. ", None))
+        self.evapStatus.setText(_translate("MainWindow", "Standby", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.EvapControl), _translate("MainWindow", "Evaporation Controls", None))
 
 from dataCollectorWidget import dataCollectorWidget
