@@ -1,7 +1,0 @@
-<RCC>
-  <qresource prefix="OnOff">
-    <file>On3.png</file>
-    <file>Off2.png</file>
-    <file>On2.png</file>
-  </qresource>
-</RCC>
