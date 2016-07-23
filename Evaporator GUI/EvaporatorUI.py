@@ -425,6 +425,45 @@ class Ui_MainWindow(object):
         self.textEdit = QtGui.QTextEdit(self.graphBackground)
         self.textEdit.setGeometry(QtCore.QRect(290, 40, 200, 63))
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
+        self.nomPressInput = QtGui.QLineEdit(self.graphBackground)
+        self.nomPressInput.setGeometry(QtCore.QRect(210, 180, 113, 21))
+        self.nomPressInput.setObjectName(_fromUtf8("nomPressInput"))
+        self.nomPressLabel = QtGui.QLabel(self.graphBackground)
+        self.nomPressLabel.setGeometry(QtCore.QRect(136, 230, 281, 21))
+        self.nomPressLabel.setStyleSheet(_fromUtf8("#nomPressLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.nomPressLabel.setObjectName(_fromUtf8("nomPressLabel"))
+        self.nomPress = QtGui.QLabel(self.graphBackground)
+        self.nomPress.setGeometry(QtCore.QRect(50, 180, 141, 21))
+        self.nomPress.setStyleSheet(_fromUtf8("#nomPress{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.nomPress.setObjectName(_fromUtf8("nomPress"))
+        self.nomPressButton = QtGui.QPushButton(self.graphBackground)
+        self.nomPressButton.setGeometry(QtCore.QRect(340, 180, 81, 21))
+        self.nomPressButton.setObjectName(_fromUtf8("nomPressButton"))
+        self.nomPressFormat = QtGui.QLabel(self.graphBackground)
+        self.nomPressFormat.setGeometry(QtCore.QRect(230, 140, 81, 21))
+        self.nomPressFormat.setStyleSheet(_fromUtf8("#nomPressFormat{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.nomPressFormat.setObjectName(_fromUtf8("nomPressFormat"))
+        self.ventButton = QtGui.QPushButton(self.graphBackground)
+        self.ventButton.setGeometry(QtCore.QRect(1020, 280, 81, 21))
+        self.ventButton.setObjectName(_fromUtf8("ventButton"))
+        self.stopVentButton = QtGui.QPushButton(self.graphBackground)
+        self.stopVentButton.setGeometry(QtCore.QRect(1020, 330, 81, 21))
+        self.stopVentButton.setObjectName(_fromUtf8("stopVentButton"))
         self.tabWidget.addTab(self.GraphicalInterface, _fromUtf8(""))
         self.Plotting = QtGui.QWidget()
         self.Plotting.setStyleSheet(_fromUtf8(""))
@@ -749,7 +788,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -772,6 +811,12 @@ class Ui_MainWindow(object):
         self.pushConnect.setText(_translate("MainWindow", "Connect to Servers", None))
         self.rateStatus.setText(_translate("MainWindow", "Not Initialized", None))
         self.thicknessStatus.setText(_translate("MainWindow", "Not Initialized", None))
+        self.nomPressLabel.setText(_translate("MainWindow", "N/A", None))
+        self.nomPress.setText(_translate("MainWindow", "Pressure Setpoint:", None))
+        self.nomPressButton.setText(_translate("MainWindow", "Set Pressure", None))
+        self.nomPressFormat.setText(_translate("MainWindow", "x.xxEsxx", None))
+        self.ventButton.setText(_translate("MainWindow", "Vent", None))
+        self.stopVentButton.setText(_translate("MainWindow", "Stop Vent", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.GraphicalInterface), _translate("MainWindow", "Graphical Interface", None))
         self.numPointsLabel.setText(_translate("MainWindow", "Number of Points:", None))
         self.Live_Plotter.setText(_translate("MainWindow", "Live Plotter", None))

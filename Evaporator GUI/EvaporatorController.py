@@ -6,7 +6,7 @@ import numpy as np
 import EvaporatorUI
 from PID import PID
 import exceptions
-import labrad.errors
+#import labrad.errors
 
 class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     """
@@ -77,6 +77,11 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.derivButton.clicked.connect(self.setDeriv)
         
         self.evapStartButton.clicked.connect(self.toggleEvap)
+        
+        self.nomPressButton.clicked.connect(self.setNomPressure)
+        self.ventButton.clicked.connect(self.vent)
+        self.stopVentButton.clicked.connect(self.stop_vent)
+        
     @inlineCallbacks
     def connect(self, cntx):
         """ Each connection can only monitor one dataset at a time. This function creates 
@@ -132,17 +137,25 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.dv_thk.signal__data_available(self.ID_NEWDATA)
             yield self.dv_thk.addListener(listener=self.update_prs, source=None, ID=self.ID_NEWDATA)
             
-            #Have the data collector connect
-            #self.dataCollectorWidget.connect()
+            Have the data collector connect
+            self.dataCollectorWidget.connect()
             
             #Have the dvFileSelect connect with a connection that won't mess with any other connections, so 
             #you can browse files without causing trouble. 
             self.cxn = yield connectAsync(name = 'Evaporator GUI')
             self.dvFileSelect.setConnection(self.cxn)
-            self.vrs = self.cxn.valve_relay_server
-
-            self.vrs.select_device()
             
+            #Connectors to the valve/relay controller, the rvc pressure controller, 
+            #and the power supply controller. 
+            self.vrs = self.cxn.valve_relay_server
+            self.vrs.select_device()
+            self.rvc = self.cxn.rvc_server
+            self.rvc.select_device()
+            self.tdk = self.cxn.power_supply_server
+            self.tdk.select_device()
+            
+            nom_prs = yield self.rvc.get_nom_prs()
+            self.nomPressLabel.setText(nom_prs)
             #self.textEdit.setPlainText('Successfully connected graphical interface and data collector to servers')
         except twisted.internet.error.ConnectionRefusedError:
             self.textEdit.setPlainText('Labrad not connected. Start labrad and servers before attempting to connect.')
@@ -489,6 +502,39 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             #yield self.steppers.close_shutter()
             # etc...
 #----------------------------------------------------------------------------------------------#
+    """ The following section specifies how to set a desired pressure and how to 
+    open / close the helium leak valve. """
+    
+    @inlineCallbacks
+    def setNomPressure(self, cntx):
+        try:
+            self.textEdit.clear()
+            prs = str(self.nomPressInput.text())
+            yield self.rvc.set_mode_prs()
+            yield self.rvc.set_nom_prs(prs)
+            new_prs = yield self.rvc.get_nom_prs()
+            self.nomPressLabel.setText(new_prs + ' mbar')
+        except:
+            self.textEdit.setPlainText("Error occured.")
+        self.nomPressInput.clear()  
+    
+    @inlineCallbacks
+    def vent(self,cntx):
+        try:
+            yield self.rvc.set_mode_flo()
+            yield self.rvc.set_nom_flo('100.0')
+            self.nomPressLabel.setText('Valve is open')
+        except:
+            self.textEdit.setPlainText("Error occured.")
+            
+    @inlineCallbacks
+    def stop_vent(self,cntx):
+        try:
+            yield self.rvc.set_mode_flo()
+            yield self.rvc.set_nom_flo('000.0')
+            self.nomPressLabel.setText('Valve is closed')
+        except:
+            self.textEdit.setPlainText("Error occured.")
         
     """ The following section specifies closing actions taken by the GUI when disconnecting.
     Probably not necessary. """

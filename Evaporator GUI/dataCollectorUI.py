@@ -119,7 +119,7 @@ class Ui_Form(object):
         self.rateInput.setGeometry(QtCore.QRect(180, 180, 113, 21))
         self.rateInput.setObjectName(_fromUtf8("rateInput"))
         self.textEdit = QtGui.QTextEdit(self.collectorBackground)
-        self.textEdit.setGeometry(QtCore.QRect(270, 300, 250, 141))
+        self.textEdit.setGeometry(QtCore.QRect(180, 280, 250, 141))
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.thicknessStartButton = QtGui.QPushButton(self.collectorBackground)
         self.thicknessStartButton.setGeometry(QtCore.QRect(590, 140, 135, 21))
