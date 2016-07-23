@@ -249,6 +249,41 @@ class ValveRelayServer(DeviceServer):
         yield dev.write("ir")
         ans = yield dev.read()
         returnValue(ans)
+
+    @setting(418,returns='s')
+    def valve_six_close(self,c):
+        """Starts the scroll pump."""
+        dev=self.selectedDevice(c)
+        yield dev.write("spr")
+        ans = yield dev.read()
+        returnValue(ans)
+
+    @setting(419,returns='s')
+    def valve_six_close(self,c):
+        """Stops the scroll pump."""
+        dev=self.selectedDevice(c)
+        yield dev.write("ssr")
+        ans = yield dev.read()
+        returnValue(ans)
+
+    @setting(420,returns='s')
+    def valve_six_close(self,c):
+        """Starts the turbo pump."""
+        dev=self.selectedDevice(c)
+        yield dev.write("tpr")
+        ans = yield dev.read()
+        returnValue(ans)
+
+    @setting(421,returns='s')
+    def valve_six_close(self,c):
+        """Stops the turbo pump."""
+        dev=self.selectedDevice(c)
+        yield dev.write("tsr")
+        ans = yield dev.read()
+        returnValue(ans)
+
+
+
         
 __server__ = ValveRelayServer()
 if __name__ == '__main__':
