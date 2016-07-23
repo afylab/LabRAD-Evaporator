@@ -54,7 +54,7 @@ class Ui_MainWindow(object):
         self.GraphicalInterface.setObjectName(_fromUtf8("GraphicalInterface"))
         self.graphBackground = QtGui.QFrame(self.GraphicalInterface)
         self.graphBackground.setEnabled(True)
-        self.graphBackground.setGeometry(QtCore.QRect(0, 0, 1294, 674))
+        self.graphBackground.setGeometry(QtCore.QRect(0, 20, 1294, 674))
         self.graphBackground.setStyleSheet(_fromUtf8("#graphBackground{\n"
 "background: black\n"
 "}"))
@@ -71,14 +71,14 @@ class Ui_MainWindow(object):
         self.line.setFrameShape(QtGui.QFrame.VLine)
         self.line.setObjectName(_fromUtf8("line"))
         self.scrollPumpLabel = QtGui.QLabel(self.graphBackground)
-        self.scrollPumpLabel.setGeometry(QtCore.QRect(40, 520, 121, 41))
+        self.scrollPumpLabel.setGeometry(QtCore.QRect(240, 590, 121, 41))
         self.scrollPumpLabel.setStyleSheet(_fromUtf8("#scrollPumpLabel{\n"
 "color: white;\n"
 "font: 16pt \"MS Shell Dlg 2\";\n"
 "}"))
         self.scrollPumpLabel.setObjectName(_fromUtf8("scrollPumpLabel"))
         self.scrollValveButton = QtGui.QPushButton(self.graphBackground)
-        self.scrollValveButton.setGeometry(QtCore.QRect(76, 410, 50, 50))
+        self.scrollValveButton.setGeometry(QtCore.QRect(275, 410, 50, 50))
         self.scrollValveButton.setStyleSheet(_fromUtf8("#scrollValveButton{\n"
 "  border-color: rgb(255, 255, 255);\n"
 "  border-width: 4px;        \n"
@@ -98,7 +98,7 @@ class Ui_MainWindow(object):
         self.line_2.setFrameShape(QtGui.QFrame.VLine)
         self.line_2.setObjectName(_fromUtf8("line_2"))
         self.scrollValveStatus = QtGui.QLabel(self.graphBackground)
-        self.scrollValveStatus.setGeometry(QtCore.QRect(20, 406, 50, 50))
+        self.scrollValveStatus.setGeometry(QtCore.QRect(330, 406, 50, 50))
         self.scrollValveStatus.setStyleSheet(_fromUtf8("#scrollValveStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
 "}"))
         self.scrollValveStatus.setObjectName(_fromUtf8("scrollValveStatus"))
         self.line_3 = QtGui.QFrame(self.graphBackground)
-        self.line_3.setGeometry(QtCore.QRect(290, 460, 20, 50))
+        self.line_3.setGeometry(QtCore.QRect(290, 460, 20, 100))
         self.line_3.setStyleSheet(_fromUtf8("#line_3{\n"
 "color: white;\n"
 "}"))
@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
         self.line_4.setFrameShape(QtGui.QFrame.VLine)
         self.line_4.setObjectName(_fromUtf8("line_4"))
         self.turboValveButton = QtGui.QPushButton(self.graphBackground)
-        self.turboValveButton.setGeometry(QtCore.QRect(276, 410, 50, 50))
+        self.turboValveButton.setGeometry(QtCore.QRect(75, 410, 50, 50))
         self.turboValveButton.setStyleSheet(_fromUtf8("#turboValveButton{\n"
 "  border-color: rgb(255, 255, 255);\n"
 "  border-width: 4px;        \n"
@@ -136,7 +136,7 @@ class Ui_MainWindow(object):
         self.turboValveButton.setText(_fromUtf8(""))
         self.turboValveButton.setObjectName(_fromUtf8("turboValveButton"))
         self.turboValveStatus = QtGui.QLabel(self.graphBackground)
-        self.turboValveStatus.setGeometry(QtCore.QRect(340, 406, 50, 50))
+        self.turboValveStatus.setGeometry(QtCore.QRect(10, 406, 50, 50))
         self.turboValveStatus.setStyleSheet(_fromUtf8("#turboValveStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -145,7 +145,7 @@ class Ui_MainWindow(object):
 "}"))
         self.turboValveStatus.setObjectName(_fromUtf8("turboValveStatus"))
         self.turboPumpLabel = QtGui.QLabel(self.graphBackground)
-        self.turboPumpLabel.setGeometry(QtCore.QRect(240, 520, 121, 41))
+        self.turboPumpLabel.setGeometry(QtCore.QRect(40, 290, 121, 41))
         self.turboPumpLabel.setStyleSheet(_fromUtf8("#turboPumpLabel{\n"
 "color: white;\n"
 "font: 16pt \"MS Shell Dlg 2\";\n"
@@ -207,7 +207,7 @@ class Ui_MainWindow(object):
         self.line_7.setFrameShape(QtGui.QFrame.HLine)
         self.line_7.setObjectName(_fromUtf8("line_7"))
         self.line_8 = QtGui.QFrame(self.graphBackground)
-        self.line_8.setGeometry(QtCore.QRect(540, 460, 20, 50))
+        self.line_8.setGeometry(QtCore.QRect(540, 460, 20, 100))
         self.line_8.setStyleSheet(_fromUtf8("#line_8{\n"
 "color: white;\n"
 "}"))
@@ -245,7 +245,7 @@ class Ui_MainWindow(object):
 "}"))
         self.boatShutterStatus.setObjectName(_fromUtf8("boatShutterStatus"))
         self.powerSupplyLabel = QtGui.QLabel(self.graphBackground)
-        self.powerSupplyLabel.setGeometry(QtCore.QRect(490, 520, 140, 41))
+        self.powerSupplyLabel.setGeometry(QtCore.QRect(490, 590, 140, 41))
         self.powerSupplyLabel.setStyleSheet(_fromUtf8("#powerSupplyLabel{\n"
 "color: white;\n"
 "font: 16pt \"MS Shell Dlg 2\";\n"
@@ -270,7 +270,7 @@ class Ui_MainWindow(object):
 "}"))
         self.pressureLabel.setObjectName(_fromUtf8("pressureLabel"))
         self.powerSupplyButton = QtGui.QPushButton(self.graphBackground)
-        self.powerSupplyButton.setGeometry(QtCore.QRect(521, 560, 55, 55))
+        self.powerSupplyButton.setGeometry(QtCore.QRect(523, 530, 55, 55))
         self.powerSupplyButton.setStyleSheet(_fromUtf8("#powerSupplyButton{\n"
 "\n"
 "image:url(:/OnOff/Off2.png);\n"
@@ -280,7 +280,7 @@ class Ui_MainWindow(object):
         self.powerSupplyButton.setText(_fromUtf8(""))
         self.powerSupplyButton.setObjectName(_fromUtf8("powerSupplyButton"))
         self.turboPumpButton = QtGui.QPushButton(self.graphBackground)
-        self.turboPumpButton.setGeometry(QtCore.QRect(271, 560, 56, 56))
+        self.turboPumpButton.setGeometry(QtCore.QRect(73, 333, 56, 56))
         self.turboPumpButton.setStyleSheet(_fromUtf8("#turboPumpButton{\n"
 "image:url(:/OnOff/Off2.png);\n"
 "background: black;\n"
@@ -288,7 +288,7 @@ class Ui_MainWindow(object):
         self.turboPumpButton.setText(_fromUtf8(""))
         self.turboPumpButton.setObjectName(_fromUtf8("turboPumpButton"))
         self.scrollPumpButton = QtGui.QPushButton(self.graphBackground)
-        self.scrollPumpButton.setGeometry(QtCore.QRect(71, 560, 55, 55))
+        self.scrollPumpButton.setGeometry(QtCore.QRect(273, 530, 55, 55))
         self.scrollPumpButton.setStyleSheet(_fromUtf8("#scrollPumpButton{\n"
 "image:url(:/OnOff/Off2.png);\n"
 "background: black;\n"
@@ -464,6 +464,15 @@ class Ui_MainWindow(object):
         self.stopVentButton = QtGui.QPushButton(self.graphBackground)
         self.stopVentButton.setGeometry(QtCore.QRect(1020, 330, 81, 21))
         self.stopVentButton.setObjectName(_fromUtf8("stopVentButton"))
+        self.line_16 = QtGui.QFrame(self.graphBackground)
+        self.line_16.setGeometry(QtCore.QRect(100, 507, 200, 3))
+        self.line_16.setStyleSheet(_fromUtf8("#line_16{\n"
+"color: white\n"
+"}"))
+        self.line_16.setFrameShadow(QtGui.QFrame.Plain)
+        self.line_16.setLineWidth(4)
+        self.line_16.setFrameShape(QtGui.QFrame.HLine)
+        self.line_16.setObjectName(_fromUtf8("line_16"))
         self.tabWidget.addTab(self.GraphicalInterface, _fromUtf8(""))
         self.Plotting = QtGui.QWidget()
         self.Plotting.setStyleSheet(_fromUtf8(""))

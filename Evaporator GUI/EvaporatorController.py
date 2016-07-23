@@ -124,20 +124,20 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.cxn_dep = yield connectAsync(name = 'Evaporator GUI')
             self.dv_dep = self.cxn_dep.data_vault
             yield self.dv_dep.signal__new_dataset(self.ID_NEWSET)
-            yield self.dv_dep.addListener(listener=self.add_dataset_prs, source=None, ID=self.ID_NEWSET)
+            yield self.dv_dep.addListener(listener=self.add_dataset_dep, source=None, ID=self.ID_NEWSET)
             yield self.dv_dep.signal__data_available(self.ID_NEWDATA)
-            yield self.dv_dep.addListener(listener=self.update_prs, source=None, ID=self.ID_NEWDATA)
+            yield self.dv_dep.addListener(listener=self.update_dep, source=None, ID=self.ID_NEWDATA)
             
             #Create a cxn_thk for monitoring thickness
             self.cxn_thk = yield connectAsync(name = 'Evaporator GUI')
             self.dv_thk = self.cxn_thk.data_vault
             
             yield self.dv_thk.signal__new_dataset(self.ID_NEWSET)
-            yield self.dv_thk.addListener(listener=self.add_dataset_prs, source=None, ID=self.ID_NEWSET)
+            yield self.dv_thk.addListener(listener=self.add_dataset_thk, source=None, ID=self.ID_NEWSET)
             yield self.dv_thk.signal__data_available(self.ID_NEWDATA)
-            yield self.dv_thk.addListener(listener=self.update_prs, source=None, ID=self.ID_NEWDATA)
+            yield self.dv_thk.addListener(listener=self.update_thk, source=None, ID=self.ID_NEWDATA)
             
-            Have the data collector connect
+            #Have the data collector connect
             self.dataCollectorWidget.connect()
             
             #Have the dvFileSelect connect with a connection that won't mess with any other connections, so 
@@ -151,12 +151,16 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.vrs.select_device()
             self.rvc = self.cxn.rvc_server
             self.rvc.select_device()
+            
             self.tdk = self.cxn.power_supply_server
             self.tdk.select_device()
+            self.tdk.adr('6')
+            self.tdk.rmt_set('REM')
             
             nom_prs = yield self.rvc.get_nom_prs()
             self.nomPressLabel.setText(nom_prs)
-            #self.textEdit.setPlainText('Successfully connected graphical interface and data collector to servers')
+            
+            self.textEdit.setPlainText('Successfully connected graphical interface and data collector to servers')
         except twisted.internet.error.ConnectionRefusedError:
             self.textEdit.setPlainText('Labrad not connected. Start labrad and servers before attempting to connect.')
         except exceptions.AttributeError as err:
@@ -178,6 +182,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         yield self.dv_gph.cd(self.directory_path)
         yield self.dv_gph2.cd(self.directory_path)
         yield self.dv_prs.cd(self.directory_path)
+        yield self.dv_thk.cd(self.directory_path)
+        yield self.dv_dep.cd(self.directory_path)
         self.dataCollectorWidget.setDirectory(self.directory_path)
         
         self.textEdit.setPlainText('Successfully natigated to vault\\' + self.directory_path[1] + "\\"
@@ -277,6 +283,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         PID if evaporating."""
         
     def add_dataset_prs(self, cntx, signal):
+        print 'Blib' 
         if signal[8:] == 'Pressure vs. Time':
             self.dv_prs.open(signal)
             print 'Pressure is now being monitored'
@@ -305,6 +312,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.tdk.volt_set(voltage)
         
     def add_dataset_thk(self, cntx, signal):
+        print signal
+        print 'Signal detected'
         if signal[8:] == 'Thickness vs. Time':
             self.dv_thk.open(signal)
             print 'Thickness is now being monitored'

@@ -60,6 +60,9 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
             self.dv_prs = self.cxn_prs.data_vault
             self.rvc = self.cxn_prs.rvc_server
             yield self.rvc.select_device()
+            
+            self.ftm = self.cxn_prs.ftm_server
+            yield self.ftm.select_device()
         
             self.cxn_thk = yield connectAsync(name = 'Evaporator GUI: Thickness')
             self.dv_thk = self.cxn_thk.data_vault
@@ -244,11 +247,15 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
         
     @inlineCallbacks    
     def update_thk(self):
-        yield self.dv_thk.add(time.clock() - self.zero_thk, np.random.rand())
+        thk = yield self.ftm.get_sensor_thickness(1)
+        thk = float(thk)
+        yield self.dv_thk.add(time.clock() - self.zero_thk, thk)
         
     @inlineCallbacks
     def update_rate(self):
-        yield self.dv_rate.add(time.clock() - self.zero_rate, time.clock() - self.zero_rate + np.random.rand())
+        rate = yield self.ftm.get_sensor_rate(1)
+        rate = float(rate)
+        yield self.dv_rate.add(time.clock() - self.zero_rate, rate)
         
     @inlineCallbacks
     def update_volt(self):

@@ -11,6 +11,7 @@ class PID:
         self.Integrator = 0
         self.Integrator_max=Integrator_max
         self.Integrator_min=Integrator_min
+        self.v_max = 0.5
 
         self.set_point=0.0
         self.error=0.0
@@ -51,8 +52,8 @@ class PID:
         if PID <0:
             PID = 0
         #Limit to maximum output voltage. 
-        elif PID > 10:
-            PID = 10
+        elif PID > self.v_max:
+            PID = self.v_max
         
         # Set current error and time to now be previous error and time. 
         self.previous_error = self.error
@@ -84,6 +85,9 @@ class PID:
         
     def setKd(self,D):
         self.Kd=D
+        
+    def setVMax(self,V):
+        self.v_max=V
 
     def getPoint(self):
         return self.set_point
