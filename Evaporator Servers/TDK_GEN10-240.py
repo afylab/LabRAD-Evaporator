@@ -218,8 +218,8 @@ class PowerSupplyServer(DeviceServer):
         ans = yield dev.read()
         returnValue(ans)
 
-    @setting(313,adr = 's', returns='s')
-    def adr(self,adr,c):
+    @setting(313, adr='s', returns='s')
+    def adr(self,c,adr):
         """Address to access the power supply."""
         dev=self.selectedDevice(c)
         yield dev.write("ADR " + adr + "\r\n")
@@ -235,7 +235,7 @@ class PowerSupplyServer(DeviceServer):
         returnValue(ans)
 
     @setting(315,rmt = 's', returns='s')
-    def rmt_set(self,rmt,c):
+    def rmt_set(self,c,rmt):
         """Sets the power supply to local or remote mode. Send LOC for local mode, REM for remote, and LLO for local lockout."""
         dev=self.selectedDevice(c)
         yield dev.write("RMT " +rmt+ "\r\n")
@@ -251,7 +251,7 @@ class PowerSupplyServer(DeviceServer):
         returnValue(ans)
 
     @setting(317,fld = 's',returns='s')
-    def fld_set(self,fld,c):
+    def fld_set(self,c,fld):
         """Turns foldback protection on or off. Send 1 for on or 0 for off."""
         dev=self.selectedDevice(c)
         yield dev.write("FLD " +fld+ "\r\n")
@@ -267,7 +267,7 @@ class PowerSupplyServer(DeviceServer):
         returnValue(ans)
 
     @setting(319,ovp = 's',returns='s')
-    def ovp_set(self,ovp,c):
+    def ovp_set(self,c,ovp):
         """Sets the over-voltage protection level."""
         dev=self.selectedDevice(c)
         yield dev.write("OVP " + ovp +  "\r\n")
@@ -283,7 +283,7 @@ class PowerSupplyServer(DeviceServer):
         returnValue(ans)
 
     @setting(321,fbd = 's',returns='s')
-    def fbd_set(self,fbd,c):
+    def fbd_set(self,c,fbd):
         """Adds the inputted number of seconds to the fold back delay."""
         dev=self.selectedDevice(c)
         yield dev.write("FBD "+fbd + "\r\n")
@@ -307,7 +307,7 @@ class PowerSupplyServer(DeviceServer):
         returnValue(ans)
 
     @setting(324,uvl = 's',returns='s')
-    def uvl_set(self,uvl,c):
+    def uvl_set(self,c,uvl):
         """Sets the under voltage limit."""
         dev=self.selectedDevice(c)
         yield dev.write("UVL "+ uvl + "\r\n")
@@ -323,7 +323,7 @@ class PowerSupplyServer(DeviceServer):
         returnValue(ans)
 
     @setting(326,ast = 's',returns='s')
-    def ast_set(self,ast,c):
+    def ast_set(self,c,ast):
         """Turns auto-restart mode on or off. Input 1 to turn on or 0 to turn off."""
         dev=self.selectedDevice(c)
         yield dev.write("AST "+ast+ "\r\n")
