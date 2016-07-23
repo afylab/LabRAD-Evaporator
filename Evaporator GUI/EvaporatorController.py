@@ -75,6 +75,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.intMaxButton.clicked.connect(self.setIntMax)
         self.intMinButton.clicked.connect(self.setIntMin)
         self.derivButton.clicked.connect(self.setDeriv)
+        self.vMaxButton.clicked.connect(self.setVMax)
         
         self.evapStartButton.clicked.connect(self.toggleEvap)
         
@@ -495,6 +496,16 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         except:
             self.textEdit2.setPlainText("Man, that aint a number")
         self.derivInput.clear()
+        
+    def setVMax(self):
+        try:
+            self.textEdit2.clear()
+            v_max = float(self.vMaxInput.text())
+            self.PID.setVMax(v_max)
+            self.vMaxStatus.setText(self.vMaxInput.text())
+        except:
+            self.textEdit2.setPlainText("Man, that aint a number")
+        self.vMaxInput.clear()
     
     #@inlineCallbacks
     def toggleEvap(self):

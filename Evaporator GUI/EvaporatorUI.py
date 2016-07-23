@@ -54,7 +54,7 @@ class Ui_MainWindow(object):
         self.GraphicalInterface.setObjectName(_fromUtf8("GraphicalInterface"))
         self.graphBackground = QtGui.QFrame(self.GraphicalInterface)
         self.graphBackground.setEnabled(True)
-        self.graphBackground.setGeometry(QtCore.QRect(0, 20, 1294, 674))
+        self.graphBackground.setGeometry(QtCore.QRect(0, 0, 1294, 674))
         self.graphBackground.setStyleSheet(_fromUtf8("#graphBackground{\n"
 "background: black\n"
 "}"))
@@ -757,6 +757,30 @@ class Ui_MainWindow(object):
 "color: rgb(212, 212, 212)\n"
 "}"))
         self.evapStatus.setObjectName(_fromUtf8("evapStatus"))
+        self.vMaxButton = QtGui.QPushButton(self.evapBackground)
+        self.vMaxButton.setGeometry(QtCore.QRect(360, 590, 101, 21))
+        self.vMaxButton.setObjectName(_fromUtf8("vMaxButton"))
+        self.vMaxLabel = QtGui.QLabel(self.evapBackground)
+        self.vMaxLabel.setGeometry(QtCore.QRect(40, 590, 150, 21))
+        self.vMaxLabel.setStyleSheet(_fromUtf8("#vMaxLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.vMaxLabel.setObjectName(_fromUtf8("vMaxLabel"))
+        self.vMaxInput = QtGui.QLineEdit(self.evapBackground)
+        self.vMaxInput.setGeometry(QtCore.QRect(220, 590, 113, 21))
+        self.vMaxInput.setObjectName(_fromUtf8("vMaxInput"))
+        self.vMaxStatus = QtGui.QLabel(self.evapBackground)
+        self.vMaxStatus.setGeometry(QtCore.QRect(486, 590, 71, 21))
+        self.vMaxStatus.setStyleSheet(_fromUtf8("#vMaxStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignCenter\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.vMaxStatus.setObjectName(_fromUtf8("vMaxStatus"))
         self.line_31 = QtGui.QFrame(self.EvapControl)
         self.line_31.setGeometry(QtCore.QRect(80, 359, 500, 3))
         self.line_31.setStyleSheet(_fromUtf8("#line_31{\n"
@@ -767,7 +791,7 @@ class Ui_MainWindow(object):
         self.line_31.setFrameShape(QtGui.QFrame.HLine)
         self.line_31.setObjectName(_fromUtf8("line_31"))
         self.line_32 = QtGui.QFrame(self.EvapControl)
-        self.line_32.setGeometry(QtCore.QRect(80, 360, 1, 242))
+        self.line_32.setGeometry(QtCore.QRect(80, 360, 1, 282))
         self.line_32.setStyleSheet(_fromUtf8("#line_32{\n"
 "color: white;\n"
 "}"))
@@ -776,7 +800,7 @@ class Ui_MainWindow(object):
         self.line_32.setFrameShape(QtGui.QFrame.VLine)
         self.line_32.setObjectName(_fromUtf8("line_32"))
         self.line_33 = QtGui.QFrame(self.EvapControl)
-        self.line_33.setGeometry(QtCore.QRect(580, 360, 1, 242))
+        self.line_33.setGeometry(QtCore.QRect(580, 360, 1, 282))
         self.line_33.setStyleSheet(_fromUtf8("#line_33{\n"
 "color: white;\n"
 "}"))
@@ -785,7 +809,7 @@ class Ui_MainWindow(object):
         self.line_33.setFrameShape(QtGui.QFrame.VLine)
         self.line_33.setObjectName(_fromUtf8("line_33"))
         self.line_34 = QtGui.QFrame(self.EvapControl)
-        self.line_34.setGeometry(QtCore.QRect(80, 600, 500, 3))
+        self.line_34.setGeometry(QtCore.QRect(80, 640, 500, 3))
         self.line_34.setStyleSheet(_fromUtf8("#line_34{\n"
 "color: white\n"
 "}"))
@@ -854,6 +878,9 @@ class Ui_MainWindow(object):
         self.deposRate.setText(_translate("MainWindow", "Desired Deposition Rate:", None))
         self.note.setText(_translate("MainWindow", "Note: the deposition rate sampling rate (from data collector) determines the speed at which the PID updates the voltage. ", None))
         self.evapStatus.setText(_translate("MainWindow", "Standby", None))
+        self.vMaxButton.setText(_translate("MainWindow", "Set V Max", None))
+        self.vMaxLabel.setText(_translate("MainWindow", "Max Voltage:", None))
+        self.vMaxStatus.setText(_translate("MainWindow", "0.5", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.EvapControl), _translate("MainWindow", "Evaporation Controls", None))
 
 from dataCollectorWidget import dataCollectorWidget

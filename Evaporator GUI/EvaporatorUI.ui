@@ -85,7 +85,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>20</y>
+        <y>0</y>
         <width>1294</width>
         <height>674</height>
        </rect>
@@ -1858,6 +1858,71 @@ color: rgb(212, 212, 212)
         <string>Standby</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="vMaxButton">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>590</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set V Max</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="vMaxLabel">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>590</y>
+         <width>150</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#vMaxLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Max Voltage:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="vMaxInput">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>590</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="vMaxStatus">
+       <property name="geometry">
+        <rect>
+         <x>486</x>
+         <y>590</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#vMaxStatus{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignCenter';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>0.5</string>
+       </property>
+      </widget>
      </widget>
      <widget class="Line" name="line_31">
       <property name="geometry">
@@ -1889,7 +1954,7 @@ color: white
         <x>80</x>
         <y>360</y>
         <width>1</width>
-        <height>242</height>
+        <height>282</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1913,7 +1978,7 @@ color: white;
         <x>580</x>
         <y>360</y>
         <width>1</width>
-        <height>242</height>
+        <height>282</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1935,7 +2000,7 @@ color: white;
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>600</y>
+        <y>640</y>
         <width>500</width>
         <height>3</height>
        </rect>
