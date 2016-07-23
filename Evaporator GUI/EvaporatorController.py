@@ -1,9 +1,12 @@
 import pyqtgraph as pg
 from PyQt4 import QtGui, QtCore
 from twisted.internet.defer import inlineCallbacks
+import twisted
 import numpy as np
 import EvaporatorUI
 from PID import PID
+import exceptions
+import labrad.errors
 
 class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     """
@@ -130,19 +133,28 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.dv_thk.addListener(listener=self.update_prs, source=None, ID=self.ID_NEWDATA)
             
             #Have the data collector connect
-            self.dataCollectorWidget.connect()
+            #self.dataCollectorWidget.connect()
             
             #Have the dvFileSelect connect with a connection that won't mess with any other connections, so 
             #you can browse files without causing trouble. 
             self.cxn = yield connectAsync(name = 'Evaporator GUI')
             self.dvFileSelect.setConnection(self.cxn)
             self.vrs = self.cxn.valve_relay_server
-            yield self.vrs.select_device()
+
+            self.vrs.select_device()
             
-            self.textEdit.setPlainText('Successfully connected graphical interface and data collector to servers')
-        except:
-            self.textEdit.setPlainText('Could not detect valve/relay box.')
-           
+            #self.textEdit.setPlainText('Successfully connected graphical interface and data collector to servers')
+        except twisted.internet.error.ConnectionRefusedError:
+            self.textEdit.setPlainText('Labrad not connected. Start labrad and servers before attempting to connect.')
+        except exceptions.AttributeError as err:
+            err_str = str(err)
+            self.textEdit.setPlainText('Server not started. Labrad' + err_str[13:])
+        #except labrad.errors.NoDevicesAvailableError:
+        #    self.textEdit.setPlainText('No device available')
+        except: 
+            self.textEdit.setPlainText('Unknown error (or no device available error) occured during connection to servers. Please investigate.')
+            #raise
+            
     @inlineCallbacks
     def promptDirectory(self, cntx): 
         #Eventually replace this with running Brunel's dv file select application. 

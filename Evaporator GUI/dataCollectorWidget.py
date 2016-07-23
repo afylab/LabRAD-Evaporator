@@ -59,7 +59,7 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
             self.cxn_prs = yield connectAsync(name = 'Evaporator GUI: Pressure')
             self.dv_prs = self.cxn_prs.data_vault
             self.rvc = self.cxn_prs.rvc_server
-            self.rvc.select_device()
+            yield self.rvc.select_device()
         
             self.cxn_thk = yield connectAsync(name = 'Evaporator GUI: Thickness')
             self.dv_thk = self.cxn_thk.data_vault
@@ -71,6 +71,7 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
             self.dv_volt = self.cxn_volt.data_vault
         except:
             print 'Didn\'t work!'
+            raise
             
     @inlineCallbacks
     def setDirectory(self, directory_path):
