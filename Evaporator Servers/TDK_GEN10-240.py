@@ -149,9 +149,11 @@ class PowerSupplyServer(DeviceServer):
     def read(self,c):
         """This piece of equipment doesn't use carriage returns, so the serial port cannot recognize
         the end of a message. The timeout parameter is set to be 0 and this function
-        loops until the message from the Power Supply has completely arrived."""
+        loops until the message from the Power Supply has completely arrived or two seconds
+        have elapsed."""
         dev=self.selectedDevice(c)
         ans = ''
+        tzero = time.clock()
         while True:
             temp_ans = yield dev.read()
             ans = ans + temp_ans
@@ -159,6 +161,10 @@ class PowerSupplyServer(DeviceServer):
             if len(ans)!=0 and ans[-1] == '\x00':
                 print 'Returning ans'
                 returnValue(ans[:-1])
+                break
+            elif (time.clock() - tzero) > 2:
+                print 'Connection timed out'
+                returnValue('Timeout')
                 break
     
     @setting(304,out = 's',returns='s')

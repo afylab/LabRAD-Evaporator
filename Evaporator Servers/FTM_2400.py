@@ -235,9 +235,11 @@ class FTMServer(DeviceServer):
     def read(self,c):
         """This piece of equipment doesn't use carriage returns, so the serial port cannot recognize
         the end of a message. The timeout parameter is set to be very short (~1 ms) and this function
-        loops until the message from the FTM monitor has completely arrived."""
+        loops until the message from the FTM monitor has completely arrived or two seconds 
+        have elapsed."""
         dev=self.selectedDevice(c)
         ans = ''
+        tzero = time.clock()
         while True:
             temp_ans = yield dev.read()
             ans = ans + temp_ans
@@ -246,9 +248,10 @@ class FTMServer(DeviceServer):
                 print 'Returning ans'
                 returnValue(ans[3:-2])
                 break
-
-                # !0AMON Ver 4.13Uw
-        
+            elif (time.clock() - tzero) > 2:
+                print 'Connection timed out'
+                returnValue('Timeout')
+                break
                         
     @setting(200,returns='s')
     def get_ver(self,c):
