@@ -1,8 +1,10 @@
+import numpy
+
 class PID:
     """
     Discrete PID control
     """
-    def __init__(self, P=0, I=0.0, D=0, Integrator_max=500, Integrator_min=-500):
+    def __init__(self, P=0.0, I=0.0, D=0.0, Integrator_max=500, Integrator_min=-500):
         self.Kp=P
         self.Ki=I
         self.Kd=D
@@ -21,45 +23,48 @@ class PID:
         Calculate PID output value for given reference input and feedback. Input current_value
         should be a tuple of the form (time, deposition rate)
         """
+
         #Set current error and time. 
-        self.error = self.set_point - current_value[0,1]
-        self.time = current_value[0,0]
-        
+        self.error = self.set_point - float(current_value[0,1])
+        self.time = float(current_value[0,0])
+
         # Proportional contribution is Kp * error
         self.P_value = self.Kp * self.error 
-        
+
         # Derivative contribution is Kd * (current error - previous error) / time step (approximate
         # instantaneous derivative). Cannot do this until the second data point. 
         if self.previous_time != None:
             self.D_value = self.Kd * (self.error - self.previous_error) / (self.time - self.previous_time)
+            
+            self.Integrator = self.Integrator + self.error*(self.time - self.previous_time)
         else:
             self.D_value = 0
+            self.Integrator = 0
         # Set the integrator to be the currently integrated value plus the current error
         # times the step size (approximate integration)
-        self.Integrator = self.Integrator + self.error*(self.time - self.previous_time)
-
+        
         if self.Integrator > self.Integrator_max:
             self.Integrator = self.Integrator_max
         elif self.Integrator < self.Integrator_min:
             self.Integrator = self.Integrator_min
-        
+
         # Set the integral contribution to be the integrated value times Ki
         self.I_value = self.Integrator * self.Ki
 
-        PID = self.P_value + self.I_value + self.D_value
-        
+        val = self.P_value + self.I_value + self.D_value
+
         # Always return a positive voltage or 0. 
-        if PID <0:
-            PID = 0
+        if val <0:
+            val = 0
         #Limit to maximum output voltage. 
-        elif PID > self.v_max:
-            PID = self.v_max
-        
+        elif val > self.v_max:
+            val = self.v_max
+
         # Set current error and time to now be previous error and time. 
         self.previous_error = self.error
         self.previous_time = self.time
         
-        return PID
+        return val
 
     def setPoint(self,set_point):
         """
