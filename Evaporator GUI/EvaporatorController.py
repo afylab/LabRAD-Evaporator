@@ -227,7 +227,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         else:
             self.plot.plot(data[-self.num_points:,0],data[-self.num_points:,1])   
         #Could be re-written in a more memory efficient way if it ends up mattering. 
-        # Can also look into pyqt graph 
         
     @inlineCallbacks
     def update_gph2(self, cntx, signal):
@@ -243,7 +242,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         else:
             self.plot2.plot(data[-self.num_points:,0],data[-self.num_points:,1])   
         #Could be re-written in a more memory efficient way if it ends up mattering. 
-        # Can also look into pyqt graph 
         
     def set_num_points(self,num_points):
         #AT SOME POINT UPDATE THIS TO BE NOT NUMBER OF POINTS, BUT NUMBER OF SECONDS
@@ -294,7 +292,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         #Get new data point
         data = yield self.dv_prs.get()
         data_string = str(data[0,1])
-        self.pressureStatus.setText(data_string[0:6])
+        self.pressureStatus.setText(data_string[0:8])
         
     def add_dataset_dep(self, cntx, signal):
         if signal[8:] == 'Deposition Rate vs. Time':
@@ -306,10 +304,11 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         #Get new data point
         data = yield self.dv_dep.get()
         data_string = str(data[0,1])
-        self.rateStatus.setText(data_string[0:6])
+        self.rateStatus.setText(data_string[0:8])
         
         if self.evaporating:
-            voltage  = self.PID.update(data)
+            voltage = str(self.PID.update(data))
+            print 'Voltage was set to: ' + voltage
             yield self.tdk.volt_set(voltage)
         
     def add_dataset_thk(self, cntx, signal):
@@ -366,15 +365,20 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.turboPumpButton.setStyleSheet("image:url(:/OnOff/Off2.png);"
             + "background: black;")  
         
-    def togglePowerSupply(self):
+    @inlineCallbacks
+    def togglePowerSupply(self, cntx):
         if self.powerSupplyState == 'Off':
             self.powerSupplyState = 'On'
             self.powerSupplyButton.setStyleSheet("image:url(:/OnOff/On3.png);"
             + "background: black;")
+            yield self.tdk.volt_set('0')
+            yield self.tdk.switch('on')
         elif self.powerSupplyState == 'On':
             self.powerSupplyState = 'Off'
             self.powerSupplyButton.setStyleSheet("image:url(:/OnOff/Off2.png);"
             + "background: black;")
+            yield self.tdk.volt_set('0')
+            yield self.tdk.switch('off')
     
     @inlineCallbacks
     def toggleScrollValve(self, ctnx):
@@ -507,8 +511,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.textEdit2.setPlainText("Man, that aint a number")
         self.vMaxInput.clear()
     
-    #@inlineCallbacks
-    def toggleEvap(self):
+    @inlineCallbacks
+    def toggleEvap(self, cntx):
         if self.evapStartButton.text() == 'Start Evaporating':
             self.evapStartButton.setText("Stop Evaporating")
             self.evaporating = True
@@ -518,7 +522,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.evaporating = False
             self.evapStatus.setText("Standby")
             #Add functions to stop all evaporating from happening. 
-            #yield self.tdk.volt_set(0)
+            yield self.tdk.volt_set('0')
+            self.PID.setIntegrator(0)
             #yield self.steppers.close_shutter()
             # etc...
 #----------------------------------------------------------------------------------------------#
@@ -555,18 +560,15 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.nomPressLabel.setText('Valve is closed')
         except:
             self.textEdit.setPlainText("Error occured.")
-        
-    """ The following section specifies closing actions taken by the GUI when disconnecting.
-    Probably not necessary. """
-    '''
+      
+#----------------------------------------------------------------------------------------------#      
+    """ The following section specifies closing actions taken by the GUI when disconnecting."""
+
     def closeEvent(self, e):
+        self.dataCollectorWidget.stop()
         self.reactor.stop()
-        try:
-            self.DataCollector.stop()
-        except:
-            print 'DataCollector not initialized'
-        print "stop"
-    '''
+        print 'Reactor shut down and stopped collecting data.'
+
 #----------------------------------------------------------------------------------------------#
             
 """ The following runs the program"""
