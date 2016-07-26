@@ -52,7 +52,7 @@ class PID:
         # Set the integral contribution to be the integrated value times Ki
         self.I_value = self.Integrator * self.Ki
 
-        val = self.P_value + self.I_value + self.D_value
+        val = self.P_value + self.I_value + self.D_value + self.v_off
 
         # Always return a positive voltage or 0. 
         if val <0:
