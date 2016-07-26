@@ -63,6 +63,9 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
             
             self.ftm = self.cxn_prs.ftm_server
             yield self.ftm.select_device()
+            
+            self.tdk = self.cxn_prs.power_supply_server
+            yield self.tdk.select_device()
         
             self.cxn_thk = yield connectAsync(name = 'Evaporator GUI: Thickness')
             self.dv_thk = self.cxn_thk.data_vault

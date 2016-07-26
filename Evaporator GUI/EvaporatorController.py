@@ -86,6 +86,11 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.ventButton.clicked.connect(self.vent)
         self.stopVentButton.clicked.connect(self.stop_vent)
         
+        self.shutterCWButton.clicked.connect(self.rotateShutterCW)
+        self.shutterCCWButton.clicked.connect(self.rotateShutterCCW)
+        self.cryoCWButton.clicked.connect(self.rotateCryoCW)
+        self.cryoCCWButton.clicked.connect(self.rotateCryoCCW)
+        
     @inlineCallbacks
     def connect(self, cntx):
         """ Each connection can only monitor one dataset at a time. This function creates 
@@ -150,12 +155,13 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.dvFileSelect.setConnection(self.cxn)
             
             #Connectors to the valve/relay controller, the rvc pressure controller, 
-            #and the power supply controller. 
+            #the stepper controller and the power supply controller. 
             self.vrs = self.cxn.valve_relay_server
             self.vrs.select_device()
             self.rvc = self.cxn.rvc_server
             self.rvc.select_device()
-            
+            self.ss = self.cxn.stepper_server
+            self.ss.select_device()
             self.tdk = self.cxn.power_supply_server
             self.tdk.select_device()
             self.tdk.adr('6')
@@ -599,7 +605,46 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.nomPressLabel.setText('Valve is closed')
         except:
             self.textEdit.setPlainText("Error occured.")
+            
+    @inlineCallbacks
+    def rotateCryoCW(self,cntx):
+        try:
+            self.textEdit.clear()
+            angle = str(self.cryoInput.text())
+            yield self.ss.rot('A',angle,'C')
+        except:
+            self.textEdit.setPlainText("Error occured.")
+        self.cryoInput.clear()
+            
+    @inlineCallbacks
+    def rotateCryoCCW(self,cntx):
+        try:
+            self.textEdit.clear()
+            angle = str(self.cryoInput.text())
+            yield self.ss.rot('A',angle,'A')
+        except:
+            self.textEdit.setPlainText("Error occured.")
+        self.cryoInput.clear()
       
+    @inlineCallbacks
+    def rotateShutterCW(self,cntx):
+        try:
+            self.textEdit.clear()
+            angle = str(self.shutterInput.text())
+            yield self.ss.rot('B',angle,'C')
+        except:
+            self.textEdit.setPlainText("Error occured.")
+        self.shutterInput.clear()
+        
+    @inlineCallbacks
+    def rotateShutterCCW(self,cntx):
+        try:
+            self.textEdit.clear()
+            angle = str(self.shutterInput.text())
+            yield self.ss.rot('B',angle,'A')
+        except:
+            self.textEdit.setPlainText("Error occured.")
+        self.shutterInput.clear()
 #----------------------------------------------------------------------------------------------#      
     """ The following section specifies closing actions taken by the GUI when disconnecting."""
 

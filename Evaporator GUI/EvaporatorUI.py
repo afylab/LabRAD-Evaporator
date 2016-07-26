@@ -607,7 +607,7 @@ class Ui_MainWindow(object):
         self.setPointButton.setGeometry(QtCore.QRect(360, 90, 101, 21))
         self.setPointButton.setObjectName(_fromUtf8("setPointButton"))
         self.evapStartButton = QtGui.QPushButton(self.evapBackground)
-        self.evapStartButton.setGeometry(QtCore.QRect(960, 90, 100, 21))
+        self.evapStartButton.setGeometry(QtCore.QRect(1030, 90, 100, 21))
         self.evapStartButton.setObjectName(_fromUtf8("evapStartButton"))
         self.setPointLabel = QtGui.QLabel(self.evapBackground)
         self.setPointLabel.setGeometry(QtCore.QRect(480, 90, 47, 21))
@@ -757,7 +757,7 @@ class Ui_MainWindow(object):
         self.intMinButton.setGeometry(QtCore.QRect(370, 480, 101, 21))
         self.intMinButton.setObjectName(_fromUtf8("intMinButton"))
         self.textEdit2 = QtGui.QTextEdit(self.evapBackground)
-        self.textEdit2.setGeometry(QtCore.QRect(870, 420, 271, 131))
+        self.textEdit2.setGeometry(QtCore.QRect(660, 90, 271, 131))
         self.textEdit2.setObjectName(_fromUtf8("textEdit2"))
         self.deposRate = QtGui.QLabel(self.evapBackground)
         self.deposRate.setGeometry(QtCore.QRect(9, 90, 201, 21))
@@ -778,7 +778,7 @@ class Ui_MainWindow(object):
 "}"))
         self.note.setObjectName(_fromUtf8("note"))
         self.evapStatus = QtGui.QLabel(self.evapBackground)
-        self.evapStatus.setGeometry(QtCore.QRect(960, 150, 171, 31))
+        self.evapStatus.setGeometry(QtCore.QRect(1020, 150, 171, 31))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.evapStatus.setFont(font)
@@ -834,6 +834,42 @@ class Ui_MainWindow(object):
         self.vOffInput = QtGui.QLineEdit(self.evapBackground)
         self.vOffInput.setGeometry(QtCore.QRect(230, 600, 113, 21))
         self.vOffInput.setObjectName(_fromUtf8("vOffInput"))
+        self.shutterInput = QtGui.QLineEdit(self.evapBackground)
+        self.shutterInput.setGeometry(QtCore.QRect(840, 360, 113, 21))
+        self.shutterInput.setObjectName(_fromUtf8("shutterInput"))
+        self.shutterCWButton = QtGui.QPushButton(self.evapBackground)
+        self.shutterCWButton.setGeometry(QtCore.QRect(980, 360, 101, 21))
+        self.shutterCWButton.setObjectName(_fromUtf8("shutterCWButton"))
+        self.shutterLabel = QtGui.QLabel(self.evapBackground)
+        self.shutterLabel.setGeometry(QtCore.QRect(639, 360, 171, 21))
+        self.shutterLabel.setStyleSheet(_fromUtf8("#shutterLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.shutterLabel.setObjectName(_fromUtf8("shutterLabel"))
+        self.shutterCCWButton = QtGui.QPushButton(self.evapBackground)
+        self.shutterCCWButton.setGeometry(QtCore.QRect(1110, 360, 101, 21))
+        self.shutterCCWButton.setObjectName(_fromUtf8("shutterCCWButton"))
+        self.cryoLabel = QtGui.QLabel(self.evapBackground)
+        self.cryoLabel.setGeometry(QtCore.QRect(639, 440, 171, 21))
+        self.cryoLabel.setStyleSheet(_fromUtf8("#cryoLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.cryoLabel.setObjectName(_fromUtf8("cryoLabel"))
+        self.cryoCCWButton = QtGui.QPushButton(self.evapBackground)
+        self.cryoCCWButton.setGeometry(QtCore.QRect(1110, 440, 101, 21))
+        self.cryoCCWButton.setObjectName(_fromUtf8("cryoCCWButton"))
+        self.cryoInput = QtGui.QLineEdit(self.evapBackground)
+        self.cryoInput.setGeometry(QtCore.QRect(840, 440, 113, 21))
+        self.cryoInput.setObjectName(_fromUtf8("cryoInput"))
+        self.cryoCWButton = QtGui.QPushButton(self.evapBackground)
+        self.cryoCWButton.setGeometry(QtCore.QRect(980, 440, 101, 21))
+        self.cryoCWButton.setObjectName(_fromUtf8("cryoCWButton"))
         self.line_31 = QtGui.QFrame(self.EvapControl)
         self.line_31.setGeometry(QtCore.QRect(80, 340, 500, 3))
         self.line_31.setStyleSheet(_fromUtf8("#line_31{\n"
@@ -945,6 +981,12 @@ class Ui_MainWindow(object):
         self.vOffLabel.setText(_translate("MainWindow", "Offset Voltage:", None))
         self.vOffButton.setText(_translate("MainWindow", "Set V Offset", None))
         self.vOffStatus.setText(_translate("MainWindow", "0", None))
+        self.shutterCWButton.setText(_translate("MainWindow", "Move Shutter CW", None))
+        self.shutterLabel.setText(_translate("MainWindow", "Shutter Blade Control:", None))
+        self.shutterCCWButton.setText(_translate("MainWindow", "Move Shutter CCW", None))
+        self.cryoLabel.setText(_translate("MainWindow", "Cryostat Control:", None))
+        self.cryoCCWButton.setText(_translate("MainWindow", "Move Shutter CCW", None))
+        self.cryoCWButton.setText(_translate("MainWindow", "Move Shutter CW", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.EvapControl), _translate("MainWindow", "Evaporation Controls", None))
 
 from dataCollectorWidget import dataCollectorWidget

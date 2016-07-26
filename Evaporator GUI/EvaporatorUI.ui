@@ -1305,7 +1305,6 @@ color: rgb(212, 212, 212)
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <zorder>comboAxes</zorder>
       </widget>
       <widget class="QComboBox" name="comboAxes">
        <property name="geometry">
@@ -1463,7 +1462,7 @@ background: rgb(0,0, 0)
       <widget class="QPushButton" name="evapStartButton">
        <property name="geometry">
         <rect>
-         <x>960</x>
+         <x>1030</x>
          <y>90</y>
          <width>100</width>
          <height>21</height>
@@ -1866,8 +1865,8 @@ qproperty-wordWrap: true;
       <widget class="QTextEdit" name="textEdit2">
        <property name="geometry">
         <rect>
-         <x>870</x>
-         <y>420</y>
+         <x>660</x>
+         <y>90</y>
          <width>271</width>
          <height>131</height>
         </rect>
@@ -1918,7 +1917,7 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="evapStatus">
        <property name="geometry">
         <rect>
-         <x>960</x>
+         <x>1020</x>
          <y>150</y>
          <width>171</width>
          <height>31</height>
@@ -2066,6 +2065,120 @@ qproperty-wordWrap: true;
          <width>113</width>
          <height>21</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="shutterInput">
+       <property name="geometry">
+        <rect>
+         <x>840</x>
+         <y>360</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="shutterCWButton">
+       <property name="geometry">
+        <rect>
+         <x>980</x>
+         <y>360</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Move Shutter CW</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="shutterLabel">
+       <property name="geometry">
+        <rect>
+         <x>639</x>
+         <y>360</y>
+         <width>171</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#shutterLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Shutter Blade Control:</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="shutterCCWButton">
+       <property name="geometry">
+        <rect>
+         <x>1110</x>
+         <y>360</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Move Shutter CCW</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="cryoLabel">
+       <property name="geometry">
+        <rect>
+         <x>639</x>
+         <y>440</y>
+         <width>171</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#cryoLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Cryostat Control:</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cryoCCWButton">
+       <property name="geometry">
+        <rect>
+         <x>1110</x>
+         <y>440</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Move Shutter CCW</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="cryoInput">
+       <property name="geometry">
+        <rect>
+         <x>840</x>
+         <y>440</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cryoCWButton">
+       <property name="geometry">
+        <rect>
+         <x>980</x>
+         <y>440</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Move Shutter CW</string>
        </property>
       </widget>
      </widget>
