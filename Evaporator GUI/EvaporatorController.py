@@ -55,6 +55,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         #Define what happens when interacting with buttons
         self.comboGraph.activated[str].connect(self.selectData)
         self.comboGraph2.activated[str].connect(self.selectData2)
+        self.comboAxes.activated[str].connect(self.selectAxes)
+        self.comboAxes2.activated[str].connect(self.selectAxes2)
         self.pushChooseDir.clicked.connect(self.promptDirectory)
         self.pushConnect.clicked.connect(self.connect)
         self.sliderGraph.valueChanged[int].connect(self.set_num_points)
@@ -76,6 +78,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.intMinButton.clicked.connect(self.setIntMin)
         self.derivButton.clicked.connect(self.setDeriv)
         self.vMaxButton.clicked.connect(self.setVMax)
+        self.vOffButton.clicked.connect(self.setVOff)
         
         self.evapStartButton.clicked.connect(self.toggleEvap)
         
@@ -276,6 +279,30 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.plot2.setLabel('left', 'Time','s')
             self.plot2.setLabel('bottom', 'Time','s') 
         
+    def selectAxes(self,style):
+        style = str(style)
+        
+        if style == 'x vs. y':
+            self.plot.setLogMode(0,0)
+        elif style == 'x vs. log(y)':
+            self.plot.setLogMode(0,1)
+        elif style == 'log(x) vs. y':
+            self.plot.setLogMode(1,0)
+        elif style == 'log(x) vs. log(y)':
+            self.plot.setLogMode(1,1)
+            
+    def selectAxes2(self,style):
+        style = str(style)
+        
+        if style == 'x vs. y':
+            self.plot2.setLogMode(0,0)
+        elif style == 'x vs. log(y)':
+            self.plot2.setLogMode(0,1)
+        elif style == 'log(x) vs. y':
+            self.plot2.setLogMode(1,0)
+        elif style == 'log(x) vs. log(y)':
+            self.plot2.setLogMode(1,1)
+         
 #----------------------------------------------------------------------------------------------#   
     """ The following section has functions for creating and updating the pressure, deposition
         rate, and thickness on the graphical interface. Also sets voltages based on discrete
@@ -445,6 +472,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         try:
             self.textEdit2.clear()
             point = float(self.setPointInput.text())
+            self.PID.resetPoint()
             self.PID.setPoint(point)
             self.setPointLabel.setText(self.setPointInput.text())
         except:
@@ -510,6 +538,16 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         except:
             self.textEdit2.setPlainText("Man, that aint a number")
         self.vMaxInput.clear()
+        
+    def setVOff(self):
+        try:
+            self.textEdit2.clear()
+            v_off = float(self.vOffInput.text())
+            self.PID.setVOff(v_off)
+            self.vOffStatus.setText(self.vOffInput.text())
+        except:
+            self.textEdit2.setPlainText("Man, that aint a number")
+        self.vOffInput.clear()
     
     @inlineCallbacks
     def toggleEvap(self, cntx):
@@ -524,6 +562,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             #Add functions to stop all evaporating from happening. 
             yield self.tdk.volt_set('0')
             self.PID.setIntegrator(0)
+            self.PID.resetPoint()
             #yield self.steppers.close_shutter()
             # etc...
 #----------------------------------------------------------------------------------------------#

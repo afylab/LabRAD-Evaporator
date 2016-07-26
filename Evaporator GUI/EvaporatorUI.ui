@@ -1224,7 +1224,7 @@ color: rgb(212, 212, 212)
         <rect>
          <x>40</x>
          <y>100</y>
-         <width>141</width>
+         <width>140</width>
          <height>22</height>
         </rect>
        </property>
@@ -1240,7 +1240,7 @@ color: rgb(212, 212, 212)
         <rect>
          <x>40</x>
          <y>380</y>
-         <width>141</width>
+         <width>140</width>
          <height>22</height>
         </rect>
        </property>
@@ -1305,6 +1305,84 @@ color: rgb(212, 212, 212)
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <zorder>comboAxes</zorder>
+      </widget>
+      <widget class="QComboBox" name="comboAxes">
+       <property name="geometry">
+        <rect>
+         <x>1100</x>
+         <y>100</y>
+         <width>140</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#comboAxes{
+color: black;
+}</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>x vs. y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>x vs. log(y)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>log(x) vs. y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>log(x) vs. log(y)</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="comboAxes2">
+       <property name="geometry">
+        <rect>
+         <x>1100</x>
+         <y>380</y>
+         <width>140</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>x vs. y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>x vs. log(y)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>log(x) vs. y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>log(x) vs. log(y)</string>
+        </property>
+       </item>
       </widget>
       <zorder>plot2</zorder>
       <zorder>plot</zorder>
@@ -1312,6 +1390,8 @@ color: rgb(212, 212, 212)
       <zorder>comboGraph</zorder>
       <zorder>comboGraph2</zorder>
       <zorder>Live_Plotter</zorder>
+      <zorder>comboAxes</zorder>
+      <zorder>comboAxes2</zorder>
      </widget>
      <zorder>detailsBackground</zorder>
      <zorder>sliderGraph</zorder>
@@ -1418,7 +1498,7 @@ qproperty-wordWrap: true;
        <property name="geometry">
         <rect>
          <x>180</x>
-         <y>300</y>
+         <y>280</y>
          <width>291</width>
          <height>31</height>
         </rect>
@@ -1461,8 +1541,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="propInput">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>390</y>
+         <x>230</x>
+         <y>360</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1471,8 +1551,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="propButton">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>390</y>
+         <x>370</x>
+         <y>360</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1484,8 +1564,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="propStatus">
        <property name="geometry">
         <rect>
-         <x>486</x>
-         <y>390</y>
+         <x>496</x>
+         <y>360</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1505,8 +1585,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="propLabel">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>390</y>
+         <x>50</x>
+         <y>360</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1526,8 +1606,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intStatus">
        <property name="geometry">
         <rect>
-         <x>486</x>
-         <y>430</y>
+         <x>496</x>
+         <y>400</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1547,8 +1627,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="intButton">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>430</y>
+         <x>370</x>
+         <y>400</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1560,8 +1640,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intLabel">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>430</y>
+         <x>50</x>
+         <y>400</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1581,8 +1661,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="intInput">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>430</y>
+         <x>230</x>
+         <y>400</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1591,8 +1671,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="derivStatus">
        <property name="geometry">
         <rect>
-         <x>486</x>
-         <y>550</y>
+         <x>496</x>
+         <y>520</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1612,8 +1692,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="derivButton">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>550</y>
+         <x>370</x>
+         <y>520</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1625,8 +1705,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="derivLabel">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>550</y>
+         <x>50</x>
+         <y>520</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1646,8 +1726,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="derivInput">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>550</y>
+         <x>230</x>
+         <y>520</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1656,8 +1736,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="intMaxInput">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>470</y>
+         <x>230</x>
+         <y>440</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1666,8 +1746,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intMaxStatus">
        <property name="geometry">
         <rect>
-         <x>486</x>
-         <y>470</y>
+         <x>496</x>
+         <y>440</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1687,8 +1767,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intMaxLabel">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>470</y>
+         <x>50</x>
+         <y>440</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1708,8 +1788,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="intMaxButton">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>470</y>
+         <x>370</x>
+         <y>440</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1721,8 +1801,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="intMinInput">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>510</y>
+         <x>230</x>
+         <y>480</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1731,8 +1811,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intMinStatus">
        <property name="geometry">
         <rect>
-         <x>486</x>
-         <y>510</y>
+         <x>496</x>
+         <y>480</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1752,8 +1832,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intMinLabel">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>510</y>
+         <x>50</x>
+         <y>480</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1773,8 +1853,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="intMinButton">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>510</y>
+         <x>370</x>
+         <y>480</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1861,8 +1941,8 @@ color: rgb(212, 212, 212)
       <widget class="QPushButton" name="vMaxButton">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>590</y>
+         <x>370</x>
+         <y>560</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1874,8 +1954,8 @@ color: rgb(212, 212, 212)
       <widget class="QLabel" name="vMaxLabel">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>590</y>
+         <x>50</x>
+         <y>560</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1895,8 +1975,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="vMaxInput">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>590</y>
+         <x>230</x>
+         <y>560</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1905,8 +1985,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="vMaxStatus">
        <property name="geometry">
         <rect>
-         <x>486</x>
-         <y>590</y>
+         <x>496</x>
+         <y>560</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1923,12 +2003,77 @@ qproperty-wordWrap: true;
         <string>0.5</string>
        </property>
       </widget>
+      <widget class="QLabel" name="vOffLabel">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>600</y>
+         <width>150</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#vOffLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Offset Voltage:</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="vOffButton">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>600</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set V Offset</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="vOffStatus">
+       <property name="geometry">
+        <rect>
+         <x>496</x>
+         <y>600</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#vOffStatus{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignCenter';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="vOffInput">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>600</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="Line" name="line_31">
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>359</y>
+        <y>340</y>
         <width>500</width>
         <height>3</height>
        </rect>
@@ -1952,9 +2097,9 @@ color: white
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>360</y>
+        <y>340</y>
         <width>1</width>
-        <height>282</height>
+        <height>302</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1976,9 +2121,9 @@ color: white;
       <property name="geometry">
        <rect>
         <x>580</x>
-        <y>360</y>
+        <y>340</y>
         <width>1</width>
-        <height>282</height>
+        <height>302</height>
        </rect>
       </property>
       <property name="styleSheet">

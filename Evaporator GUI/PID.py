@@ -14,6 +14,7 @@ class PID:
         self.Integrator_max=Integrator_max
         self.Integrator_min=Integrator_min
         self.v_max = 0.5
+        self.v_off = 0
 
         self.set_point=0.0
         self.error=0.0
@@ -68,10 +69,9 @@ class PID:
 
     def setPoint(self,set_point):
         """
-        Initilize the setpoint of PID. Also resets built up integrator. 
+        Initilize the setpoint of PID. 
         """
         self.set_point = set_point
-        self.Integrator=0
 
     def setIntegrator(self, Integrator):
         self.Integrator = Integrator
@@ -93,6 +93,13 @@ class PID:
         
     def setVMax(self,V):
         self.v_max=V
+        
+    def setVOff(self,V):
+        self.v_off=V
+        
+    def resetPoint(self):
+        self.previous_time = None
+        self.previous_error = 0
 
     def getPoint(self):
         return self.set_point

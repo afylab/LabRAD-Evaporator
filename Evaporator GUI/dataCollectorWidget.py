@@ -259,7 +259,9 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
         
     @inlineCallbacks
     def update_volt(self):
-        yield self.dv_volt.add(time.clock() - self.zero_volt, time.clock() - self.zero_volt + np.random.rand())
+        volt = yield self.tdk.volt_read()
+        volt = float(volt)
+        yield self.dv_volt.add(time.clock() - self.zero_volt, volt)
         
 #----------------------------------------------------------------------------------------------#   
     """ The following section has functions for stopping everything."""  
