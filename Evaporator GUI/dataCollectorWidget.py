@@ -3,6 +3,7 @@ from twisted.internet.defer import inlineCallbacks
 import numpy as np
 import dataCollectorUI
 import time
+import exceptions
 
 """ The following section defines the data collector object, which is used to prompt various
     equipment for data and sending them to a relevant data vault fies. """  
@@ -56,7 +57,7 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
         try: 
             from labrad.wrappers import connectAsync
             #Need a data vault connection for each file being run. 
-            self.cxn_prs = yield connectAsync(name = 'Evaporator GUI: Pressure')
+            self.cxn_prs = yield connectAsync(name = 'Data Collector: Pressure')
             self.dv_prs = self.cxn_prs.data_vault
             self.rvc = self.cxn_prs.rvc_server
             yield self.rvc.select_device()
@@ -67,14 +68,15 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
             self.tdk = self.cxn_prs.power_supply_server
             yield self.tdk.select_device()
         
-            self.cxn_thk = yield connectAsync(name = 'Evaporator GUI: Thickness')
+            self.cxn_thk = yield connectAsync(name = 'Data Collector: Thickness')
             self.dv_thk = self.cxn_thk.data_vault
             
-            self.cxn_rate = yield connectAsync(name = 'Evaporator GUI: Deposition Rate')
+            self.cxn_rate = yield connectAsync(name = 'Data Collector: Deposition Rate')
             self.dv_rate = self.cxn_rate.data_vault
             
-            self.cxn_volt = yield connectAsync(name = 'Evaporator GUI: Voltage')
+            self.cxn_volt = yield connectAsync(name = 'Data Collector: Voltage')
             self.dv_volt = self.cxn_volt.data_vault
+
         except:
             print 'Didn\'t work!'
             raise
@@ -269,8 +271,23 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
 #----------------------------------------------------------------------------------------------#   
     """ The following section has functions for stopping everything."""  
     
-    def stop(self):
+    def stop_timers(self):
         self.prs_timer.stop()
         self.thk_timer.stop()
         self.rate_timer.stop()
         self.volt_timer.stop()
+    
+    @inlineCallbacks
+    def disconnect(self):
+        self.stop_timers()
+        print 'Data Collector Widget timers being stopped.'
+        yield self.cxn_prs.disconnect()
+        self.cxn_prs = None
+        yield self.cxn_rate.disconnect()
+        self.cxn_rate = None
+        yield self.cxn_thk.disconnect()
+        self.cxn_thk = None
+        yield self.cxn_volt.disconnect()
+        self.cxn_volt = None
+        print 'Data Collector Widget connections are closed.'
+        

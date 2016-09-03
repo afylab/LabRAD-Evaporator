@@ -106,7 +106,9 @@ class dataVaultFileSelectWidget(gui.QWidget):
         self.line_height    = line_height
         self.button_length  = button_length
         self.length         = length
-
+        
+        #self.directoryChangeSignal = core.pyqtSignal()
+        
         self.doUI()
 
     def doUI(self):
@@ -160,6 +162,9 @@ class dataVaultFileSelectWidget(gui.QWidget):
 
         self.list_folders.updateItems(folders)
         self.list_files.updateItems(files)
+        
+        #self.directoryChangeSignal.emit()
+        #Emit signal here with self.current_directory
 
     def dvSelectFolder(self,folder):
         """Changes directory to a selected folder in the current directory"""

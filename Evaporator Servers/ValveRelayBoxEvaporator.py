@@ -251,7 +251,7 @@ class ValveRelayServer(DeviceServer):
         returnValue(ans)
 
     @setting(418,returns='s')
-    def valve_six_close(self,c):
+    def scroll_on(self,c):
         """Starts the scroll pump."""
         dev=self.selectedDevice(c)
         yield dev.write("spr")
@@ -259,7 +259,7 @@ class ValveRelayServer(DeviceServer):
         returnValue(ans)
 
     @setting(419,returns='s')
-    def valve_six_close(self,c):
+    def scroll_off(self,c):
         """Stops the scroll pump."""
         dev=self.selectedDevice(c)
         yield dev.write("ssr")
@@ -267,7 +267,7 @@ class ValveRelayServer(DeviceServer):
         returnValue(ans)
 
     @setting(420,returns='s')
-    def valve_six_close(self,c):
+    def turbo_on(self,c):
         """Starts the turbo pump."""
         dev=self.selectedDevice(c)
         yield dev.write("tpr")
@@ -275,7 +275,7 @@ class ValveRelayServer(DeviceServer):
         returnValue(ans)
 
     @setting(421,returns='s')
-    def valve_six_close(self,c):
+    def turbo_off(self,c):
         """Stops the turbo pump."""
         dev=self.selectedDevice(c)
         yield dev.write("tsr")

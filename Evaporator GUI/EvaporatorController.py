@@ -40,6 +40,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.directory_path = ""
         self.num_points = 50
         
+        self.isConnected = False
         #initialize PID
         self.PID = PID()
         self.evaporating = False
@@ -91,6 +92,11 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.cryoCWButton.clicked.connect(self.rotateCryoCW)
         self.cryoCCWButton.clicked.connect(self.rotateCryoCCW)
         
+        #self.dvFileSelect.directoryChangeSignal.connect(self.test)
+        
+    #def test(self,string):
+     #   print 'Whoop whoop'
+        
     @inlineCallbacks
     def connect(self, cntx):
         """ Each connection can only monitor one dataset at a time. This function creates 
@@ -100,12 +106,15 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         the data collector connect function. Finally, it makes a connection with the servers 
         to the equipment that needs to be controlled
         which acti"""
-        
+        if self.isConnected:
+            self.disconnect()
+            self.isConnected = False
         try:
+           
             from labrad.wrappers import connectAsync
             
             #This connect is used for updating graph 1 
-            self.cxn_gph = yield connectAsync(name = 'Evaporator GUI')
+            self.cxn_gph = yield connectAsync(name = 'Evaporator GUI: Graph 1')
             self.dv_gph = self.cxn_gph.data_vault
             #Set signal ID for creation of new dataset
             yield self.dv_gph.signal__new_dataset(self.ID_NEWSET)
@@ -114,7 +123,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.dv_gph.addListener(listener=self.update_gph, source=None, ID=self.ID_NEWDATA)
             
             #This connect is used for updating graph 2 
-            self.cxn_gph2 = yield connectAsync(name = 'Evaporator GUI')
+            self.cxn_gph2 = yield connectAsync(name = 'Evaporator GUI: Graph 2')
             self.dv_gph2 = self.cxn_gph2.data_vault
             #No need to signal ID for creation of new dataset since first graph will documents all the creations. 
             yield self.dv_gph2.signal__data_available(self.ID_NEWDATA)
@@ -122,7 +131,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
                  
             #Next, create a connection for connecting to each server from which we want constant updates. 
             #Create a cxn_prs for monitoring pressure for front pannel. 
-            self.cxn_prs = yield connectAsync(name = 'Evaporator GUI')
+            self.cxn_prs = yield connectAsync(name = 'Evaporator GUI: Pressure')
             self.dv_prs = self.cxn_prs.data_vault
             yield self.dv_prs.signal__new_dataset(self.ID_NEWSET)
             yield self.dv_prs.addListener(listener=self.add_dataset_prs, source=None, ID=self.ID_NEWSET)
@@ -130,7 +139,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.dv_prs.addListener(listener=self.update_prs, source=None, ID=self.ID_NEWDATA)
             
             #Create a cxn_dep for monitoring deposition rate
-            self.cxn_dep = yield connectAsync(name = 'Evaporator GUI')
+            self.cxn_dep = yield connectAsync(name = 'Evaporator GUI: Deposition Rate')
             self.dv_dep = self.cxn_dep.data_vault
             yield self.dv_dep.signal__new_dataset(self.ID_NEWSET)
             yield self.dv_dep.addListener(listener=self.add_dataset_dep, source=None, ID=self.ID_NEWSET)
@@ -138,7 +147,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.dv_dep.addListener(listener=self.update_dep, source=None, ID=self.ID_NEWDATA)
             
             #Create a cxn_thk for monitoring thickness
-            self.cxn_thk = yield connectAsync(name = 'Evaporator GUI')
+            self.cxn_thk = yield connectAsync(name = 'Evaporator GUI: Thickness')
             self.dv_thk = self.cxn_thk.data_vault
             
             yield self.dv_thk.signal__new_dataset(self.ID_NEWSET)
@@ -151,7 +160,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             
             #Have the dvFileSelect connect with a connection that won't mess with any other connections, so 
             #you can browse files without causing trouble. 
-            self.cxn = yield connectAsync(name = 'Evaporator GUI')
+            self.cxn = yield connectAsync(name = 'Evaporator GUI: General Connection')
             self.dvFileSelect.setConnection(self.cxn)
             
             #Connectors to the valve/relay controller, the rvc pressure controller, 
@@ -170,6 +179,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             nom_prs = yield self.rvc.get_nom_prs()
             self.nomPressLabel.setText(nom_prs)
             
+            self.isConnected = True
             self.textEdit.setPlainText('Successfully connected graphical interface and data collector to servers')
         except twisted.internet.error.ConnectionRefusedError:
             self.textEdit.setPlainText('Labrad not connected. Start labrad and servers before attempting to connect.')
@@ -184,7 +194,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             
     @inlineCallbacks
     def promptDirectory(self, cntx): 
-        #Eventually replace this with running Brunel's dv file select application. 
         #Sets the directory of the data collector and all the other to the dv file select location
         self.directory_path = self.dvFileSelect.current_directory
         
@@ -314,8 +323,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         rate, and thickness on the graphical interface. Also sets voltages based on discrete
         PID if evaporating."""
         
-    def add_dataset_prs(self, cntx, signal):
-        print 'Blib' 
+    def add_dataset_prs(self, cntx, signal): 
         if signal[8:] == 'Pressure vs. Time':
             self.dv_prs.open(signal)
             print 'Pressure is now being monitored'
@@ -377,26 +385,32 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.heliumFlowButton.setStyleSheet("#heliumFlowButton{border-color:"
             "rgb(255, 255, 255); border-width: 4px;border-style: solid;  " +
             "border-radius: 25px;background: white;}")
-        
-    def toggleScrollPump(self):
+    
+    @inlineCallbacks
+    def toggleScrollPump(self,cntx):
         if self.scrollPumpState == 'Off':
             self.scrollPumpState = 'On'
             self.scrollPumpButton.setStyleSheet("image:url(:/OnOff/On3.png);"
             + "background: black;")
+            yield self.vrs.scroll_on()
         elif self.scrollPumpState == 'On':
             self.scrollPumpState = 'Off'
             self.scrollPumpButton.setStyleSheet("image:url(:/OnOff/Off2.png);"
             + "background: black;")  
-        
-    def toggleTurboPump(self):
+            yield self.vrs.scroll_off()
+            
+    @inlineCallbacks
+    def toggleTurboPump(self,cntx):
         if self.turboPumpState == 'Off':
             self.turboPumpState = 'On'
             self.turboPumpButton.setStyleSheet("image:url(:/OnOff/On3.png);"
             + "background: black;")
+            yield self.vrs.turbo_on()
         elif self.turboPumpState == 'On':
             self.turboPumpState = 'Off'
             self.turboPumpButton.setStyleSheet("image:url(:/OnOff/Off2.png);"
             + "background: black;")  
+            yield self.vrs.turbo_off()
         
     @inlineCallbacks
     def togglePowerSupply(self, cntx):
@@ -611,7 +625,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         try:
             self.textEdit.clear()
             angle = str(self.cryoInput.text())
-            yield self.ss.rot('A',angle,'C')
+            yield self.ss.rot('B',angle,'C')
         except:
             self.textEdit.setPlainText("Error occured.")
         self.cryoInput.clear()
@@ -621,7 +635,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         try:
             self.textEdit.clear()
             angle = str(self.cryoInput.text())
-            yield self.ss.rot('A',angle,'A')
+            yield self.ss.rot('B',angle,'A')
         except:
             self.textEdit.setPlainText("Error occured.")
         self.cryoInput.clear()
@@ -631,7 +645,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         try:
             self.textEdit.clear()
             angle = str(self.shutterInput.text())
-            yield self.ss.rot('B',angle,'C')
+            yield self.ss.rot('A',angle,'C')
         except:
             self.textEdit.setPlainText("Error occured.")
         self.shutterInput.clear()
@@ -641,7 +655,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         try:
             self.textEdit.clear()
             angle = str(self.shutterInput.text())
-            yield self.ss.rot('B',angle,'A')
+            yield self.ss.rot('A',angle,'A')
         except:
             self.textEdit.setPlainText("Error occured.")
         self.shutterInput.clear()
@@ -649,10 +663,28 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     """ The following section specifies closing actions taken by the GUI when disconnecting."""
 
     def closeEvent(self, e):
-        self.dataCollectorWidget.stop()
+        if self.isConnected:
+            self.disconnect()
         self.reactor.stop()
         print 'Reactor shut down and stopped collecting data.'
-
+        
+    @inlineCallbacks
+    def disconnect(self):
+        print 'Closing all existing labrad connections.'
+        self.dataCollectorWidget.disconnect()
+        yield self.cxn_gph.disconnect()
+        self.cxn_gph = None
+        yield self.cxn_gph2.disconnect()
+        self.cxn_gph2 = None
+        yield self.cxn_prs.disconnect()
+        self.cxn_prs = None
+        yield self.cxn_dep.disconnect()
+        self.cxn_dep = None
+        yield self.cxn_thk.disconnect()
+        self.cxn_thk = None
+        yield self.cxn.disconnect()
+        self.cxn = None
+        print 'Evaporator GUI connections are closed.'
 #----------------------------------------------------------------------------------------------#
             
 """ The following runs the program"""

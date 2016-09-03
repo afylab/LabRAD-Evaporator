@@ -101,7 +101,7 @@ class StepperWrapper(DeviceWrapper):
 
 class StepperServer(DeviceServer):
     name             = 'Stepper_Server'
-    deviceName       = 'Stepper Motor Controller'
+    deviceName       = 'Evaporator Stepper Motor Controller'
     deviceWrapper    = StepperWrapper
     
     @inlineCallbacks
@@ -116,7 +116,6 @@ class StepperServer(DeviceServer):
     @inlineCallbacks
     def loadConfigInfo(self):
         reg = self.reg
-        #THIS STILL NEEDS TO BE ADDED TO THE REGISTRY
         yield reg.cd(['', 'Servers', 'Evaporator Stepper', 'Links'], True)
         dirs, keys = yield reg.dir()
         p = reg.packet()
