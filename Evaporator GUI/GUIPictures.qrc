@@ -2,6 +2,9 @@
   <qresource prefix="OnOff">
     <file>On3.png</file>
     <file>Off2.png</file>
-    <file>On2.png</file>
+  </qresource>
+  <qresource prefix="Shutter">
+    <file>Open3.png</file>
+    <file>Closed3.png</file>
   </qresource>
 </RCC>

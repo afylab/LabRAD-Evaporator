@@ -69,7 +69,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="GraphicalInterface">
      <property name="styleSheet">
@@ -459,7 +459,7 @@ color: white
       <widget class="Line" name="line_8">
        <property name="geometry">
         <rect>
-         <x>540</x>
+         <x>500</x>
          <y>460</y>
          <width>20</width>
          <height>100</height>
@@ -483,7 +483,7 @@ color: white;
       <widget class="Line" name="line_9">
        <property name="geometry">
         <rect>
-         <x>540</x>
+         <x>500</x>
          <y>360</y>
          <width>20</width>
          <height>50</height>
@@ -507,19 +507,16 @@ color: white
       <widget class="QPushButton" name="boatShutterButton">
        <property name="geometry">
         <rect>
-         <x>526</x>
-         <y>410</y>
-         <width>50</width>
-         <height>50</height>
+         <x>477</x>
+         <y>400</y>
+         <width>66</width>
+         <height>66</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">#boatShutterButton{
-  border-color: rgb(255, 255, 255);
-  border-width: 4px;        
-  border-style: solid;
-  border-radius: 25px;
- background: black;
+image: url(:/Shutter/Closed3.png);
+background: black;
 }</string>
        </property>
        <property name="text">
@@ -529,7 +526,7 @@ color: white
       <widget class="QLabel" name="boatShutterStatus">
        <property name="geometry">
         <rect>
-         <x>460</x>
+         <x>410</x>
          <y>406</y>
          <width>50</width>
          <height>50</height>
@@ -570,7 +567,7 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;
        <property name="geometry">
         <rect>
          <x>1060</x>
-         <y>50</y>
+         <y>40</y>
          <width>100</width>
          <height>51</height>
         </rect>
@@ -591,7 +588,7 @@ qproperty-wordWrap: true;
        <property name="geometry">
         <rect>
          <x>890</x>
-         <y>50</y>
+         <y>40</y>
          <width>150</width>
          <height>50</height>
         </rect>
@@ -611,7 +608,7 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="powerSupplyButton">
        <property name="geometry">
         <rect>
-         <x>523</x>
+         <x>483</x>
          <y>530</y>
          <width>55</width>
          <height>55</height>
@@ -667,54 +664,11 @@ background: black;
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="cryoAngleLabel">
-       <property name="geometry">
-        <rect>
-         <x>680</x>
-         <y>420</y>
-         <width>171</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">#cryoAngleLabel{
-color: white;
-font: 16pt &quot;MS Shell Dlg 2&quot;;
-}</string>
-       </property>
-       <property name="text">
-        <string>Cryostat Position:</string>
-       </property>
-      </widget>
-      <widget class="Line" name="line_10">
-       <property name="geometry">
-        <rect>
-         <x>550</x>
-         <y>360</y>
-         <width>125</width>
-         <height>3</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">#line_10{
-color: white
-}</string>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="lineWidth">
-        <number>4</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
       <widget class="QLabel" name="rateLabel">
        <property name="geometry">
         <rect>
          <x>890</x>
-         <y>105</y>
+         <y>95</y>
          <width>150</width>
          <height>50</height>
         </rect>
@@ -735,7 +689,7 @@ qproperty-wordWrap: true;
        <property name="geometry">
         <rect>
          <x>890</x>
-         <y>160</y>
+         <y>150</y>
          <width>150</width>
          <height>50</height>
         </rect>
@@ -752,20 +706,20 @@ qproperty-wordWrap: true;
         <string>Thickness:</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="heliumFlowButton">
+      <widget class="QPushButton" name="heliumValveButton">
        <property name="enabled">
         <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>670</x>
+         <x>600</x>
          <y>336</y>
          <width>50</width>
          <height>50</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">#heliumFlowButton{
+        <string notr="true">#heliumValveButton{
   border-color: rgb(255, 255, 255);
   border-width: 4px;        
   border-style: solid;
@@ -777,41 +731,17 @@ qproperty-wordWrap: true;
         <string/>
        </property>
       </widget>
-      <widget class="Line" name="line_11">
+      <widget class="QLabel" name="heliumValveStatus">
        <property name="geometry">
         <rect>
-         <x>720</x>
-         <y>360</y>
-         <width>125</width>
-         <height>3</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">#line_11{
-color: white
-}</string>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="lineWidth">
-        <number>4</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-      <widget class="QLabel" name="heliumFlowStatus">
-       <property name="geometry">
-        <rect>
-         <x>645</x>
-         <y>286</y>
+         <x>573</x>
+         <y>288</y>
          <width>100</width>
          <height>50</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">#heliumFlowStatus{
+        <string notr="true">#heliumValveStatus{
 color: white;
 font: 12pt &quot;MS Shell Dlg 2&quot;;
 qproperty-alignment: 'AlignVCenter | AlignHCenter';
@@ -819,7 +749,7 @@ qproperty-wordWrap: true;
 }</string>
        </property>
        <property name="text">
-        <string>Not Flowing</string>
+        <string>Closed</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushChooseDir">
@@ -852,7 +782,7 @@ qproperty-wordWrap: true;
        <property name="geometry">
         <rect>
          <x>900</x>
-         <y>50</y>
+         <y>40</y>
          <width>300</width>
          <height>3</height>
         </rect>
@@ -876,7 +806,7 @@ color: white
        <property name="geometry">
         <rect>
          <x>900</x>
-         <y>210</y>
+         <y>200</y>
          <width>300</width>
          <height>3</height>
         </rect>
@@ -900,7 +830,7 @@ color: white
        <property name="geometry">
         <rect>
          <x>900</x>
-         <y>50</y>
+         <y>41</y>
          <width>1</width>
          <height>160</height>
         </rect>
@@ -924,7 +854,7 @@ color: white;
        <property name="geometry">
         <rect>
          <x>1200</x>
-         <y>50</y>
+         <y>41</y>
          <width>1</width>
          <height>160</height>
         </rect>
@@ -948,7 +878,7 @@ color: white;
        <property name="geometry">
         <rect>
          <x>1060</x>
-         <y>105</y>
+         <y>95</y>
          <width>100</width>
          <height>51</height>
         </rect>
@@ -969,7 +899,7 @@ qproperty-wordWrap: true;
        <property name="geometry">
         <rect>
          <x>1060</x>
-         <y>160</y>
+         <y>150</y>
          <width>100</width>
          <height>51</height>
         </rect>
@@ -1009,8 +939,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="nomPressInput">
        <property name="geometry">
         <rect>
-         <x>210</x>
-         <y>180</y>
+         <x>910</x>
+         <y>350</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1019,9 +949,9 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="nomPressLabel">
        <property name="geometry">
         <rect>
-         <x>136</x>
-         <y>230</y>
-         <width>281</width>
+         <x>1130</x>
+         <y>350</y>
+         <width>111</width>
          <height>21</height>
         </rect>
        </property>
@@ -1029,7 +959,7 @@ qproperty-wordWrap: true;
         <string notr="true">#nomPressLabel{
 color: white;
 font: 12pt &quot;MS Shell Dlg 2&quot;;
-qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-alignment: 'AlignVCenter | AlignCenter';
 qproperty-wordWrap: true;
 }</string>
        </property>
@@ -1040,8 +970,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="nomPress">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>180</y>
+         <x>750</x>
+         <y>350</y>
          <width>141</width>
          <height>21</height>
         </rect>
@@ -1061,8 +991,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="nomPressButton">
        <property name="geometry">
         <rect>
-         <x>340</x>
-         <y>180</y>
+         <x>1040</x>
+         <y>350</y>
          <width>81</width>
          <height>21</height>
         </rect>
@@ -1074,8 +1004,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="nomPressFormat">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>140</y>
+         <x>930</x>
+         <y>310</y>
          <width>81</width>
          <height>21</height>
         </rect>
@@ -1092,32 +1022,6 @@ qproperty-wordWrap: true;
         <string>x.xxEsxx</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="ventButton">
-       <property name="geometry">
-        <rect>
-         <x>1020</x>
-         <y>280</y>
-         <width>81</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Vent</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="stopVentButton">
-       <property name="geometry">
-        <rect>
-         <x>1020</x>
-         <y>330</y>
-         <width>81</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Stop Vent</string>
-       </property>
-      </widget>
       <widget class="Line" name="line_16">
        <property name="geometry">
         <rect>
@@ -1129,6 +1033,51 @@ qproperty-wordWrap: true;
        </property>
        <property name="styleSheet">
         <string notr="true">#line_16{
+color: white
+}</string>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>4</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="shutterWarning">
+       <property name="geometry">
+        <rect>
+         <x>560</x>
+         <y>390</y>
+         <width>251</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#shutterWarning{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignLeft';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Make sure that shutter position matches GUI after reloading lead.</string>
+       </property>
+      </widget>
+      <widget class="Line" name="line_10">
+       <property name="geometry">
+        <rect>
+         <x>550</x>
+         <y>360</y>
+         <width>50</width>
+         <height>3</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#line_10{
 color: white
 }</string>
        </property>
@@ -1413,7 +1362,7 @@ color: black;
     </widget>
     <widget class="QWidget" name="EvapControl">
      <attribute name="title">
-      <string>Evaporation Controls</string>
+      <string>Evaporation</string>
      </attribute>
      <widget class="QFrame" name="evapBackground">
       <property name="geometry">
@@ -1440,7 +1389,7 @@ background: rgb(0,0, 0)
        <property name="geometry">
         <rect>
          <x>230</x>
-         <y>90</y>
+         <y>140</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1449,8 +1398,8 @@ background: rgb(0,0, 0)
       <widget class="QPushButton" name="setPointButton">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>90</y>
+         <x>370</x>
+         <y>140</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1462,8 +1411,8 @@ background: rgb(0,0, 0)
       <widget class="QPushButton" name="evapStartButton">
        <property name="geometry">
         <rect>
-         <x>1030</x>
-         <y>90</y>
+         <x>800</x>
+         <y>390</y>
          <width>100</width>
          <height>21</height>
         </rect>
@@ -1475,8 +1424,8 @@ background: rgb(0,0, 0)
       <widget class="QLabel" name="setPointLabel">
        <property name="geometry">
         <rect>
-         <x>480</x>
-         <y>90</y>
+         <x>470</x>
+         <y>140</y>
          <width>47</width>
          <height>21</height>
         </rect>
@@ -1496,8 +1445,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="Feedback">
        <property name="geometry">
         <rect>
-         <x>180</x>
-         <y>280</y>
+         <x>130</x>
+         <y>330</y>
          <width>291</width>
          <height>31</height>
         </rect>
@@ -1513,20 +1462,20 @@ color: rgb(212, 212, 212)
 }</string>
        </property>
        <property name="text">
-        <string>Feedback PID Settings</string>
+        <string>PID Settings</string>
        </property>
       </widget>
-      <widget class="QLabel" name="units">
+      <widget class="QLabel" name="rateUnits">
        <property name="geometry">
         <rect>
-         <x>560</x>
-         <y>90</y>
+         <x>530</x>
+         <y>140</y>
          <width>47</width>
          <height>21</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">#units{
+        <string notr="true">#rateUnits{
 color: white;
 font: 12pt &quot;MS Shell Dlg 2&quot;;
 qproperty-alignment: 'AlignVCenter | AlignLeft';
@@ -1540,8 +1489,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="propInput">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>360</y>
+         <x>150</x>
+         <y>390</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1550,8 +1499,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="propButton">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>360</y>
+         <x>290</x>
+         <y>390</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1563,8 +1512,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="propStatus">
        <property name="geometry">
         <rect>
-         <x>496</x>
-         <y>360</y>
+         <x>400</x>
+         <y>390</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1584,8 +1533,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="propLabel">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>360</y>
+         <x>-30</x>
+         <y>390</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1605,8 +1554,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intStatus">
        <property name="geometry">
         <rect>
-         <x>496</x>
-         <y>400</y>
+         <x>400</x>
+         <y>430</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1620,14 +1569,14 @@ qproperty-wordWrap: true;
 }</string>
        </property>
        <property name="text">
-        <string>0</string>
+        <string>0.001</string>
        </property>
       </widget>
       <widget class="QPushButton" name="intButton">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>400</y>
+         <x>290</x>
+         <y>430</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1639,8 +1588,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intLabel">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>400</y>
+         <x>-30</x>
+         <y>430</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1660,8 +1609,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="intInput">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>400</y>
+         <x>150</x>
+         <y>430</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1670,8 +1619,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="derivStatus">
        <property name="geometry">
         <rect>
-         <x>496</x>
-         <y>520</y>
+         <x>400</x>
+         <y>550</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1691,8 +1640,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="derivButton">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>520</y>
+         <x>290</x>
+         <y>550</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1704,8 +1653,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="derivLabel">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>520</y>
+         <x>-30</x>
+         <y>550</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1725,8 +1674,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="derivInput">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>520</y>
+         <x>150</x>
+         <y>550</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1735,8 +1684,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="intMaxInput">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>440</y>
+         <x>150</x>
+         <y>470</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1745,8 +1694,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intMaxStatus">
        <property name="geometry">
         <rect>
-         <x>496</x>
-         <y>440</y>
+         <x>400</x>
+         <y>470</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1766,8 +1715,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intMaxLabel">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>440</y>
+         <x>-30</x>
+         <y>470</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1787,8 +1736,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="intMaxButton">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>440</y>
+         <x>290</x>
+         <y>470</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1800,8 +1749,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="intMinInput">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>480</y>
+         <x>150</x>
+         <y>510</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1810,8 +1759,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intMinStatus">
        <property name="geometry">
         <rect>
-         <x>496</x>
-         <y>480</y>
+         <x>400</x>
+         <y>510</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1831,8 +1780,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="intMinLabel">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>480</y>
+         <x>-30</x>
+         <y>510</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1852,8 +1801,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="intMinButton">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>480</y>
+         <x>290</x>
+         <y>510</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1865,18 +1814,23 @@ qproperty-wordWrap: true;
       <widget class="QTextEdit" name="textEdit2">
        <property name="geometry">
         <rect>
-         <x>660</x>
-         <y>90</y>
-         <width>271</width>
-         <height>131</height>
+         <x>770</x>
+         <y>20</y>
+         <width>491</width>
+         <height>71</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#textEdit2{
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+}</string>
        </property>
       </widget>
       <widget class="QLabel" name="deposRate">
        <property name="geometry">
         <rect>
-         <x>9</x>
-         <y>90</y>
+         <x>20</x>
+         <y>140</y>
          <width>201</width>
          <height>21</height>
         </rect>
@@ -1896,10 +1850,10 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="note">
        <property name="geometry">
         <rect>
-         <x>180</x>
-         <y>170</y>
-         <width>271</width>
-         <height>91</height>
+         <x>480</x>
+         <y>530</y>
+         <width>221</width>
+         <height>81</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -1911,15 +1865,15 @@ qproperty-wordWrap: true;
 }</string>
        </property>
        <property name="text">
-        <string>Note: the deposition rate sampling rate (from data collector) determines the speed at which the PID updates the voltage. </string>
+        <string>The deposition rate sampling rate (from data collector) determines the speed at which the PID updates the voltage. </string>
        </property>
       </widget>
       <widget class="QLabel" name="evapStatus">
        <property name="geometry">
         <rect>
-         <x>1020</x>
-         <y>150</y>
-         <width>171</width>
+         <x>750</x>
+         <y>430</y>
+         <width>201</width>
          <height>31</height>
         </rect>
        </property>
@@ -1930,7 +1884,9 @@ qproperty-wordWrap: true;
        </property>
        <property name="styleSheet">
         <string notr="true">#evapStatus{
-color: rgb(212, 212, 212)
+color: rgb(212, 212, 212);
+qproperty-alignment: 'AlignVCenter | AlignCenter';
+qproperty-wordWrap: true;
 }</string>
        </property>
        <property name="text">
@@ -1940,8 +1896,8 @@ color: rgb(212, 212, 212)
       <widget class="QPushButton" name="vMaxButton">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>560</y>
+         <x>290</x>
+         <y>590</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -1953,8 +1909,8 @@ color: rgb(212, 212, 212)
       <widget class="QLabel" name="vMaxLabel">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>560</y>
+         <x>-30</x>
+         <y>590</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -1974,8 +1930,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="vMaxInput">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>560</y>
+         <x>150</x>
+         <y>590</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -1984,8 +1940,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="vMaxStatus">
        <property name="geometry">
         <rect>
-         <x>496</x>
-         <y>560</y>
+         <x>400</x>
+         <y>590</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1999,14 +1955,14 @@ qproperty-wordWrap: true;
 }</string>
        </property>
        <property name="text">
-        <string>0.5</string>
+        <string>0.7</string>
        </property>
       </widget>
       <widget class="QLabel" name="vOffLabel">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>600</y>
+         <x>-30</x>
+         <y>630</y>
          <width>150</width>
          <height>21</height>
         </rect>
@@ -2026,8 +1982,8 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="vOffButton">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>600</y>
+         <x>290</x>
+         <y>630</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -2039,8 +1995,8 @@ qproperty-wordWrap: true;
       <widget class="QLabel" name="vOffStatus">
        <property name="geometry">
         <rect>
-         <x>496</x>
-         <y>600</y>
+         <x>400</x>
+         <y>630</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -2054,14 +2010,14 @@ qproperty-wordWrap: true;
 }</string>
        </property>
        <property name="text">
-        <string>0</string>
+        <string>0.45</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="vOffInput">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>600</y>
+         <x>150</x>
+         <y>630</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -2070,8 +2026,8 @@ qproperty-wordWrap: true;
       <widget class="QLineEdit" name="shutterInput">
        <property name="geometry">
         <rect>
-         <x>840</x>
-         <y>360</y>
+         <x>911</x>
+         <y>580</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -2080,21 +2036,21 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="shutterCWButton">
        <property name="geometry">
         <rect>
-         <x>980</x>
-         <y>360</y>
+         <x>1051</x>
+         <y>580</y>
          <width>101</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>Move Shutter CW</string>
+        <string>Turn CW</string>
        </property>
       </widget>
       <widget class="QLabel" name="shutterLabel">
        <property name="geometry">
         <rect>
-         <x>639</x>
-         <y>360</y>
+         <x>710</x>
+         <y>580</y>
          <width>171</width>
          <height>21</height>
         </rect>
@@ -2114,21 +2070,21 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="shutterCCWButton">
        <property name="geometry">
         <rect>
-         <x>1110</x>
-         <y>360</y>
+         <x>1180</x>
+         <y>580</y>
          <width>101</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>Move Shutter CCW</string>
+        <string>Turn CCW</string>
        </property>
       </widget>
       <widget class="QLabel" name="cryoLabel">
        <property name="geometry">
         <rect>
-         <x>639</x>
-         <y>440</y>
+         <x>710</x>
+         <y>620</y>
          <width>171</width>
          <height>21</height>
         </rect>
@@ -2148,21 +2104,21 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="cryoCCWButton">
        <property name="geometry">
         <rect>
-         <x>1110</x>
-         <y>440</y>
+         <x>1180</x>
+         <y>620</y>
          <width>101</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>Move Shutter CCW</string>
+        <string>Turn  CCW</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="cryoInput">
        <property name="geometry">
         <rect>
-         <x>840</x>
-         <y>440</y>
+         <x>911</x>
+         <y>620</y>
          <width>113</width>
          <height>21</height>
         </rect>
@@ -2171,23 +2127,870 @@ qproperty-wordWrap: true;
       <widget class="QPushButton" name="cryoCWButton">
        <property name="geometry">
         <rect>
-         <x>980</x>
-         <y>440</y>
+         <x>1051</x>
+         <y>620</y>
          <width>101</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>Move Shutter CW</string>
+        <string>Turn CW</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="Manual">
+       <property name="geometry">
+        <rect>
+         <x>770</x>
+         <y>330</y>
+         <width>201</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#Manual{
+color: rgb(212, 212, 212)
+}</string>
+       </property>
+       <property name="text">
+        <string>Manual Controls</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="Auto">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>40</y>
+         <width>281</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#Auto{
+color: rgb(212, 212, 212)
+}</string>
+       </property>
+       <property name="text">
+        <string>Automatic Evaporation</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="thicknessStatus_2">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>410</y>
+         <width>100</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#thicknessStatus_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Not Initialized</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="rateStatus_2">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>365</y>
+         <width>100</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#rateStatus_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Not Initialized</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="rateLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>420</x>
+         <y>365</y>
+         <width>150</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#rateLabel_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Dep. Rate:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="thicknessLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>420</x>
+         <y>410</y>
+         <width>150</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#thicknessLabel_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Thickness:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="pressureStatus_2">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>320</y>
+         <width>100</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#pressureStatus_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Not Initialized</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="pressureLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>420</x>
+         <y>320</y>
+         <width>150</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#pressureLabel_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Pressure:</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="emergStop">
+       <property name="geometry">
+        <rect>
+         <x>600</x>
+         <y>30</y>
+         <width>91</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#emergStop{
+	font: 14pt &quot;MS Shell Dlg 2&quot;;
+border-width: 0px;        
+border-style: solid;
+border-radius: 20px;
+background: red;
+color: rgb(212,212,212)
+}</string>
+       </property>
+       <property name="text">
+        <string>STOP</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="angleStatus">
+       <property name="geometry">
+        <rect>
+         <x>1150</x>
+         <y>140</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#angleStatus{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignCenter';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>105</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="angleButton">
+       <property name="geometry">
+        <rect>
+         <x>1040</x>
+         <y>140</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set Angle</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="angleLabel">
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>140</y>
+         <width>150</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#angleLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Contact Angle:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="angleInput">
+       <property name="geometry">
+        <rect>
+         <x>900</x>
+         <y>140</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="contactThkStatus">
+       <property name="geometry">
+        <rect>
+         <x>1150</x>
+         <y>190</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#contactThkStatus{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignCenter';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>40</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="contactThkInput">
+       <property name="geometry">
+        <rect>
+         <x>900</x>
+         <y>190</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="contactThkButton">
+       <property name="geometry">
+        <rect>
+         <x>1040</x>
+         <y>190</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set Thickness</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="contactThkLabel">
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>190</y>
+         <width>150</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#contactThkLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Contact Thickness:</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="startAuto">
+       <property name="geometry">
+        <rect>
+         <x>420</x>
+         <y>30</y>
+         <width>91</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#startAuto{
+	font: 14pt &quot;MS Shell Dlg 2&quot;;
+border-width: 0px;        
+border-style: solid;
+border-radius: 20px;
+background: green;
+color: rgb(212,212,212)
+}</string>
+       </property>
+       <property name="text">
+        <string>START</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="contactThkUnits">
+       <property name="geometry">
+        <rect>
+         <x>1210</x>
+         <y>190</y>
+         <width>47</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#contactThkUnits{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignLeft';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>nm</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="contactAngleUnits">
+       <property name="geometry">
+        <rect>
+         <x>1210</x>
+         <y>140</y>
+         <width>47</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#contactAngleUnits{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignLeft';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>°</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="headThkUnits">
+       <property name="geometry">
+        <rect>
+         <x>1210</x>
+         <y>240</y>
+         <width>47</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#headThkUnits{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignLeft';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>nm</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="headThkButton">
+       <property name="geometry">
+        <rect>
+         <x>1040</x>
+         <y>240</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set Thickness</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="headThkLabel">
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>240</y>
+         <width>150</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#headThkLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Head On Thickness:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="headThkStatus">
+       <property name="geometry">
+        <rect>
+         <x>1150</x>
+         <y>240</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#headThkStatus{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignCenter';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>25</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="headThkInput">
+       <property name="geometry">
+        <rect>
+         <x>900</x>
+         <y>240</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="Line" name="line_34">
+       <property name="geometry">
+        <rect>
+         <x>710</x>
+         <y>311</y>
+         <width>1</width>
+         <height>363</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#line_34{
+color: white;
+}</string>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+      <widget class="Line" name="line_21">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>470</y>
+         <width>240</width>
+         <height>3</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#line_21{
+color: white
+}</string>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="thermTimeUnits">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>190</y>
+         <width>47</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#thermTimeUnits{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignLeft';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>min</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="thermTimeInput">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>190</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="thermTimeButton">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>190</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set Time</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="thermTimeStatusLabel">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>190</y>
+         <width>47</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#thermTimeStatusLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>25</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="thermTimeLabel">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>190</y>
+         <width>201</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#thermTimeLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Thermalization Time: </string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="nomPressFormat_2">
+       <property name="geometry">
+        <rect>
+         <x>920</x>
+         <y>490</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#nomPressFormat_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>x.xxEsxx</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="nomPress_2">
+       <property name="geometry">
+        <rect>
+         <x>750</x>
+         <y>530</y>
+         <width>141</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#nomPress_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Pressure Setpoint:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="nomPressInput_2">
+       <property name="geometry">
+        <rect>
+         <x>910</x>
+         <y>530</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="nomPressLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>1160</x>
+         <y>530</y>
+         <width>111</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#nomPressLabel_2{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignCenter';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>N/A</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="nomPressButton_2">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>530</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set Pressure</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="boatShutterButton_2">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>390</y>
+         <width>66</width>
+         <height>66</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#boatShutterButton_2{
+image: url(:/Shutter/Closed3.png);
+background: black;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="heliumValveButton_2">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>1190</x>
+         <y>400</y>
+         <width>50</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#heliumValveButton_2{
+  border-color: rgb(255, 255, 255);
+  border-width: 4px;        
+  border-style: solid;
+  border-radius: 25px;
+ background: black;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="thermPrsUnits">
+       <property name="geometry">
+        <rect>
+         <x>560</x>
+         <y>240</y>
+         <width>47</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#thermPrsUnits{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignLeft';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>mbar</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="thermPrsInput">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>240</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="thermPrsLabel">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>240</y>
+         <width>201</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#thermPrsLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Thermalization Pressure: </string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="thermPrsStatusLabel">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>240</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#thermPrsStatusLabel{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>1.00E-03</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="thermPrsButton">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>240</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set Pressure</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="nomPressFormat_3">
+       <property name="geometry">
+        <rect>
+         <x>81</x>
+         <y>273</y>
+         <width>231</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#nomPressFormat_3{
+color: white;
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+qproperty-alignment: 'AlignVCenter | AlignRight';
+qproperty-wordWrap: true;
+}</string>
+       </property>
+       <property name="text">
+        <string>Input Format:       x.xxEsxx</string>
        </property>
       </widget>
      </widget>
      <widget class="Line" name="line_31">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>340</y>
-        <width>500</width>
+        <x>0</x>
+        <y>310</y>
+        <width>1294</width>
         <height>3</height>
        </rect>
       </property>
@@ -2206,37 +3009,13 @@ color: white
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="Line" name="line_32">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>340</y>
-        <width>1</width>
-        <height>302</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#line_32{
-color: white;
-}</string>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>1</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
      <widget class="Line" name="line_33">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>340</y>
+        <x>470</x>
+        <y>311</y>
         <width>1</width>
-        <height>302</height>
+        <height>363</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -2252,30 +3031,6 @@ color: white;
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-     <widget class="Line" name="line_34">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>640</y>
-        <width>500</width>
-        <height>3</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#line_34{
-color: white
-}</string>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>1</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </widget>

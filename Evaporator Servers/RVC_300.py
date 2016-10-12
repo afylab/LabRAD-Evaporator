@@ -256,6 +256,166 @@ class RVCServer(DeviceServer):
         ans = yield dev.read()
         returnValue(ans)
         
+    @setting(218,returns='s')
+    def get_prs_sensor(self,c):
+        """Queries the RTP? command and returns the response. Gets pressure sensor name. Usage get_prs_sensor()"""
+        dev=self.selectedDevice(c)
+        yield dev.write("PRS?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(219,returns='s')
+    def get_valve_type(self,c):
+        """Queries the VEN? command and returns the response. Gets valve type name. Usage get_valve_type()"""
+        dev=self.selectedDevice(c)
+        yield dev.write("VEN?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(220,auto = 's', returns='s')
+    def select_auto_controller(self,c, auto):
+        """Queries the RAS=xx command and returns the response. auto should be a string of two positive integers.
+           This sets the PID to automatic paramter where auto = '01' is the slowest response, and auto = '99' is
+           the fastest. An example query would be RAS=05. Usage is set_auto_controller('05')."""
+        dev=self.selectedDevice(c)
+        yield dev.write("RAS=" + auto + "\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(221,auto = 's', returns='s')
+    def select_PID(self,c, auto):
+        """Queries the RAS=_0 command and returns the response. auto should be a string of two positive integers.
+            This sets the PID to automatic paramter where auto = '01' is the slowest response, and auto = '99' is
+            the fastest. An example query would be RAS=05. Usage is set_auto_controller('05')."""
+        dev=self.selectedDevice(c)
+        yield dev.write("RAS=" + auto + "\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(222,Kp = 's', returns='s')
+    def set_Kp(self,c, Kp):
+        """Queries the RSP=xxx.x command and returns the response. Kp should be a string of xxx.x, where x is an integer.
+            This sets the PID proportional term to the provided input value. Accepts values 0.1 through 100.0."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RSP=" + Kp + "\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(223,Tv = 's', returns='s')
+    def set_Tv(self,c, Tv):
+        """Queries the RSD=xxxx.x command and returns the response. Tv should be a string of xxxx.x, where x is an integer.
+            This sets the PID derivative time Tv to the provided input value. Accepts values 0.0 through 3600.0."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RSD=" + Tn + "\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(224,on = 's', returns='s')
+    def set_auto_reset(self,c, on):
+        """Queries the RAR=x command and returns the response. on should be a string of either 0 or 1, where 0 is off and 1
+        is on. This turns the auto reset function off and on."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RAR=" + on + "\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(225,returns='s')
+    def get_PID_setting(self,c):
+        """Queries the RAS? command and returns the response. Returns the PID setting number. 0 corresponds to manual PID
+        parameter entry, 1-99 is slow to fast automatic settings."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RAS?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(226,returns='s')
+    def get_Kp(self,c):
+        """Queries the RSP? command and returns the response, which is the manual PID proportional gain."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RSP?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(227,returns='s')
+    def get_Tn(self,c):
+        """Queries the RSI? command and returns the response, which is the manual PID reset time."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RSI?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(228,returns='s')
+    def get_Tv(self,c):
+        """Queries the RSD? command and returns the response, which is the manual PID derivative time."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RSD?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(229,returns='s')
+    def get_auto_reset(self,c):
+        """Queries the RAR? command and returns the response. RAR=0 corresponds to auto reset function is off
+            whereas RAR=1 corresponds to it being on."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RAR?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(230,returns='s')
+    def get_deviation(self,c):
+        """Queries the RVA? command and returns the response. Returns the deviation."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RVA?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(231,returns='s')
+    def get_P_comp(self,c):
+        """Queries the RVP? command and returns the response. Returns the P component."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RVA?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(232,returns='s')
+    def get_I_comp(self,c):
+        """Queries the RVI? command and returns the response. Returns the I component."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RVI?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(233,returns='s')
+    def get_D_comp(self,c):
+        """Queries the RVD? command and returns the response. Returns the D component."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RVD?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+        
+    @setting(233,returns='s')
+    def get_manipulating_variable(self,c):
+        """Queries the RVO? command and returns the response. Returns the manipulating variable."""
+
+        dev=self.selectedDevice(c)
+        yield dev.write("RVO?\r\n")
+        ans = yield dev.read()
+        returnValue(ans)
+            
+            
+            
 __server__ = RVCServer()
 if __name__ == '__main__':
     from labrad import util

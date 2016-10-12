@@ -163,6 +163,14 @@ class StepperServer(DeviceServer):
         ans = yield dev.read()
         returnValue(ans)
         
+    @setting(507,returns = 's')
+    def status(self,c):
+        """Returns the status (whether or not something is turning)."""
+        dev=self.selectedDevice(c)
+        yield dev.write("sr")
+        ans = yield dev.read()
+        returnValue(ans)
+        
 __server__ = StepperServer()
 if __name__ == '__main__':
     from labrad import util

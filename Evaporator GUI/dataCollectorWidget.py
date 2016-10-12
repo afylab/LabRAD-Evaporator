@@ -271,6 +271,30 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
 #----------------------------------------------------------------------------------------------#   
     """ The following section has functions for stopping everything."""  
     
+    def lock_buttons(self):   
+        self.pressureButton.setEnabled(False)
+        self.thicknessButton.setEnabled(False)
+        self.rateButton.setEnabled(False)
+        self.voltButton.setEnabled(False)
+        
+        self.pressureStartButton.setEnabled(False)
+        self.thicknessStartButton.setEnabled(False)
+        self.rateStartButton.setEnabled(False)
+        self.voltStartButton.setEnabled(False)
+        self.allStartButton.setEnabled(False)
+        
+    def unlock_buttons(self):
+        self.pressureButton.setEnabled(True)
+        self.thicknessButton.setEnabled(True)
+        self.rateButton.setEnabled(True)
+        self.voltButton.setEnabled(True)
+        
+        self.pressureStartButton.setEnabled(True)
+        self.thicknessStartButton.setEnabled(True)
+        self.rateStartButton.setEnabled(True)
+        self.voltStartButton.setEnabled(True)
+        self.allStartButton.setEnabled(True)
+        
     def stop_timers(self):
         self.prs_timer.stop()
         self.thk_timer.stop()

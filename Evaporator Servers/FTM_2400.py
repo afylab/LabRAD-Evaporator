@@ -403,7 +403,7 @@ class FTMServer(DeviceServer):
 
     @setting(215,returns='s')
     def zero_rates_thickness(self,c):
-        """Queries the L command and returns the response. Usage is get_rate()"""
+        """Queries the S command and returns the response. Usage is zero_rates_thickness()"""
         dev=self.selectedDevice(c)
         command = self.format_command(c,'S')
         yield dev.write(command)

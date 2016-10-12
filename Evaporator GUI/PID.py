@@ -4,7 +4,7 @@ class PID:
     """
     Discrete PID control
     """
-    def __init__(self, P=0.0, I=0.0, D=0.0, Integrator_max=500, Integrator_min=-500):
+    def __init__(self, P=0.0, I=0.0, D=0.0, Integrator_max=500, Integrator_min=-500, v_max = 0.7, v_off = 0.45):
         self.Kp=P
         self.Ki=I
         self.Kd=D
@@ -13,8 +13,8 @@ class PID:
         self.Integrator = 0
         self.Integrator_max=Integrator_max
         self.Integrator_min=Integrator_min
-        self.v_max = 0.5
-        self.v_off = 0
+        self.v_max = v_max
+        self.v_off = v_off
 
         self.set_point=0.0
         self.error=0.0

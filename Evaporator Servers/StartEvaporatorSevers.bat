@@ -1,3 +1,4 @@
+call activate python27
 start /min labrad
 ping 127.0.0.1 -n 3 > nul 
 start /min python data_vault.py & start /min python serial_server.py
