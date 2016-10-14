@@ -2457,7 +2457,7 @@ qproperty-wordWrap: true;
 }</string>
        </property>
        <property name="text">
-        <string>40</string>
+        <string>400</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="contactThkInput">
@@ -2642,7 +2642,7 @@ qproperty-wordWrap: true;
 }</string>
        </property>
        <property name="text">
-        <string>25</string>
+        <string>250</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="headThkInput">
