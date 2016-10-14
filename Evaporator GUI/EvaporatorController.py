@@ -69,14 +69,14 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.evapInProgress = False
         self.evapTimer = QtCore.QTimer(self)
         self.evapVoltage = 0.45
-        self.stddev = 0.1
+        self.max_diff = 0.1
         self.checkPoints = 15
         self.setPoint = 0.0
         self.thermTime = 25.0
         self.thermPrs = '1.00E-03'
         self.contactAngle = 105.0
-        self.contactThk = 40.0
-        self.headThk  = 25.0
+        self.contactThk = 400.0
+        self.headThk  = 250.0
         
         #Define what happens when interacting with buttons
         self.comboGraph.activated[str].connect(self.selectData)
@@ -219,6 +219,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.tdk.select_device()
             self.tdk.adr('6')
             self.tdk.rmt_set('REM')
+            self.ftm = self.cxn.ftm_server
+            self.ftm.select_device()
             
             nom_prs = yield self.rvc.get_nom_prs()
             self.nomPressLabel.setText(nom_prs)
@@ -261,13 +263,13 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.plot.setLabel('right','')
         self.plot.setLabel('left', '')
         self.plot.setLabel('bottom', '')  
-        self.gph1Data = None
+        self.gph1Data = [[]]
         
         self.plot2.setTitle('Choose Data for Display')
         self.plot2.setLabel('right','')
         self.plot2.setLabel('left', '')
         self.plot2.setLabel('bottom', '')    
-        self.gph2Data = None
+        self.gph2Data = [[]]
         
 #----------------------------------------------------------------------------------------------#   
     """ The following section has functions for creating and updating the graphs """
@@ -286,7 +288,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         new_data = yield self.dv_gph.get()
         
         #If graph data is empty graph data is new data points
-        if self.gph1Data == None:
+        if self.gph1Data == [[]]:
             self.gph1Data = new_data
         #Otherwise append new data points to the data set
         else:
@@ -312,7 +314,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         new_data = yield self.dv_gph2.get()
         
         #If graph data is empty graph data is new data points
-        if self.gph2Data == None:
+        if self.gph2Data == [[]]:
             self.gph2Data = new_data
         #Otherwise append new data points to the data set
         else:
@@ -339,6 +341,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
           
     @inlineCallbacks
     def selectData(self,data_name):
+        self.gph1Data = [[]]
         name = str(data_name)
         yield self.dv_gph.open(name)
         print 'Opened file in graph 1: ' + name
@@ -346,19 +349,22 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         
         if name[8:] == 'Pressure vs. Time':
             self.plot.setLabel('left', 'Pressure (mbar)')
-            self.plot.setLabel('bottom', 'Time (s)','s')   
+            self.plot.setLabel('bottom', 'Time','s')   
         elif name[8:] == 'Thickness vs. Time':
             self.plot.setLabel('left', 'Thickness (Anstroms)')
-            self.plot.setLabel('bottom', 'Time (s)','s') 
+            self.plot.setLabel('bottom', 'Time','s') 
         elif name[8:] == 'Deposition Rate vs. Time':
             self.plot.setLabel('left', 'Deposition Rate (Anstroms / s)')
-            self.plot.setLabel('bottom', 'Time (s)','s')     
+            self.plot.setLabel('bottom', 'Time','s')     
         elif name[8:] == 'Voltage vs. Time':
             self.plot.setLabel('left', 'Voltage (V)')
-            self.plot.setLabel('bottom', 'Time (s)','s')   
+            self.plot.setLabel('bottom', 'Time','s')   
+            
+        self.update_gph(None, 'selectData')
             
     @inlineCallbacks
     def selectData2(self,data_name):
+        self.gph2Data = [[]]
         name = str(data_name)
         yield self.dv_gph2.open(name)
         print 'Opened file in graph 2: ' + name
@@ -366,17 +372,18 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         
         if name[8:] == 'Pressure vs. Time':
             self.plot2.setLabel('left', 'Pressure (mbar)')
-            self.plot2.setLabel('bottom', 'Time (s)','s')   
+            self.plot2.setLabel('bottom', 'Time','s')   
         elif name[8:] == 'Thickness vs. Time':
             self.plot2.setLabel('left', 'Thickness (Anstroms)')
-            self.plot2.setLabel('bottom', 'Time (s)','s') 
+            self.plot2.setLabel('bottom', 'Time','s') 
         elif name[8:] == 'Deposition Rate vs. Time':
             self.plot2.setLabel('left', 'Deposition Rate (Anstroms / s)')
-            self.plot2.setLabel('bottom', 'Time (s)','s')     
+            self.plot2.setLabel('bottom', 'Time','s')     
         elif name[8:] == 'Voltage vs. Time':
             self.plot2.setLabel('left', 'Voltage (V)')
-            self.plot2.setLabel('bottom', 'Time (s)','s')   
+            self.plot2.setLabel('bottom', 'Time','s')   
             
+        self.update_gph2(None, 'selectData')
         
     def selectAxes(self,style):
         style = str(style)
@@ -410,7 +417,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def add_dataset_prs(self, cntx, signal): 
         if signal[8:] == 'Pressure vs. Time':
             self.dv_prs.open(signal)
-            self.prs_data = None
+            self.prs_data = [[]]
             print 'Pressure is now being monitored'
         
     @inlineCallbacks
@@ -421,7 +428,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.pressureStatus.setText(data_string[0:8])
         self.pressureStatus_2.setText(data_string[0:8])
         
-        if self.prs_data == None:
+        if self.prs_data == [[]]:
             self.prs_data = new_data
         else:
             self.prs_data = np.append(self.prs_data,new_data,axis=0)
@@ -433,7 +440,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def add_dataset_dep(self, cntx, signal):
         if signal[8:] == 'Deposition Rate vs. Time':
             self.dv_dep.open(signal)
-            self.dep_data = None
+            self.dep_data = [[]]
             print 'Deposition Rate is now being monitored'
         
     @inlineCallbacks
@@ -449,7 +456,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             print 'Voltage was set to: ' + voltage
             yield self.tdk.volt_set(voltage)
             
-        if self.dep_data == None:
+        if self.dep_data == [[]]:
             self.dep_data = new_data
         else:
             self.dep_data = np.append(self.dep_data,new_data,axis=0)
@@ -461,7 +468,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def add_dataset_thk(self, cntx, signal):
         if signal[8:] == 'Thickness vs. Time':
             self.dv_thk.open(signal)
-            self.thk_data = None
+            self.thk_data = [[]]
             print 'Thickness is now being monitored'
         
     @inlineCallbacks
@@ -480,7 +487,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
                 yield self.toggleEvap(cntx) 
                 yield self.toggleShutter(cntx)
             
-        if self.thk_data == None:
+        if self.thk_data == [[]]:
             self.thk_data = new_data
         else:
             self.thk_data = np.append(self.thk_data,new_data,axis=0)
@@ -492,14 +499,14 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def add_dataset_volt(self, cntx, signal):
         if signal[8:] == 'Voltage vs. Time':
             self.dv_volt.open(signal)
-            self.volt_data = None
+            self.volt_data = [[]]
             print 'Voltage is now being monitored'
             
     @inlineCallbacks
     def update_volt(self, cntx, signal):
-        new_data = yield self.dv_thk.get()
+        new_data = yield self.dv_volt.get()
         
-        if self.volt_data == None:
+        if self.volt_data == [[]]:
             self.volt_data = new_data
         else:
             self.volt_data = np.append(self.volt_data,new_data,axis=0)
@@ -617,6 +624,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     
     @inlineCallbacks
     def toggleShutter(self,cntx):
+        print "Toggling shutter"
         if self.boatShutterStatus.text() == 'Open':
             self.boatShutterStatus.setText('Closed')
             self.boatShutterButton.setStyleSheet("image:url(:/Shutter/Closed3.png);"
@@ -660,7 +668,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         try:
             self.textEdit2.clear()
             prs = self.thermPrsInput.text()
-            self.thermPrs = prs
+            self.thermPrs = str(prs)
             self.thermPrsStatusLabel.setText(self.thermPrsInput.text())
         except:
             self.textEdit2.setPlainText("Man, that ain't a number")
@@ -819,7 +827,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.heliumValveButton_2.setStyleSheet("#heliumValveButton_2{border-color:"
             "rgb(255, 255, 255); border-width: 4px;border-style: solid;  " +
             "border-radius: 25px;background: blue;}")            
-                
             yield self.rvc.set_mode_prs()
             yield self.rvc.set_nom_prs(prs)
             new_prs = yield self.rvc.get_nom_prs()
@@ -830,6 +837,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
                 self.textEdit.setPlainText("Error occured.")
             elif objName =='nomPressButton_2':
                 self.textEdit2.setPlainText("Error occured.")
+            else:
+                print "Nominal pressure failed to set."
     
     @inlineCallbacks
     def open_valve(self,cntx):
@@ -942,56 +951,56 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def waitXMinutes(self):
         if self.minutesRemaining == 1 and self.evapInProgress:
             self.textEdit2.setText('Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
             self.minutesRemaining = self.minutesRemaining - 1
             #Change this to 60 seconds instead of 1 when done debugging. 
-            self.evapTimer.singleShot(1000,self.pumpOutChamber)
+            self.evapTimer.singleShot(60000,self.pumpOutChamber)
         elif self.minutesRemaining > 1 and self.evapInProgress:
             self.textEdit2.setText('Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
             self.minutesRemaining = self.minutesRemaining - 1
             #Change this to 60 seconds instead of 1 when done debugging. 
-            self.evapTimer.singleShot(1000,self.waitXMinutes)
+            self.evapTimer.singleShot(60000,self.waitXMinutes)
         
     @inlineCallbacks
-    def pumpOutChamber(self,cntx):
-        if evapInProgress:
-            yield self.close_valve(cntx)
+    def pumpOutChamber(self):
+        if self.evapInProgress:
+            yield self.close_valve(None)
             self.textEdit2.setText('Thermalization complete. Pumping out exchange gas.')
-            #Eventually give 30 seconds to evacutate exchange gas. For now, set to 5 seconds. 
-            self.evapTimer.singleShot(5000,self.autoEvapPhase2)
+            print 'Thermalization complete. Pumping out exchange gas.'
+            self.evapTimer.singleShot(30000,self.autoEvapPhase2)
             
     @inlineCallbacks
-    def autoEvapPhase2(self, cntx):
+    def autoEvapPhase2(self):
         if self.evapInProgress:
             self.textEdit2.setText('Calibrating evaporation voltage.')
-            yield self.toggleShutter(cntx)
-            yield self.toggleEvap(cntx)
+            print 'Calibrating evaporation voltage.'
+            yield self.toggleShutter(None)
+            yield self.toggleEvap(None)
             #If this thickness is reached, then then evaporator stops evaporating. Units of angstroms.  
             self.desiredThk = 20000
-            self.getBaseVoltage(cntx)
+            self.getBaseVoltage()
             
-    @inlineCallbacks
-    def getBaseVoltage(self,cntx):
+    def getBaseVoltage(self):
         if self.evapInProgress:
             #Times out if evaporate too much material (whatever set by the desiredThk in autoEvapPhase2)
-            #Add functionality to auto stop if hit max voltage
-            std = np.std(self.dep_data[-self.checkPoints:,1] - self.setPoint)
-            if std >= self.stddev and self.evaporating:
+            #Add functionality to auto stop if hit max voltage. For now this is done manually. 
+            max = np.max(np.abs(self.dep_data[-self.checkPoints:,1] - self.setPoint))
+            if max >= self.max_diff and self.evaporating:
                 self.evapTimer.singleShot(5000,self.getBaseVoltage)
-            elif std <= self.stddev and self.evaporating:
+            elif max <= self.max_diff and self.evaporating:
                 self.evapVoltage = np.average(self.volt_data[-self.checkPoints:,1])
-                print "Base voltage chosen to be " + str(self.evapVoltage)
-                
-                self.autoEvapPhase3(cntx)
+                self.autoEvapPhase3()
             elif self.evaporating == False:
                 self.textEdit2.setText("Took too long to reach equilibrium evaporating rate. Make sure" + 
                 " there's enough lead in the evaporator.")
     
     @inlineCallbacks
-    def autoEvapPhase3(self,cntx):
+    def autoEvapPhase3(self):
         if self.evapInProgress:
             #Close the shutter and stops evaporating
-            yield self.toggleShutter(cntx)
-            yield self.toggleEvap(cntx)
+            yield self.toggleShutter(None)
+            yield self.toggleEvap(None)
             
             #Set the offset voltage to the 
             self.PID.setVOff(self.evapVoltage)
@@ -1000,21 +1009,22 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             angle = (360 - 2*self.contactAngle)/2
             yield self.ss.rot('B',str(int(angle)),'C')
             
-            self.textEdit2.setText("Base voltage chosen to be " + str(self.evapVoltage) + ". Rotating to first " + 
-            "contact evaporation.")
-            self.pauseUntilRotated1(cntx)
+            self.textEdit2.setText("Base voltage chosen as " + str(self.evapVoltage) + ". Rotating " 
+            + str(angle) + " degrees to first contact evaporation.")
+            print "Base voltage chosen as " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to first contact evaporation."
+            self.pauseUntilRotated1()
             
     @inlineCallbacks
-    def pauseUntilRotated1(self,cntx):
+    def pauseUntilRotated1(self):
         if self.evapInProgress:
             status = yield self.ss.status()
             if status.startswith('turning'):
-                self.evapTimer.singleShot(1000,pauseUntilRotated)
+                self.evapTimer.singleShot(1000,self.pauseUntilRotated1)
             else:
-                self.autoEvapPhase4(cntx)
+                self.autoEvapPhase4()
                 
     @inlineCallbacks
-    def autoEvapPhase4(self,cntx):
+    def autoEvapPhase4(self):
         if self.evapInProgress:
             self.PID.setKd(0)
             self.PID.setKp(0)
@@ -1024,24 +1034,26 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.propStatus.setText(str(0))
             self.intStatus.setText(str(0))
             #make sure thickness is zeroed
-            yield self.ftm.zero_rate_thickness()
+            yield self.ftm.zero_rates_thickness()
             #Start evaporating with shutter closed 
-            yield self.toggleEvap(cntx)
+            yield self.toggleEvap(None)
             #Sit at the determined voltage for a minute to get up to desired evaporation rate
             self.textEdit2.setText("Contact evaporation angle reached. Preheating lead before sample deposition.")
-            self.evapTimer.singleShot(60000,self.autoEvapPhase5)
+            print "Contact evaporation angle reached. Preheating lead before sample deposition."
+            self.evapTimer.singleShot(45000,self.autoEvapPhase5)
             
     @inlineCallbacks
-    def autoEvapPhase5(self,cntx):
+    def autoEvapPhase5(self):
         if self.evapInProgress:
             self.desiredThk = self.contactThk
             #Open shutter
-            yield self.toggleShutter(cntx)
+            yield self.toggleShutter(None)
+            self.textEdit2.setText("Shutter opened. Evaporating first contact.")
+            print "Shutter opened. Evaporating first contact."
             #Give a couple seconds for ftm to read correctly
             self.evapTimer.singleShot(5000,self.autoEvapPhase6)
             
-    @inlineCallbacks
-    def autoEvapPhase6(self,cntx):
+    def autoEvapPhase6(self):
         if self.evapInProgress:
             #Set PID parameters back to achieve as constant an evaporation rate as possible
             self.PID.setKd(0)
@@ -1051,20 +1063,21 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.derivStatus.setText(str(0))
             self.propStatus.setText(str(0))
             self.intStatus.setText(str(0.001))
-            self.textEdit2.setText("Evaporating first contact.")
+            self.textEdit2.setText("Evaporating first contact. PID enabled.")
+            print "Evaporating first contact. PID enabled."
             self.waitForEvap1()
             
     def waitForEvap1(self):
         if self.evapInProgress:
             if self.evaporating:
                 self.evapVoltage = self.volt_data[-1,1]
-                self.evapTimer.singleShot(1000,self.waitForEvap)
+                self.evapTimer.singleShot(1000,self.waitForEvap1)
             else: 
                 self.autoEvapPhase7()
             #Add a way to check that the evaporation was successful. 
         
     @inlineCallbacks
-    def autoEvapPhase7(self,cntx):
+    def autoEvapPhase7(self):
         if self.evapInProgress:
             #Set the offset voltage to the updated value from the previous evaporation
             self.PID.setVOff(self.evapVoltage)
@@ -1072,22 +1085,22 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             
             angle = self.contactAngle
             yield self.ss.rot('B',str(int(angle)),'C')
-            
-            self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage) + ". Rotating to head on " + 
-            "evaporation.")
-            self.pauseUntilRotated2(cntx)
+            self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage) + ". Rotating " 
+            + str(angle) + " degrees to head on evaporation.")
+            print "Base voltage updated to " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to head on evaporation."
+            self.pauseUntilRotated2()
         
     @inlineCallbacks
-    def pauseUntilRotated2(self,cntx):
+    def pauseUntilRotated2(self):
         if self.evapInProgress:
             status = yield self.ss.status()
             if status.startswith('turning'):
-                self.evapTimer.singleShot(1000,pauseUntilRotated)
+                self.evapTimer.singleShot(1000,self.pauseUntilRotated2)
             else:
-                self.autoEvapPhase8(cntx)  
+                self.autoEvapPhase8()  
         
     @inlineCallbacks
-    def autoEvapPhase8(self,cntx):
+    def autoEvapPhase8(self):
         if self.evapInProgress:
             self.PID.setKd(0)
             self.PID.setKp(0)
@@ -1097,26 +1110,28 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.propStatus.setText(str(0))
             self.intStatus.setText(str(0))
             #make sure thickness is zeroed
-            yield self.ftm.zero_rate_thickness()
+            yield self.ftm.zero_rates_thickness()
             #Start evaporating with shutter closed 
-            yield self.toggleEvap(cntx)
+            self.desiredThk = 20000
+            yield self.toggleEvap(None)
             #Sit at the determined voltage for a minute to get up to desired evaporation rate
             self.textEdit2.setText("Head on orientation reached. Preheating lead before sample deposition.")
-            self.evapTimer.singleShot(60000,self.autoEvapPhase9)
-
+            print "Head on orientation reached. Preheating lead before sample deposition."
+            self.evapTimer.singleShot(45000,self.autoEvapPhase9)
     
     @inlineCallbacks
-    def autoEvapPhase9(self,cntx):
+    def autoEvapPhase9(self):
         if self.evapInProgress:
-            #Set thickness to head on evaporation thickness
+            #Set thickness to head on evaporation thickness. Eventuall add (if ==0, then skip)
             self.desiredThk = self.headThk
             #Open shutter
-            yield self.toggleShutter(cntx)
+            yield self.toggleShutter(None)
             #Give a couple seconds for ftm to read correctly
+            self.textEdit2.setText("Shutter opened. Evaporating head on.")
+            print "Shutter opened. Evaporating head on."
             self.evapTimer.singleShot(5000,self.autoEvapPhase10)
             
-    @inlineCallbacks
-    def autoEvapPhase10(self,cntx):
+    def autoEvapPhase10(self):
         if self.evapInProgress:
             #Set PID parameters back to achieve as constant an evaporation rate as possible
             self.PID.setKd(0)
@@ -1126,20 +1141,21 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.derivStatus.setText(str(0))
             self.propStatus.setText(str(0))
             self.intStatus.setText(str(0.001))
-            self.textEdit2.setText("Evaporating head on.")
+            self.textEdit2.setText("Evaporating head on. PID on.")
+            print "Evaporating head on. PID on."
             self.waitForEvap2()
             
     def waitForEvap2(self):
         if self.evapInProgress:
             if self.evaporating:
                 self.evapVoltage = self.volt_data[-1,1]
-                self.evapTimer.singleShot(1000,self.waitForEvap)
+                self.evapTimer.singleShot(1000,self.waitForEvap2)
             else: 
                 self.autoEvapPhase11()
             #Add a way to check that the evaporation was successful. 
     
     @inlineCallbacks
-    def autoEvapPhase11(self,cntx):
+    def autoEvapPhase11(self):
         if self.evapInProgress:
             #Set the offset voltage to the updated value from the previous evaporation
             self.PID.setVOff(self.evapVoltage)
@@ -1147,22 +1163,23 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             
             angle = self.contactAngle
             yield self.ss.rot('B',str(int(angle)),'C')
-            
-            self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage) + ". Rotating to second " + 
-            "contact evaporation.")
-            self.pauseUntilRotated3(cntx)
+
+            self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage) + ". Rotating " 
+            + str(angle) + " degrees to second contact evaporation.")
+            print "Base voltage updated to " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to second contact evaporation."
+            self.pauseUntilRotated3()
             
     @inlineCallbacks
-    def pauseUntilRotated3(self,cntx):
+    def pauseUntilRotated3(self):
         if self.evapInProgress:
             status = yield self.ss.status()
             if status.startswith('turning'):
-                self.evapTimer.singleShot(1000,pauseUntilRotated)
+                self.evapTimer.singleShot(1000,self.pauseUntilRotated3)
             else:
-                self.autoEvapPhase12(cntx) 
+                self.autoEvapPhase12() 
            
     @inlineCallbacks
-    def autoEvapPhase12(self,cntx):
+    def autoEvapPhase12(self):
         if self.evapInProgress:
             self.PID.setKd(0)
             self.PID.setKp(0)
@@ -1172,25 +1189,27 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.propStatus.setText(str(0))
             self.intStatus.setText(str(0))
             #make sure thickness is zeroed
-            yield self.ftm.zero_rate_thickness()
+            yield self.ftm.zero_rates_thickness()
             #Start evaporating with shutter closed 
-            yield self.toggleEvap(cntx)
+            self.desiredThk = 20000
+            yield self.toggleEvap(None)
             #Sit at the determined voltage for a minute to get up to desired evaporation rate
-            self.textEdit2.setText("Head on orientation reached. Preheating lead before sample deposition.")
-            self.evapTimer.singleShot(60000,self.autoEvapPhase13)
+            self.textEdit2.setText("Second contact orientation reached. Preheating lead before sample deposition.")
+            print "Second contact orientation reached. Preheating lead before sample deposition."
+            self.evapTimer.singleShot(45000,self.autoEvapPhase13)
 
     @inlineCallbacks
-    def autoEvapPhase13(self,cntx):
+    def autoEvapPhase13(self):
         if self.evapInProgress:
-            #Set thickness to head on evaporation thickness
+            #Set thickness to head on evaporation thickness (eventually skip if 0)
             self.desiredThk = self.contactThk
             #Open shutter
-            yield self.toggleShutter(cntx)
-            #Give a couple seconds for ftm to read correctly
+            yield self.toggleShutter(None)
+            self.textEdit2.setText("Shutter opened. Evaporating second contact.")
+            print "Shutter opened. Evaporating second contact."
             self.evapTimer.singleShot(5000,self.autoEvapPhase14)
             
-    @inlineCallbacks
-    def autoEvapPhase14(self,cntx):
+    def autoEvapPhase14(self):
         if self.evapInProgress:
             #Set PID parameters back to achieve as constant an evaporation rate as possible
             self.PID.setKd(0)
@@ -1200,20 +1219,21 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.derivStatus.setText(str(0))
             self.propStatus.setText(str(0))
             self.intStatus.setText(str(0.001))
-            self.textEdit2.setText("Evaporating head on.")
+            self.textEdit2.setText("Evaporating second contact. PID on.")
+            print "Evaporating second contact. PID on."
             self.waitForEvap3()
             
     def waitForEvap3(self):
         if self.evapInProgress:
             if self.evaporating:
                 self.evapVoltage = self.volt_data[-1,1]
-                self.evapTimer.singleShot(1000,self.waitForEvap)
+                self.evapTimer.singleShot(1000,self.waitForEvap3)
             else: 
                 self.autoEvapPhase15()
             #Add a way to check that the evaporation was successful. 
         
     @inlineCallbacks
-    def autoEvapPhase15(self,cntx):
+    def autoEvapPhase15(self):
         if self.evapInProgress:
             #Set the offset voltage to the updated value from the previous evaporation
             self.PID.setVOff(self.evapVoltage)
@@ -1223,17 +1243,20 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.ss.rot('B',str(int(angle)),'C')
             
             self.textEdit2.setText("Returning to original orientation.")
-            self.pauseUntilRotated4(cntx)
+            print "Returning to original orientation."
+            self.pauseUntilRotated4()
         
     @inlineCallbacks
-    def pauseUntilRotated4(self,cntx):
+    def pauseUntilRotated4(self):
         if self.evapInProgress:
             status = yield self.ss.status()
             if status.startswith('turning'):
-                self.evapTimer.singleShot(1000,pauseUntilRotated)
+                self.evapTimer.singleShot(1000,self.pauseUntilRotated4)
             else:
                 self.textEdit2.setText("Three angle evaporation complete.")
+                print "Three angle evaporation complete."
                 self.evapInProgress = False
+                self.unlock_interface()
                 self.startAuto.setStyleSheet("#startAuto{font: 14pt \"MS Shell Dlg 2\"; border-width: 0px;" + 
                 "border-style: solid; border-radius: 20px; background: green; color: rgb(212,212,212);}")
         
@@ -1247,6 +1270,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             "border-style: solid; border-radius: 20px; background: green; color: rgb(212,212,212);}")
         self.unlock_interface()
         yield self.close_valve(cntx)
+        if self.evaporating:
+            yield self.toggleEvap(cntx)
         if self.powerSupplyState != "Off":
             yield self.togglePowerSupply(cntx)    
         if self.boatShutterStatus.text() != "Closed":
@@ -1345,6 +1370,9 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.cryoCWButton.setEnabled(True)
         self.cryoCCWButton.setEnabled(True)
         
+    def doNothing(self):
+        print 'Doing nothing!'
+        #self.textEdit2.setText("You have reached the do nothing command!")
         
 #----------------------------------------------------------------------------------------------#      
     """ The following section specifies closing actions taken by the GUI when disconnecting."""

@@ -37,12 +37,13 @@ serial_server_name = (platform.node() + '_serial_server').replace('-','_').lower
 from labrad.server import setting
 from labrad.devices import DeviceServer,DeviceWrapper
 from twisted.internet.defer import inlineCallbacks, returnValue
+from twisted.internet import reactor, defer
 import labrad.units as units
 from labrad.types import Value
 import time
 
-#TIMEOUT = Value(0.011,'s') 
-# This server does not use timeout because the device doesn't implement stadard message termination. 
+TIMEOUT = Value(5,'s') 
+# This server does not use timeout because the device doesn't implement standard message termination. 
 BAUD    = 19200
 BYTESIZE = 8
 STOPBITS = 1
@@ -63,8 +64,9 @@ class FTMWrapper(DeviceWrapper):
         p.bytesize(BYTESIZE)
         p.stopbits(STOPBITS)
         p.setParity = PARITY
+        p.timeout(TIMEOUT)
         p.read()  # clear out the read buffer
-        #p.timeout(TIMEOUT)
+
         #No timeout means checks for stored characters then immediately stops waiting. 
         p.timeout(None)
         print(" CONNECTED ")
@@ -114,6 +116,7 @@ class FTMServer(DeviceServer):
         print 'done.'
         print self.serialLinks
         yield DeviceServer.initServer(self)
+        self.busy = False
 
     @inlineCallbacks
     def loadConfigInfo(self):
@@ -197,7 +200,7 @@ class FTMServer(DeviceServer):
                     print 'Problem with data in command'
                 return False
         except IndexError:
-            print 'Message status character not yet arrived'
+            #print 'Message status character not yet arrived'
             return False
             
         try:
@@ -208,7 +211,7 @@ class FTMServer(DeviceServer):
                 print 'CRC did not match expected form. Error in data.'
                 return False
         except IndexError:
-            print 'Entire string not yet arrived'
+            #print 'Entire string not yet arrived'
             return False
         
 
@@ -231,44 +234,59 @@ class FTMServer(DeviceServer):
                 crc = crc & 0x3fff    
         return crc
         
-    @setting(106,returns = 's')
-    def read(self,c):
+    @setting(106,input = 's', returns = 's')
+    def read(self,c, input):
         """This piece of equipment doesn't use carriage returns, so the serial port cannot recognize
-        the end of a message. The timeout parameter is set to be very short (~1 ms) and this function
-        loops until the message from the FTM monitor has completely arrived or two seconds 
-        have elapsed."""
-        dev=self.selectedDevice(c)
-        ans = ''
+        the end of a message. The timeout parameter is set to be 0 and this function
+        loops until the message from the Deposition Monitor has completely arrived or two seconds
+        have elapsed. Also ensures that only one message is sent / being received at a time."""
+        command = self.format_command(c,input)
         tzero = time.clock()
+        #print 'Attempting to write: ' + command
         while True:
-            temp_ans = yield dev.read()
-            ans = ans + temp_ans
-            print ans
-            if self.check_ans(c,ans):
-                print 'Returning ans'
-                returnValue(ans[3:-2])
-                break
+            if self.busy == False:
+                self.busy = True
+                dev=self.selectedDevice(c)
+                #print 'Writing: ' + command
+                yield dev.write(command)
+                ans = ''
+                tzero = time.clock()
+                while True:
+                    temp_ans = yield dev.read()
+                    ans = ans + temp_ans
+                    #print ans
+                    if self.check_ans(c,ans):
+                        #print 'Returning ans: ' + str(ans[3:-2])
+                        self.busy = False
+                        returnValue(ans[3:-2])
+                    elif (time.clock() - tzero) > 2:
+                        print 'Connection timed out while reading'
+                        self.busy = False
+                        returnValue('Timeout')
             elif (time.clock() - tzero) > 2:
-                print 'Connection timed out'
-                returnValue('Timeout')
-                break
-                        
+                print 'Connection timed out while writing'
+                self.busy = False
+                returnValue("Timeout")
+            yield self.sleep(0.1)
+            #print "Sleeping"
+                     
+    def sleep(self,secs):
+        """Asynchronous compatible sleep command. Sleeps for given time in seconds, but allows
+        other operations to be done elsewhere while paused."""
+        d = defer.Deferred()
+        reactor.callLater(secs,d.callback,'Sleeping')
+        return d
+                
     @setting(200,returns='s')
     def get_ver(self,c):
         """Queries the @ command and returns the response. Usage is get_ver()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'@')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'@')
         returnValue(ans)
             
     @setting(201,film = 'i', returns='s')
     def get_film_parameters(self,c, film):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'A'+str(film)+'?')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'A'+str(film)+'?')
         returnValue(ans)
             
     @setting(202,film = 'i',film_name = 's',density = 'v[]',tool = 'i',
@@ -277,21 +295,15 @@ class FTMServer(DeviceServer):
     def set_film_parameters(self,c, film, film_name, density, tool, 
                 zfactor, thickness, thickness_setpoint, time_setpoint, sensor):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'A'+str(film)+film_name + ' ' + str(density) 
+        ans = yield self.read(c,'A'+str(film)+film_name + ' ' + str(density) 
                 + ' ' + str(tool) + ' ' + str(zfactor) + ' ' + str(thickness) + ' ' +
                 str(thickness_setpoint) + ' '+ str(time_setpoint) + ' ' + str(sensor))
-        yield dev.write(command)
-        ans = yield self.read(c)
         returnValue(ans)
             
     @setting(203,returns='s')
     def get_sys1_parameters(self,c, film):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'B?')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'B?')
         returnValue(ans)
             
     # Add set sys1 parameters if necessary eventually. Didn't seem necessary.         
@@ -309,10 +321,7 @@ class FTMServer(DeviceServer):
     @setting(205,returns='s')
     def get_sys2_parameters(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'C?')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'C?')
         returnValue(ans)
             
     @setting(206,min_freq = 'v[]', max_freq = 'v[]', min_rate = 'v[]', max_rate = 'v[]',
@@ -320,157 +329,105 @@ class FTMServer(DeviceServer):
     def set_sys2_parameters(self,c,min_freq,max_freq,min_rate,max_rate,min_thick,
                 max_thick,etch_mode):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'C' + ' ' + str(min_freq) + ' ' + str(max_freq) + ' ' + 
+        ans = yield self.read(c,'C' + ' ' + str(min_freq) + ' ' + str(max_freq) + ' ' + 
             str(min_rate) + ' ' + str(max_rate) + ' ' + str(min_thick) + ' ' + str(max_thick) + 
             ' ' + str(etch_mode))
-        
-        yield dev.write(command)
-        ans = yield self.read(c)
         returnValue(ans)
             
     @setting(207,film = 'i',returns='s')
     def set_film(self,c, film):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'D'+str(film))
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'D'+str(film))
         returnValue(ans)
             
     @setting(208,returns='s')
     def get_num_channels(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'J')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'J')
         returnValue(ans)
             
     @setting(209,sensor = 'i',returns='s')
     def get_sensor_rate(self,c,sensor):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'L'+str(sensor)+'?')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'L'+str(sensor)+'?')
         returnValue(ans)
             
     @setting(210,returns='s')
     def get_avg_rate(self,c,sensor):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'M')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'M')
         returnValue(ans)
 
     @setting(211,sensor = 'i',returns='s')
     def get_sensor_thickness(self,c,sensor):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'N'+str(sensor)+'?')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'N'+str(sensor)+'?')
         returnValue(ans)      
 
     @setting(212,returns='s')
     def get_avg_thickness(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'O')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'O')
         returnValue(ans)  
 
     @setting(213,sensor = 'i',returns='s')
     def get_sensor_freq(self,c,sensor):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'P'+str(sensor))
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'P'+str(sensor))
         returnValue(ans)    
 
     @setting(214,sensor = 'i', returns='s')
     def get_sensor_life(self,c,sensor):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'R'+str(sensor))
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'R'+str(sensor))
         returnValue(ans)  
 
     @setting(215,returns='s')
     def zero_rates_thickness(self,c):
         """Queries the S command and returns the response. Usage is zero_rates_thickness()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'S')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'S')
         returnValue(ans)
             
     @setting(216,returns='s')
     def zero_time(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'T')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'T')
         returnValue(ans)
             
     @setting(217,returns='s')
     def get_shutter_status(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'U?')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'U?')
         returnValue(ans)
     
     @setting(218,returns='s')
     def set_shutter_open(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'U1')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'U1')
         returnValue(ans)
     
     @setting(219,returns='s')
     def set_shutter_close(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'U0')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'U0')
         returnValue(ans)
             
     @setting(220,returns='s')
     def get_all_sensor_data(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'W')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'W')
         returnValue(ans) 
             
     @setting(221,returns='s')
     def power_up_status(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'Y')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'Y')
         returnValue(ans)
             
     @setting(222,returns='s')
     def set_default_parameters(self,c):
         """Queries the L command and returns the response. Usage is get_rate()"""
-        dev=self.selectedDevice(c)
-        command = self.format_command(c,'Z')
-        yield dev.write(command)
-        ans = yield self.read(c)
+        ans = yield self.read(c,'Z')
         returnValue(ans)
             
 __server__ = FTMServer()

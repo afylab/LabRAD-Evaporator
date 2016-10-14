@@ -253,7 +253,7 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
     @inlineCallbacks    
     def update_thk(self):
         thk = yield self.ftm.get_sensor_thickness(1)
-        thk = float(thk)
+        thk = 1000*float(thk)
         yield self.dv_thk.add(time.clock() - self.zero_thk, thk)
         
     @inlineCallbacks

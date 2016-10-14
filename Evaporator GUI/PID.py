@@ -26,8 +26,8 @@ class PID:
         """
 
         #Set current error and time. 
-        self.error = self.set_point - float(current_value[0,1])
-        self.time = float(current_value[0,0])
+        self.error = self.set_point - float(current_value[1])
+        self.time = float(current_value[0])
 
         # Proportional contribution is Kp * error
         self.P_value = self.Kp * self.error 

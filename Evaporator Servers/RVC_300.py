@@ -405,7 +405,7 @@ class RVCServer(DeviceServer):
         ans = yield dev.read()
         returnValue(ans)
         
-    @setting(233,returns='s')
+    @setting(234,returns='s')
     def get_manipulating_variable(self,c):
         """Queries the RVO? command and returns the response. Returns the manipulating variable."""
 

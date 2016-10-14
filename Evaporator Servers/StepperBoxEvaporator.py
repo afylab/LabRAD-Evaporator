@@ -39,6 +39,7 @@ from labrad.devices import DeviceServer,DeviceWrapper
 from twisted.internet.defer import inlineCallbacks, returnValue
 import labrad.units as units
 from labrad.types import Value
+from collections import deque
 import time
 
 TIMEOUT = Value(5,'s')
@@ -64,7 +65,7 @@ class StepperWrapper(DeviceWrapper):
         p.setParity = PARITY
         p.read()  # clear out the read buffer
         p.timeout(TIMEOUT)
-        p.timeout(None)
+        #p.timeout(None)
         print(" CONNECTED ")
         yield p.send()
         
@@ -112,6 +113,7 @@ class StepperServer(DeviceServer):
         print 'done.'
         print self.serialLinks
         yield DeviceServer.initServer(self)
+        self.stack  = deque([])
 
     @inlineCallbacks
     def loadConfigInfo(self):
@@ -150,10 +152,18 @@ class StepperServer(DeviceServer):
         stepper motor is motor 'A'. The cryostat stepper motor is motor 'B'. Use C to move clockwise and
         A to move anti-clockwise. Example command: A150C. This will turn stepper motor A 150 degrees 
         clockwise."""
-        dev=self.selectedDevice(c)
-        yield dev.write(stepper+degrees+direction+"r")
-        ans = yield dev.read()
-        returnValue(ans)
+        stat = yield self.status(c)
+        command = stepper+degrees+direction+"r" 
+        if stat.startswith('stationary') and len(self.stack) == 0:
+            dev=self.selectedDevice(c)
+            yield dev.write(command)
+            ans = yield dev.read()
+            returnValue(ans)
+        else:
+            self.stack.append(command)
+            if len(self.stack) == 1:
+                self.empty_stack(c)
+            returnValue('Added to stack\r\n')
 
     @setting(506, returns='s')
     def iden(self,c):
@@ -170,6 +180,19 @@ class StepperServer(DeviceServer):
         yield dev.write("sr")
         ans = yield dev.read()
         returnValue(ans)
+        
+    @setting(508,returns = '')
+    def empty_stack(self,c):
+        """Works on emptying the stack. Should never need to be called manually."""
+        dev=self.selectedDevice(c)
+        while len(self.stack)>0:
+            stat = yield self.status(c)
+            if stat.startswith('stationary'):
+                command = self.stack.popleft()
+                yield dev.write(command)
+                ans = yield dev.read()
+                yield self.empty_stack(c)
+                
         
 __server__ = StepperServer()
 if __name__ == '__main__':
