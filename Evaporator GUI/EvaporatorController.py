@@ -505,6 +505,9 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     @inlineCallbacks
     def update_volt(self, cntx, signal):
         new_data = yield self.dv_volt.get()
+        data_string = str(new_data[0,1])
+        self.voltageStatus.setText(data_string[0:6])
+        self.voltageStatus_2.setText(data_string[0:6])
         
         if self.volt_data == [[]]:
             self.volt_data = new_data
@@ -1004,7 +1007,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             
             #Set the offset voltage to the 
             self.PID.setVOff(self.evapVoltage)
-            self.vOffStatus.setText(str(self.evapVoltage))
+            string = str(self.evapVoltage)
+            self.vOffStatus.setText(string[0:6])
             
             angle = (360 - 2*self.contactAngle)/2
             yield self.ss.rot('B',str(int(angle)),'C')
@@ -1081,7 +1085,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         if self.evapInProgress:
             #Set the offset voltage to the updated value from the previous evaporation
             self.PID.setVOff(self.evapVoltage)
-            self.vOffStatus.setText(str(self.evapVoltage))
+            string = str(self.evapVoltage)
+            self.vOffStatus.setText(string[0:6])
             
             angle = self.contactAngle
             yield self.ss.rot('B',str(int(angle)),'C')
@@ -1159,7 +1164,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         if self.evapInProgress:
             #Set the offset voltage to the updated value from the previous evaporation
             self.PID.setVOff(self.evapVoltage)
-            self.vOffStatus.setText(str(self.evapVoltage))
+            string = str(self.evapVoltage)
+            self.vOffStatus.setText(string[0:6])
             
             angle = self.contactAngle
             yield self.ss.rot('B',str(int(angle)),'C')
@@ -1235,9 +1241,10 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     @inlineCallbacks
     def autoEvapPhase15(self):
         if self.evapInProgress:
-            #Set the offset voltage to the updated value from the previous evaporation
+            #Set the offset voltage to the updated value from the previous evaporation. Not necessary at this step. 
             self.PID.setVOff(self.evapVoltage)
-            self.vOffStatus.setText(str(self.evapVoltage))
+            string = str(self.evapVoltage)
+            self.vOffStatus.setText(string[0:6])
             
             angle = (360-2*self.contactAngle)/2
             yield self.ss.rot('B',str(int(angle)),'C')

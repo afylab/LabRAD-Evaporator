@@ -347,7 +347,7 @@ class Ui_MainWindow(object):
         self.line_12.setFrameShape(QtGui.QFrame.HLine)
         self.line_12.setObjectName(_fromUtf8("line_12"))
         self.line_13 = QtGui.QFrame(self.graphBackground)
-        self.line_13.setGeometry(QtCore.QRect(900, 200, 300, 3))
+        self.line_13.setGeometry(QtCore.QRect(900, 260, 300, 3))
         self.line_13.setStyleSheet(_fromUtf8("#line_13{\n"
 "color: white\n"
 "}"))
@@ -356,7 +356,7 @@ class Ui_MainWindow(object):
         self.line_13.setFrameShape(QtGui.QFrame.HLine)
         self.line_13.setObjectName(_fromUtf8("line_13"))
         self.line_14 = QtGui.QFrame(self.graphBackground)
-        self.line_14.setGeometry(QtCore.QRect(900, 41, 1, 160))
+        self.line_14.setGeometry(QtCore.QRect(900, 41, 1, 220))
         self.line_14.setStyleSheet(_fromUtf8("#line_14{\n"
 "color: white;\n"
 "}"))
@@ -365,7 +365,7 @@ class Ui_MainWindow(object):
         self.line_14.setFrameShape(QtGui.QFrame.VLine)
         self.line_14.setObjectName(_fromUtf8("line_14"))
         self.line_15 = QtGui.QFrame(self.graphBackground)
-        self.line_15.setGeometry(QtCore.QRect(1200, 41, 1, 160))
+        self.line_15.setGeometry(QtCore.QRect(1200, 41, 1, 221))
         self.line_15.setStyleSheet(_fromUtf8("#line_15{\n"
 "color: white;\n"
 "}"))
@@ -401,7 +401,7 @@ class Ui_MainWindow(object):
         self.nomPressInput.setGeometry(QtCore.QRect(910, 350, 113, 21))
         self.nomPressInput.setObjectName(_fromUtf8("nomPressInput"))
         self.nomPressLabel = QtGui.QLabel(self.graphBackground)
-        self.nomPressLabel.setGeometry(QtCore.QRect(1130, 350, 111, 21))
+        self.nomPressLabel.setGeometry(QtCore.QRect(1130, 340, 151, 41))
         self.nomPressLabel.setStyleSheet(_fromUtf8("#nomPressLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -457,6 +457,24 @@ class Ui_MainWindow(object):
         self.line_10.setLineWidth(4)
         self.line_10.setFrameShape(QtGui.QFrame.HLine)
         self.line_10.setObjectName(_fromUtf8("line_10"))
+        self.voltageStatus = QtGui.QLabel(self.graphBackground)
+        self.voltageStatus.setGeometry(QtCore.QRect(1060, 205, 100, 51))
+        self.voltageStatus.setStyleSheet(_fromUtf8("#voltageStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.voltageStatus.setObjectName(_fromUtf8("voltageStatus"))
+        self.voltageLabel = QtGui.QLabel(self.graphBackground)
+        self.voltageLabel.setGeometry(QtCore.QRect(890, 205, 150, 50))
+        self.voltageLabel.setStyleSheet(_fromUtf8("#voltageLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.voltageLabel.setObjectName(_fromUtf8("voltageLabel"))
         self.tabWidget.addTab(self.GraphicalInterface, _fromUtf8(""))
         self.Plotting = QtGui.QWidget()
         self.Plotting.setStyleSheet(_fromUtf8(""))
@@ -1062,7 +1080,7 @@ class Ui_MainWindow(object):
         self.line_34.setFrameShape(QtGui.QFrame.VLine)
         self.line_34.setObjectName(_fromUtf8("line_34"))
         self.line_21 = QtGui.QFrame(self.evapBackground)
-        self.line_21.setGeometry(QtCore.QRect(470, 470, 240, 3))
+        self.line_21.setGeometry(QtCore.QRect(470, 510, 240, 3))
         self.line_21.setStyleSheet(_fromUtf8("#line_21{\n"
 "color: white\n"
 "}"))
@@ -1125,7 +1143,7 @@ class Ui_MainWindow(object):
         self.nomPressInput_2.setGeometry(QtCore.QRect(910, 530, 113, 21))
         self.nomPressInput_2.setObjectName(_fromUtf8("nomPressInput_2"))
         self.nomPressLabel_2 = QtGui.QLabel(self.evapBackground)
-        self.nomPressLabel_2.setGeometry(QtCore.QRect(1160, 530, 111, 21))
+        self.nomPressLabel_2.setGeometry(QtCore.QRect(1140, 520, 151, 41))
         self.nomPressLabel_2.setStyleSheet(_fromUtf8("#nomPressLabel_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1198,6 +1216,24 @@ class Ui_MainWindow(object):
 "qproperty-wordWrap: true;\n"
 "}"))
         self.nomPressFormat_3.setObjectName(_fromUtf8("nomPressFormat_3"))
+        self.voltageLabel_2 = QtGui.QLabel(self.evapBackground)
+        self.voltageLabel_2.setGeometry(QtCore.QRect(420, 455, 150, 50))
+        self.voltageLabel_2.setStyleSheet(_fromUtf8("#voltageLabel_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.voltageLabel_2.setObjectName(_fromUtf8("voltageLabel_2"))
+        self.voltageStatus_2 = QtGui.QLabel(self.evapBackground)
+        self.voltageStatus_2.setGeometry(QtCore.QRect(590, 455, 100, 51))
+        self.voltageStatus_2.setStyleSheet(_fromUtf8("#voltageStatus_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.voltageStatus_2.setObjectName(_fromUtf8("voltageStatus_2"))
         self.line_31 = QtGui.QFrame(self.EvapControl)
         self.line_31.setGeometry(QtCore.QRect(0, 310, 1294, 3))
         self.line_31.setStyleSheet(_fromUtf8("#line_31{\n"
@@ -1220,7 +1256,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1247,6 +1283,8 @@ class Ui_MainWindow(object):
         self.nomPressButton.setText(_translate("MainWindow", "Set Pressure", None))
         self.nomPressFormat.setText(_translate("MainWindow", "x.xxEsxx", None))
         self.shutterWarning.setText(_translate("MainWindow", "Make sure that shutter position matches GUI after reloading lead.", None))
+        self.voltageStatus.setText(_translate("MainWindow", "Not Initialized", None))
+        self.voltageLabel.setText(_translate("MainWindow", "Voltage:", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.GraphicalInterface), _translate("MainWindow", "Graphical Interface", None))
         self.numPointsLabel.setText(_translate("MainWindow", "Number of Points:", None))
         self.Live_Plotter.setText(_translate("MainWindow", "Live Plotter", None))
@@ -1311,9 +1349,9 @@ class Ui_MainWindow(object):
         self.contactThkButton.setText(_translate("MainWindow", "Set Thickness", None))
         self.contactThkLabel.setText(_translate("MainWindow", "Contact Thickness:", None))
         self.startAuto.setText(_translate("MainWindow", "START", None))
-        self.contactThkUnits.setText(_translate("MainWindow", "nm", None))
+        self.contactThkUnits.setText(_translate("MainWindow", "Å", None))
         self.contactAngleUnits.setText(_translate("MainWindow", "°", None))
-        self.headThkUnits.setText(_translate("MainWindow", "nm", None))
+        self.headThkUnits.setText(_translate("MainWindow", "Å", None))
         self.headThkButton.setText(_translate("MainWindow", "Set Thickness", None))
         self.headThkLabel.setText(_translate("MainWindow", "Head On Thickness:", None))
         self.headThkStatus.setText(_translate("MainWindow", "25", None))
@@ -1330,6 +1368,8 @@ class Ui_MainWindow(object):
         self.thermPrsStatusLabel.setText(_translate("MainWindow", "1.00E-03", None))
         self.thermPrsButton.setText(_translate("MainWindow", "Set Pressure", None))
         self.nomPressFormat_3.setText(_translate("MainWindow", "Input Format:       x.xxEsxx", None))
+        self.voltageLabel_2.setText(_translate("MainWindow", "Voltage:", None))
+        self.voltageStatus_2.setText(_translate("MainWindow", "Not Initialized", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.EvapControl), _translate("MainWindow", "Evaporation", None))
 
 from dataCollectorWidget import dataCollectorWidget

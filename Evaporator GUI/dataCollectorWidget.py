@@ -207,7 +207,7 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
     def startSamplingVolt(self, cntx):
         if self.voltStatus.text() == 'N/A':
             self.voltStatus.setText("Sampling")
-            self.voltStartButton.setText("Stop Sampling Rate")
+            self.voltStartButton.setText("Stop Sampling Voltage")
             
             yield self.dv_volt.new('Voltage vs. Time','x','y')
             
@@ -216,7 +216,7 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
             
         else: 
             self.voltStatus.setText("N/A")
-            self.voltStartButton.setText("Start Sampling Rate")
+            self.voltStartButton.setText("Start Sampling Voltage")
             self.volt_timer.stop()
     
     def startSamplingAll(self):
