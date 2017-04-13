@@ -37,14 +37,14 @@ global serverNameValveRelayController; serverNameValveRelayController = "valve_r
 global serverNameStepperController; serverNameStepperController = "stepper_server" # Stepper Motor Controller
 global serverNamePowerSupply; serverNamePowerSupply = "power_supply_server" # TDK Power Supply
 
-global IO_DELAY  ;IO_DELAY   = 0.1 # delay between read and write
+global IO_DELAY  ;IO_DELAY   = 1 # delay between read and write
 global PORT_DELAY;PORT_DELAY = 2.0 # delay after opening serial port
 
 global TIMEOUT; TIMEOUT = Value(1,'s') # timeout for reading 
 
 # ports that the manager will always ignore.
 global blacklistedPorts
-blacklistedPorts = ['COM1']
+blacklistedPorts = ['COM1','COM3','COM4']
 
 
 
@@ -285,7 +285,7 @@ class serialDeviceManager(object):
                 break # if we got a non-empty response, don't try any more baudrates.
                 
 
-        if response.startswith('Valve and Relay Control'):                                      # For the valve/relay controller, the response to ir will be Valve and Relay Control
+        if response.startswith('Arduino Solendoid Valve Controller'):                                      # For the valve/relay controller, the response to ir will be Valve and Relay Control
             print("\tPort %s identified as a Valve and Relay Controller."%port)  # Print info that port has been identified
             self.regWrite('Evaporator Valves/Relays','Valve and Relay Controller',port)  # Write a registry entry identifying this port as corresponding to a Valve/Relay Controller
             self.ser.close() # close the port
@@ -318,7 +318,7 @@ class serialDeviceManager(object):
                 
         if response.startswith('Stepper Motor Control'):                                      # For the stepper controller, the response to ir will be Stepper Motor Control
             print("\tPort %s identified as a Stepper Controller."%port)  # Print info that port has been identified
-            self.regWrite('Evaporator Stepper','Stepper Motor Controller',port)  # Write a registry entry identifying this port as corresponding to a Valve/Relay Controller
+            self.regWrite('Evaporator Stepper','Evaporator Stepper Motor Controller',port)  # Write a registry entry identifying this port as corresponding to a Valve/Relay Controller
             self.ser.close() # close the port
             return True                                                                  # Returning True tells the run() function that the port has been identified.
         else:                                                                # no response
@@ -330,23 +330,23 @@ class serialDeviceManager(object):
         #####################
         ##   Power Supply  ##
         #####################
-        print("\tTrying device type: Stepper Controller") # 
+        print("\tTrying device type: Power Supply") # 
         PowerSupplyBaudrates= [9600]      # values of baudrates for this type of device
         for rate in PowerSupplyBaudrates:
             time.sleep(IO_DELAY)
             self.ser.baudrate(rate)                # set the baudrate
-            self.ser.write("IDN?")
+            self.ser.write("IDN?\r")
             time.sleep(IO_DELAY)
             self.ser.read_line()                   # flush the interface
             time.sleep(IO_DELAY);   
-            self.ser.write("IDN?")                 # query identification command
+            self.ser.write("IDN?\r")                 # query identification command
             time.sleep(IO_DELAY)                   # delay for processing
             response = self.ser.read_line()        # get response from device
             if response:
                 print("\tGot response: <%s>"%response)
                 break # if we got a non-empty response, don't try any more baudrates.
                 
-        if response.startswith('LAMBDA, GENX-Y'):                                   # For the stepper controller, the response to ir will be GET THIS FROM AVI
+        if response.startswith('LAMBDA,GEN10-240-LAN'):                                   # For the stepper controller, the response to ir will be GET THIS FROM AVI
             print("\tPort %s identified as a TDK Power Supply."%port)             # Print info that port has been identified
             self.regWrite('Power Supply','TDK Power Supply',port)     # Write a registry entry identifying this port as corresponding to a Valve/Relay Controller
             self.ser.close() # close the port

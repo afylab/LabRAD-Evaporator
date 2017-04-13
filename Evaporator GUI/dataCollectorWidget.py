@@ -266,7 +266,10 @@ class dataCollectorWidget(QtGui.QWidget, dataCollectorUI.Ui_Form):
     def update_volt(self):
         volt = yield self.tdk.volt_read()
         volt = float(volt)
+        #tzero = time.clock()
         yield self.dv_volt.add(time.clock() - self.zero_volt, volt)
+        #tadd = time.clock()-tzero
+        #print 'Time to add data point: ' + str(tadd)
         
 #----------------------------------------------------------------------------------------------#   
     """ The following section has functions for stopping everything."""  

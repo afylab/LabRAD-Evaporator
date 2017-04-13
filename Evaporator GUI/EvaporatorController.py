@@ -304,9 +304,10 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.plot.plot(self.gph1Data[-self.num_points:,0],self.gph1Data[-self.num_points:,1])   
         
         #Prevents graph data from taking up too much memory
-        if len(self.gph1Data[:,0]) > 10000:
-            over = len(self.gph1Data[:,0]) - 10000
-            self.gph1Data = np.delete(self.gph1Data,np.arange(over),0)
+        if len(self.gph1Data[:,0]) > 1000:
+            over = len(self.gph1Data[:,0]) - 1000
+            self.gph1Data = self.gph1Data[over:,:]
+            #self.gph1Data = np.delete(self.gph1Data,np.arange(over),0)
         
     @inlineCallbacks
     def update_gph2(self, cntx, signal):
@@ -328,11 +329,12 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.plot2.plot(self.gph2Data[:,0],self.gph2Data[:,1])
         else:
             self.plot2.plot(self.gph2Data[-self.num_points:,0],self.gph2Data[-self.num_points:,1])   
-        
+            
         #Prevents graph data from taking up too much memory
-        if len(self.gph2Data[:,0]) > 10000:
-            over = len(self.gph2Data[:,0]) - 10000
-            self.gph2Data = np.delete(self.gph1Data,np.arange(over),0)
+        if len(self.gph2Data[:,0]) > 1000:
+            over = len(self.gph2Data[:,0]) - 1000
+            self.gph2Data = self.gph2Data[over:,:]
+            #self.gph2Data = np.delete(self.gph2Data,np.arange(over),0)
         
     def set_num_points(self,num_points):
         #AT SOME POINT UPDATE THIS TO BE NOT NUMBER OF POINTS, BUT NUMBER OF SECONDS
@@ -988,6 +990,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         if self.evapInProgress:
             #Times out if evaporate too much material (whatever set by the desiredThk in autoEvapPhase2)
             #Add functionality to auto stop if hit max voltage. For now this is done manually. 
+            #Add functionality of taking too much time (Fix PID parameters)
             max = np.max(np.abs(self.dep_data[-self.checkPoints:,1] - self.setPoint))
             if max >= self.max_diff and self.evaporating:
                 self.evapTimer.singleShot(5000,self.getBaseVoltage)
@@ -1005,7 +1008,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.toggleShutter(None)
             yield self.toggleEvap(None)
             
-            #Set the offset voltage to the 
+            #Set the offset voltage to the appropriate value
             self.PID.setVOff(self.evapVoltage)
             string = str(self.evapVoltage)
             self.vOffStatus.setText(string[0:6])
@@ -1013,10 +1016,12 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             angle = (360 - 2*self.contactAngle)/2
             yield self.ss.rot('B',str(int(angle)),'C')
             
-            self.textEdit2.setText("Base voltage chosen as " + str(self.evapVoltage) + ". Rotating " 
+            self.textEdit2.setText("Base voltage chosen as " + str(self.evapVoltage)[:6] + ". Rotating " 
             + str(angle) + " degrees to first contact evaporation.")
-            print "Base voltage chosen as " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to first contact evaporation."
-            self.pauseUntilRotated1()
+            #print "Base voltage chosen as " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to first contact evaporation."
+            #Wait a second before checking to see if rotation is finished. Avoids bug of stepper server not having updated
+            #to rotating status by the time the program checks to see if it's rotating
+            self.evapTimer.singleShot(1000,self.pauseUntilRotated1())
             
     @inlineCallbacks
     def pauseUntilRotated1(self):
@@ -1029,22 +1034,26 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
                 
     @inlineCallbacks
     def autoEvapPhase4(self):
-        if self.evapInProgress:
-            self.PID.setKd(0)
-            self.PID.setKp(0)
-            self.PID.setKi(0)
-            self.PID.setIntegrator(0)
-            self.derivStatus.setText(str(0))
-            self.propStatus.setText(str(0))
-            self.intStatus.setText(str(0))
-            #make sure thickness is zeroed
-            yield self.ftm.zero_rates_thickness()
-            #Start evaporating with shutter closed 
-            yield self.toggleEvap(None)
-            #Sit at the determined voltage for a minute to get up to desired evaporation rate
-            self.textEdit2.setText("Contact evaporation angle reached. Preheating lead before sample deposition.")
-            print "Contact evaporation angle reached. Preheating lead before sample deposition."
-            self.evapTimer.singleShot(45000,self.autoEvapPhase5)
+        if self.evapInProgress:            
+            if self.contactThk != 0:
+                self.PID.setKd(0)
+                self.PID.setKp(0)
+                self.PID.setKi(0)
+                self.PID.setIntegrator(0)
+                self.derivStatus.setText(str(0))
+                self.propStatus.setText(str(0))
+                self.intStatus.setText(str(0))
+                #make sure thickness is zeroed
+                yield self.ftm.zero_rates_thickness()
+                #Start evaporating with shutter closed 
+                yield self.toggleEvap(None)
+                #Sit at the determined voltage for a minute to get up to desired evaporation rate
+                self.textEdit2.setText("Contact evaporation angle reached. Preheating lead before sample deposition.")
+                print "Contact evaporation angle reached. Preheating lead before sample deposition."
+                self.evapTimer.singleShot(45000,self.autoEvapPhase5)
+            else: 
+                #If contact thickness is 0, skip evaporating the contact
+                self.autoEvapPhase7()
             
     @inlineCallbacks
     def autoEvapPhase5(self):
@@ -1090,10 +1099,10 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             
             angle = self.contactAngle
             yield self.ss.rot('B',str(int(angle)),'C')
-            self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage) + ". Rotating " 
+            self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage)[0:6] + ". Rotating " 
             + str(angle) + " degrees to head on evaporation.")
             print "Base voltage updated to " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to head on evaporation."
-            self.pauseUntilRotated2()
+            self.evapTimer.singleShot(1000,self.pauseUntilRotated2())
         
     @inlineCallbacks
     def pauseUntilRotated2(self):
@@ -1114,15 +1123,18 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.derivStatus.setText(str(0))
             self.propStatus.setText(str(0))
             self.intStatus.setText(str(0))
-            #make sure thickness is zeroed
-            yield self.ftm.zero_rates_thickness()
-            #Start evaporating with shutter closed 
-            self.desiredThk = 20000
-            yield self.toggleEvap(None)
-            #Sit at the determined voltage for a minute to get up to desired evaporation rate
-            self.textEdit2.setText("Head on orientation reached. Preheating lead before sample deposition.")
-            print "Head on orientation reached. Preheating lead before sample deposition."
-            self.evapTimer.singleShot(45000,self.autoEvapPhase9)
+            if self.headThk !=0:
+                #make sure thickness is zeroed
+                yield self.ftm.zero_rates_thickness()
+                #Start evaporating with shutter closed 
+                self.desiredThk = 20000
+                yield self.toggleEvap(None)
+                #Sit at the determined voltage for a minute to get up to desired evaporation rate
+                self.textEdit2.setText("Head on orientation reached. Preheating lead before sample deposition.")
+                print "Head on orientation reached. Preheating lead before sample deposition."
+                self.evapTimer.singleShot(45000,self.autoEvapPhase9)
+            else:
+                self.autoEvapPhase11()
     
     @inlineCallbacks
     def autoEvapPhase9(self):
@@ -1170,10 +1182,10 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             angle = self.contactAngle
             yield self.ss.rot('B',str(int(angle)),'C')
 
-            self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage) + ". Rotating " 
+            self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage)[0:6] + ". Rotating " 
             + str(angle) + " degrees to second contact evaporation.")
             print "Base voltage updated to " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to second contact evaporation."
-            self.pauseUntilRotated3()
+            self.evapTimer.singleShot(1000,self.pauseUntilRotated3)
             
     @inlineCallbacks
     def pauseUntilRotated3(self):
@@ -1194,15 +1206,18 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.derivStatus.setText(str(0))
             self.propStatus.setText(str(0))
             self.intStatus.setText(str(0))
-            #make sure thickness is zeroed
-            yield self.ftm.zero_rates_thickness()
-            #Start evaporating with shutter closed 
-            self.desiredThk = 20000
-            yield self.toggleEvap(None)
-            #Sit at the determined voltage for a minute to get up to desired evaporation rate
-            self.textEdit2.setText("Second contact orientation reached. Preheating lead before sample deposition.")
-            print "Second contact orientation reached. Preheating lead before sample deposition."
-            self.evapTimer.singleShot(45000,self.autoEvapPhase13)
+            if self.contactThk !=0:
+                #make sure thickness is zeroed
+                yield self.ftm.zero_rates_thickness()
+                #Start evaporating with shutter closed 
+                self.desiredThk = 20000
+                yield self.toggleEvap(None)
+                #Sit at the determined voltage for a minute to get up to desired evaporation rate
+                self.textEdit2.setText("Second contact orientation reached. Preheating lead before sample deposition.")
+                print "Second contact orientation reached. Preheating lead before sample deposition."
+                self.evapTimer.singleShot(45000,self.autoEvapPhase13)
+            else:
+                self.autoEvapPhase15()
 
     @inlineCallbacks
     def autoEvapPhase13(self):
@@ -1251,7 +1266,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             
             self.textEdit2.setText("Returning to original orientation.")
             print "Returning to original orientation."
-            self.pauseUntilRotated4()
+            self.evapTimer.singleShot(1000,self.pauseUntilRotated4)
         
     @inlineCallbacks
     def pauseUntilRotated4(self):

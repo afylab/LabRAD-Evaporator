@@ -42,7 +42,7 @@ import labrad.units as units
 from labrad.types import Value
 import time
 
-TIMEOUT = Value(5,'s')
+TIMEOUT = Value(2,'s')
 BAUD    = 9600
 BYTESIZE = 8
 STOPBITS = 1
@@ -153,11 +153,14 @@ class PowerSupplyServer(DeviceServer):
         the end of a message. The timeout parameter is set to be 0 and this function
         loops until the message from the Power Supply has completely arrived or two seconds
         have elapsed. Also ensures that only one message is sent / being received at a time."""
-
+        
         tzero = time.clock()
+        input = input + '$' + self.checksum(input) + '\r'
         #print 'Attempting to write: ' + input
+        
         while True:
             if self.busy == False:
+                print 'Initiating Query: ' + input
                 self.busy = True
                 dev=self.selectedDevice(c)
                 #print 'Writing: ' + input
@@ -167,14 +170,42 @@ class PowerSupplyServer(DeviceServer):
                 while True:
                     temp_ans = yield dev.read()
                     ans = ans + temp_ans
-                    if len(ans)!=0 and ans[-1] == '\x00':
-                        #print 'Returning ans: ' + ans
-                        self.busy = False
-                        returnValue(ans[:-1])
+                    #TDK power supply randomly inserts unimportant characters. Following loop removes them
+                    ans_final = ''
+                    for char in ans:
+                        if ord(char) > 31 and ord(char) < 128:
+                            ans_final = ans_final + char
+                    
+                    ans = ans_final
+                    #print ans
+                    #print len(ans)
+                    #try:
+                    #    print 'Printing 3rd to last char: ' + ans[-3]
+                    #except:
+                    #    pass
+                    if len(ans)>3 and ans[-3] == '$':
+                        #print 'Checking stuff'
+                        #print ans[-2:]
+                        #print self.checksum(ans[:-3])
+                        if ans[-2:] == self.checksum(ans[:-3]):
+                            print 'Returning: ' + ans
+                            self.busy = False
+                            returnValue(ans[:-3])
+                        else:
+                            ans_num = ''
+                            for char in ans:
+                                ans_num = ans_num + str(ord(char)) + ','
+                            print 'Checksum error: ' + ans + ', Length: ' + str(len(ans)) + ', ASCII: ' +  ans_num
+                            self.busy = False
+                            returnValue('ChecksumError')
                     elif (time.clock() - tzero) > 2:
-                        print 'Connection timed out while reading'
+                        ans_num = ''
+                        for char in ans:
+                            ans_num = ans_num + str(ord(char)) + ','
+                        print 'Reading timeout: ' + ans + ', Length: ' + str(len(ans)) + ', ASCII: ' +  ans_num
                         self.busy = False
                         returnValue('Timeout')
+                    yield self.sleep(0.05)
             elif (time.clock() - tzero) > 2:
                 print 'Connection timed out while writing'
                 self.busy = False
@@ -185,167 +216,174 @@ class PowerSupplyServer(DeviceServer):
         d = defer.Deferred()
         reactor.callLater(secs,d.callback,'Sleeping')
         return d
+        
+    def checksum(self,string):
+        val = 0
+        for sub in string:
+            val = val + ord(sub)
+        ans = str(hex(val%256)[-2:]).upper()
+        return ans
     
     @setting(304,out = 's',returns='s')
     def switch(self,c,out):
         """Switches the output on or off."""
-        ans = yield self.read(c,"OUT " + out + "\r")
+        ans = yield self.read(c,"OUT " + out)
         returnValue(ans)
 
     @setting(305,returns='s')
     def onoff(self,c):
         """Returns the output on/off status."""
-        ans = yield self.read(c,"OUT?" + "\r")
+        ans = yield self.read(c,"OUT?")
         returnValue(ans)
 
     @setting(306,returns='s')
     def iden(self,c):
         """Returns the power supply model identification."""
-        ans = yield self.read(c,"IDN?" + "\r")
+        ans = yield self.read(c,"IDN?")
         returnValue(ans)
 
     @setting(307,volts = 's',returns='s')
     def volt_set(self,c,volts):
         """Sets the output voltage value in Volts."""
-        ans = yield self.read(c,"PV " + volts + "\r")
+        ans = yield self.read(c,"PV " + volts)
         returnValue(ans)
 
     @setting(308,returns='s')
     def volt_read(self,c):
         """Reads the output voltage setting."""
-        ans = yield self.read(c,"PV?" + "\r")
+        ans = yield self.read(c,"PV?")
         returnValue(ans)
 
     @setting(309,returns='s')
     def act_volt(self,c):
         """Returns the actual voltage output."""
-        ans = yield self.read(c,"MV?" + "\r")
+        ans = yield self.read(c,"MV?")
         returnValue(ans)
 
     @setting(310,current = 's',returns='s')
     def cur_set(self,c,current):
         """Sets the output current value in Amperes."""
-        ans = yield self.read(c,"PC " + current + "\r")
+        ans = yield self.read(c,"PC " + current)
         returnValue(ans)
 
     @setting(311,returns='s')
     def cur_read(self,c):
         """Reads the output current setting."""
-        ans = yield self.read(c,"PC?" + "\r")
+        ans = yield self.read(c,"PC?")
         returnValue(ans)
 
     @setting(312,returns='s')
     def act_cur(self,c):
         """Returns the actual current output."""
-        ans = yield self.read(c,"MC?" + "\r")
+        ans = yield self.read(c,"MC?")
         returnValue(ans)
 
     @setting(313, adr='s', returns='s')
     def adr(self,c,adr):
         """Address to access the power supply."""
-        ans = yield self.read(c,"ADR " + adr + "\r")
+        ans = yield self.read(c,"ADR " + adr)
         returnValue(ans)
 
     @setting(314,returns='s')
     def clear(self,c):
         """Clear status."""
-        ans = yield self.read(c,"CLS" + "\r")
+        ans = yield self.read(c,"CLS")
         returnValue(ans)
 
     @setting(315,rmt = 's', returns='s')
     def rmt_set(self,c,rmt):
         """Sets the power supply to local or remote mode. Send LOC for local mode, REM for remote, and LLO for local lockout."""
-        ans = yield self.read(c,"RMT " +rmt+ "\r")
+        ans = yield self.read(c,"RMT " +rmt)
         returnValue(ans)
 
     @setting(316,returns='s')
     def rmt_read(self,c):
         """Returns the remote mode setting."""
-        ans = yield self.read(c,"RMT?" + "\r")
+        ans = yield self.read(c,"RMT?")
         returnValue(ans)
 
     @setting(317,fld = 's',returns='s')
     def fld_set(self,c,fld):
         """Turns foldback protection on or off. Send 1 for on or 0 for off."""
-        ans = yield self.read(c,"FLD " +fld+ "\r")
+        ans = yield self.read(c,"FLD " +fld)
         returnValue(ans)
 
     @setting(318,returns='s')
     def fld_read(self,c):
         """Returns the foldback protection status."""
-        ans = yield self.read(c,"FLD?" + "\r")
+        ans = yield self.read(c,"FLD?")
         returnValue(ans)
 
     @setting(319,ovp = 's',returns='s')
     def ovp_set(self,c,ovp):
         """Sets the over-voltage protection level."""
-        ans = yield self.read(c,"OVP " + ovp +  "\r")
+        ans = yield self.read(c,"OVP " + ovp)
         returnValue(ans)
 
     @setting(320,returns='s')
     def ovp_read(self,c):
         """Returns the over-voltage protection setting."""
-        ans = yield self.read(c,"OVP?" + "\r")
+        ans = yield self.read(c,"OVP?")
         returnValue(ans)
 
     @setting(321,fbd = 's',returns='s')
     def fbd_set(self,c,fbd):
         """Adds the inputted number of seconds to the fold back delay."""
-        ans = yield self.read(c,"FBD "+fbd + "\r")
+        ans = yield self.read(c,"FBD "+fbd)
         returnValue(ans)
 
     @setting(322,returns='s')
     def fbd_read(self,c):
         """Reads the number of seconds added to the fold back delay."""
-        ans = yield self.read(c,"FBD?"+ "\r")
+        ans = yield self.read(c,"FBD?")
         returnValue(ans)
 
     @setting(323,returns='s')
     def fbd_rst(self,c):
         """Resets the fold back delay to zero."""
-        ans = yield self.read(c,"FBDRST"+ "\r")
+        ans = yield self.read(c,"FBDRST")
         returnValue(ans)
 
     @setting(324,uvl = 's',returns='s')
     def uvl_set(self,c,uvl):
         """Sets the under voltage limit."""
-        ans = yield self.read(c,"UVL "+ uvl + "\r")
+        ans = yield self.read(c,"UVL "+ uvl)
         returnValue(ans)
 
     @setting(325,returns='s')
     def uvl_read(self,c):
         """Reads the under voltage limit."""
-        ans = yield self.read(c,"UVL?"+ "\r")
+        ans = yield self.read(c,"UVL?")
         returnValue(ans)
 
     @setting(326,ast = 's',returns='s')
     def ast_set(self,c,ast):
         """Turns auto-restart mode on or off. Input 1 to turn on or 0 to turn off."""
-        ans = yield self.read(c,"AST "+ast+ "\r")
+        ans = yield self.read(c,"AST "+ast)
         returnValue(ans)
 
     @setting(327,returns='s')
     def fbd_read(self,c):
         """Reads the auto restart status."""
-        ans = yield self.read(c,"AST?"+ "\r")
+        ans = yield self.read(c,"AST?")
         returnValue(ans)
 
     @setting(328,returns='s')
     def sav(self,c):
         """Saves the present settings."""
-        ans = yield self.read(c,"SAV"+ "\r")
+        ans = yield self.read(c,"SAV")
         returnValue(ans)
 
     @setting(329,returns='s')
     def rcl(self,c):
         """Recalls the setting from either the last power-down or the last SAV command."""
-        ans = yield self.read(c,"RCL"+ "\r")
+        ans = yield self.read(c,"RCL")
         returnValue(ans)
 
     @setting(330,returns='s')
     def mode(self,c):
         """Returns the power supply operation mode. If the supply is ON it will reutrn either CV or CC (constant voltage/current). If the supply is OFF it will return OFF."""
-        ans = yield self.read(c,"MODE?"+ "\r")
+        ans = yield self.read(c,"MODE?")
         returnValue(ans)
         
 __server__ = PowerSupplyServer()
