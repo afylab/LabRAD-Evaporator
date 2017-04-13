@@ -47,7 +47,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.Kprop = 0
         self.Kint = 0.001
         self.Kderiv = 0
-        self.Kint
         self.PID = PID(0,0.001,0,500,-500,0.7,0.45)
         self.evaporating = False
         
@@ -71,12 +70,13 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.evapVoltage = 0.45
         self.max_diff = 0.1
         self.checkPoints = 15
-        self.setPoint = 0.0
-        self.thermTime = 25.0
-        self.thermPrs = '1.00E-03'
+        self.setPoint = 5.0
+        self.thermTime1 = 15.0
+        self.thermTime2 = 6.0
+        self.thermPrs = '5.00E-03'
         self.contactAngle = 105.0
-        self.contactThk = 400.0
-        self.headThk  = 250.0
+        self.contactThk = 250.0
+        self.headThk  = 170.0
         
         #Define what happens when interacting with buttons
         self.comboGraph.activated[str].connect(self.selectData)
@@ -101,10 +101,12 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         
         self.setPointButton.clicked.connect(self.setSetpoint)
         self.thermTimeButton.clicked.connect(self.setThermTime)
+        self.thermTimeButton_2.clicked.connect(self.setThermTime2)
         self.thermPrsButton.clicked.connect(self.setThermPrs)
         self.angleButton.clicked.connect(self.setAngle)
         self.contactThkButton.clicked.connect(self.setContactThk)
         self.headThkButton.clicked.connect(self.setHeadThk)
+        self.zeroThkButton.clicked.connect(self.zeroThk)
         
         self.propButton.clicked.connect(self.setProp)
         self.intButton.clicked.connect(self.setInt)
@@ -663,11 +665,21 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         try:
             self.textEdit2.clear()
             time = float(self.thermTimeInput.text())
-            self.thermTime = time
+            self.thermTime1 = time
             self.thermTimeStatusLabel.setText(self.thermTimeInput.text())
         except:
             self.textEdit2.setPlainText("Man, that ain't a number")
         self.thermTimeInput.clear()  
+        
+    def setThermTime2(self):
+        try:
+            self.textEdit2.clear()
+            time = float(self.thermTimeInput_2.text())
+            self.thermTime2 = time
+            self.thermTimeStatusLabel_2.setText(self.thermTimeInput_2.text())
+        except:
+            self.textEdit2.setPlainText("Man, that ain't a number")
+        self.thermTimeInput_2.clear() 
         
     def setThermPrs(self):
         try:
@@ -708,6 +720,13 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         except:
             self.textEdit2.setPlainText("Man, that ain't a number")
         self.headThkInput.clear()   
+        
+    @inlineCallbacks
+    def zeroThk(self,cntx):
+        try: 
+            yield self.ftm.zero_rates_thickness()
+        except:
+            self.textEdit2.setPlainText("Boopty boop, something went wrong.")
           
   #----------------------------------------------------------------------------------------------#
     """ The following section defines all the connections for the PID Settings."""
@@ -927,9 +946,10 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         msgBox = QtGui.QMessageBox()
         msgBox.setIcon(QtGui.QMessageBox.Information)
         msgBox.setText("Check that the following conditions are met: \r\n 1. The cryostat is at the desired temperature and the " + 
-        "dewar has sufficient LN2. \r\n 2. The chamber is at the desired base pressure. \r\n 3. The tip is pointing directly away " + 
+        "dewar has sufficient liquid helium. \r\n 2. The chamber is at the desired base pressure. \r\n 3. The tip is pointing directly away " + 
         "from the evaporation source. \r\n 4. All data " + 
-        "is being sampled at a rate appropriate for the PID settings. \r\n 5. Helium gas is connected to the helium leak valve.")
+        "is being sampled at a rate appropriate for the PID settings. \r\n 5. Helium gas is connected to the helium leak valve." + 
+        "\r\n 6. The cryostat rotation stepper motor is connected.")
         msgBox.setStandardButtons(QtGui.QMessageBox.Yes | QtGui.QMessageBox.Cancel)
         
         if msgBox.exec_() == QtGui.QMessageBox.Cancel:
@@ -947,33 +967,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             if self.powerSupplyState == "Off":
                 yield self.togglePowerSupply(cntx)
             
-            #Go to higher pressure to thermalize
-            yield self.setNomPressure(cntx, self.thermPrs)
-            
-            self.minutesRemaining = self.thermTime
-            self.waitXMinutes()
-        
-    def waitXMinutes(self):
-        if self.minutesRemaining == 1 and self.evapInProgress:
-            self.textEdit2.setText('Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
-            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
-            self.minutesRemaining = self.minutesRemaining - 1
-            #Change this to 60 seconds instead of 1 when done debugging. 
-            self.evapTimer.singleShot(60000,self.pumpOutChamber)
-        elif self.minutesRemaining > 1 and self.evapInProgress:
-            self.textEdit2.setText('Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
-            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
-            self.minutesRemaining = self.minutesRemaining - 1
-            #Change this to 60 seconds instead of 1 when done debugging. 
-            self.evapTimer.singleShot(60000,self.waitXMinutes)
-        
-    @inlineCallbacks
-    def pumpOutChamber(self):
-        if self.evapInProgress:
-            yield self.close_valve(None)
-            self.textEdit2.setText('Thermalization complete. Pumping out exchange gas.')
-            print 'Thermalization complete. Pumping out exchange gas.'
-            self.evapTimer.singleShot(30000,self.autoEvapPhase2)
+            #First calibrate evaporation voltage
+            self.autoEvapPhase2()
             
     @inlineCallbacks
     def autoEvapPhase2(self):
@@ -1013,12 +1008,13 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             string = str(self.evapVoltage)
             self.vOffStatus.setText(string[0:6])
             
+            #Rotate to the first evaporation position
             angle = (360 - 2*self.contactAngle)/2
             yield self.ss.rot('B',str(int(angle)),'C')
             
             self.textEdit2.setText("Base voltage chosen as " + str(self.evapVoltage)[:6] + ". Rotating " 
             + str(angle) + " degrees to first contact evaporation.")
-            #print "Base voltage chosen as " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to first contact evaporation."
+
             #Wait a second before checking to see if rotation is finished. Avoids bug of stepper server not having updated
             #to rotating status by the time the program checks to see if it's rotating
             self.evapTimer.singleShot(1000,self.pauseUntilRotated1())
@@ -1030,11 +1026,40 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             if status.startswith('turning'):
                 self.evapTimer.singleShot(1000,self.pauseUntilRotated1)
             else:
-                self.autoEvapPhase4()
+                self.startTherm1()
                 
     @inlineCallbacks
+    def startTherm1(self):
+        if self.evapInProgress:  
+            #Go to higher pressure to thermalize
+            yield self.setNomPressure(cntx, self.thermPrs)
+            
+            self.minutesRemaining = self.thermTime1
+            self.waitXMinutes()
+            
+    def waitXMinutes(self):
+        if self.minutesRemaining == 1 and self.evapInProgress:
+            self.textEdit2.setText('Initial thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
+            self.minutesRemaining = self.minutesRemaining - 1
+            self.evapTimer.singleShot(60000,self.pumpOutChamber)
+        elif self.minutesRemaining > 1 and self.evapInProgress:
+            self.textEdit2.setText('Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
+            self.minutesRemaining = self.minutesRemaining - 1
+            self.evapTimer.singleShot(60000,self.waitXMinutes)
+        
+    @inlineCallbacks
+    def pumpOutChamber(self):
+        if self.evapInProgress:
+            yield self.close_valve(None)
+            self.textEdit2.setText('Thermalization complete. Pumping out exchange gas.')
+            print 'Thermalization complete. Pumping out exchange gas.'
+            self.evapTimer.singleShot(30000,self.autoEvapPhase4)   
+
+    @inlineCallbacks
     def autoEvapPhase4(self):
-        if self.evapInProgress:            
+        if self.evapInProgress:
             if self.contactThk != 0:
                 self.PID.setKd(0)
                 self.PID.setKp(0)
@@ -1048,7 +1073,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
                 #Start evaporating with shutter closed 
                 yield self.toggleEvap(None)
                 #Sit at the determined voltage for a minute to get up to desired evaporation rate
-                self.textEdit2.setText("Contact evaporation angle reached. Preheating lead before sample deposition.")
+                self.textEdit2.setText("Contact evaporation angle reached and thermalization complete. Preheating lead before sample deposition.")
                 print "Contact evaporation angle reached. Preheating lead before sample deposition."
                 self.evapTimer.singleShot(45000,self.autoEvapPhase5)
             else: 
@@ -1111,7 +1136,36 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             if status.startswith('turning'):
                 self.evapTimer.singleShot(1000,self.pauseUntilRotated2)
             else:
-                self.autoEvapPhase8()  
+                self.startTherm2() 
+                
+    @inlineCallbacks
+    def startTherm2(self):
+        if self.evapInProgress:  
+            #Go to higher pressure to thermalize
+            yield self.setNomPressure(cntx, self.thermPrs)
+            
+            self.minutesRemaining = self.thermTime2
+            self.waitXMinutes2()
+            
+    def waitXMinutes2(self):
+        if self.minutesRemaining == 1 and self.evapInProgress:
+            self.textEdit2.setText('Secondary thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
+            self.minutesRemaining = self.minutesRemaining - 1
+            self.evapTimer.singleShot(60000,self.pumpOutChamber2)
+        elif self.minutesRemaining > 1 and self.evapInProgress:
+            self.textEdit2.setText('Secondary thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
+            self.minutesRemaining = self.minutesRemaining - 1
+            self.evapTimer.singleShot(60000,self.waitXMinutes2)
+        
+    @inlineCallbacks
+    def pumpOutChamber2(self):
+        if self.evapInProgress:
+            yield self.close_valve(None)
+            self.textEdit2.setText('Thermalization complete. Pumping out exchange gas.')
+            print 'Thermalization complete. Pumping out exchange gas.'
+            self.evapTimer.singleShot(30000,self.autoEvapPhase8)   
         
     @inlineCallbacks
     def autoEvapPhase8(self):
@@ -1130,7 +1184,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
                 self.desiredThk = 20000
                 yield self.toggleEvap(None)
                 #Sit at the determined voltage for a minute to get up to desired evaporation rate
-                self.textEdit2.setText("Head on orientation reached. Preheating lead before sample deposition.")
+                self.textEdit2.setText("Head on orientation reached and thermalization complete. Preheating lead before sample deposition.")
                 print "Head on orientation reached. Preheating lead before sample deposition."
                 self.evapTimer.singleShot(45000,self.autoEvapPhase9)
             else:
@@ -1139,7 +1193,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     @inlineCallbacks
     def autoEvapPhase9(self):
         if self.evapInProgress:
-            #Set thickness to head on evaporation thickness. Eventuall add (if ==0, then skip)
+            #Set thickness to head on evaporation thickness.
             self.desiredThk = self.headThk
             #Open shutter
             yield self.toggleShutter(None)
@@ -1194,7 +1248,36 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             if status.startswith('turning'):
                 self.evapTimer.singleShot(1000,self.pauseUntilRotated3)
             else:
-                self.autoEvapPhase12() 
+                self.startTherm3()
+                
+    @inlineCallbacks
+    def startTherm3(self):
+        if self.evapInProgress:  
+            #Go to higher pressure to thermalize
+            yield self.setNomPressure(cntx, self.thermPrs)
+            
+            self.minutesRemaining = self.thermTime2
+            self.waitXMinutes3()
+            
+    def waitXMinutes3(self):
+        if self.minutesRemaining == 1 and self.evapInProgress:
+            self.textEdit2.setText('Secondary thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
+            self.minutesRemaining = self.minutesRemaining - 1
+            self.evapTimer.singleShot(60000,self.pumpOutChamber3)
+        elif self.minutesRemaining > 1 and self.evapInProgress:
+            self.textEdit2.setText('Secondary thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
+            self.minutesRemaining = self.minutesRemaining - 1
+            self.evapTimer.singleShot(60000,self.waitXMinutes3)
+        
+    @inlineCallbacks
+    def pumpOutChamber3(self):
+        if self.evapInProgress:
+            yield self.close_valve(None)
+            self.textEdit2.setText('Thermalization complete. Pumping out exchange gas.')
+            print 'Thermalization complete. Pumping out exchange gas.'
+            self.evapTimer.singleShot(30000,self.autoEvapPhase12)  
            
     @inlineCallbacks
     def autoEvapPhase12(self):

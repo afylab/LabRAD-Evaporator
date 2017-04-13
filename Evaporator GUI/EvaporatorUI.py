@@ -603,16 +603,16 @@ class Ui_MainWindow(object):
         self.evapBackground.setFrameShadow(QtGui.QFrame.Raised)
         self.evapBackground.setObjectName(_fromUtf8("evapBackground"))
         self.setPointInput = QtGui.QLineEdit(self.evapBackground)
-        self.setPointInput.setGeometry(QtCore.QRect(230, 140, 113, 21))
+        self.setPointInput.setGeometry(QtCore.QRect(590, 110, 113, 21))
         self.setPointInput.setObjectName(_fromUtf8("setPointInput"))
         self.setPointButton = QtGui.QPushButton(self.evapBackground)
-        self.setPointButton.setGeometry(QtCore.QRect(370, 140, 101, 21))
+        self.setPointButton.setGeometry(QtCore.QRect(730, 110, 101, 21))
         self.setPointButton.setObjectName(_fromUtf8("setPointButton"))
         self.evapStartButton = QtGui.QPushButton(self.evapBackground)
         self.evapStartButton.setGeometry(QtCore.QRect(800, 390, 100, 21))
         self.evapStartButton.setObjectName(_fromUtf8("evapStartButton"))
         self.setPointLabel = QtGui.QLabel(self.evapBackground)
-        self.setPointLabel.setGeometry(QtCore.QRect(470, 140, 47, 21))
+        self.setPointLabel.setGeometry(QtCore.QRect(830, 110, 47, 21))
         self.setPointLabel.setStyleSheet(_fromUtf8("#setPointLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -630,7 +630,7 @@ class Ui_MainWindow(object):
 "}"))
         self.Feedback.setObjectName(_fromUtf8("Feedback"))
         self.rateUnits = QtGui.QLabel(self.evapBackground)
-        self.rateUnits.setGeometry(QtCore.QRect(530, 140, 47, 21))
+        self.rateUnits.setGeometry(QtCore.QRect(890, 110, 47, 21))
         self.rateUnits.setStyleSheet(_fromUtf8("#rateUnits{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -765,7 +765,7 @@ class Ui_MainWindow(object):
 "}"))
         self.textEdit2.setObjectName(_fromUtf8("textEdit2"))
         self.deposRate = QtGui.QLabel(self.evapBackground)
-        self.deposRate.setGeometry(QtCore.QRect(20, 140, 201, 21))
+        self.deposRate.setGeometry(QtCore.QRect(380, 110, 201, 21))
         self.deposRate.setStyleSheet(_fromUtf8("#deposRate{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -961,7 +961,7 @@ class Ui_MainWindow(object):
 "}"))
         self.emergStop.setObjectName(_fromUtf8("emergStop"))
         self.angleStatus = QtGui.QLabel(self.evapBackground)
-        self.angleStatus.setGeometry(QtCore.QRect(1150, 140, 71, 21))
+        self.angleStatus.setGeometry(QtCore.QRect(1150, 150, 71, 21))
         self.angleStatus.setStyleSheet(_fromUtf8("#angleStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -970,10 +970,10 @@ class Ui_MainWindow(object):
 "}"))
         self.angleStatus.setObjectName(_fromUtf8("angleStatus"))
         self.angleButton = QtGui.QPushButton(self.evapBackground)
-        self.angleButton.setGeometry(QtCore.QRect(1040, 140, 101, 21))
+        self.angleButton.setGeometry(QtCore.QRect(1040, 150, 101, 21))
         self.angleButton.setObjectName(_fromUtf8("angleButton"))
         self.angleLabel = QtGui.QLabel(self.evapBackground)
-        self.angleLabel.setGeometry(QtCore.QRect(730, 140, 150, 21))
+        self.angleLabel.setGeometry(QtCore.QRect(730, 150, 150, 21))
         self.angleLabel.setStyleSheet(_fromUtf8("#angleLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -982,10 +982,10 @@ class Ui_MainWindow(object):
 "}"))
         self.angleLabel.setObjectName(_fromUtf8("angleLabel"))
         self.angleInput = QtGui.QLineEdit(self.evapBackground)
-        self.angleInput.setGeometry(QtCore.QRect(900, 140, 113, 21))
+        self.angleInput.setGeometry(QtCore.QRect(900, 150, 113, 21))
         self.angleInput.setObjectName(_fromUtf8("angleInput"))
         self.contactThkStatus = QtGui.QLabel(self.evapBackground)
-        self.contactThkStatus.setGeometry(QtCore.QRect(1150, 190, 71, 21))
+        self.contactThkStatus.setGeometry(QtCore.QRect(1150, 195, 71, 21))
         self.contactThkStatus.setStyleSheet(_fromUtf8("#contactThkStatus{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -994,13 +994,13 @@ class Ui_MainWindow(object):
 "}"))
         self.contactThkStatus.setObjectName(_fromUtf8("contactThkStatus"))
         self.contactThkInput = QtGui.QLineEdit(self.evapBackground)
-        self.contactThkInput.setGeometry(QtCore.QRect(900, 190, 113, 21))
+        self.contactThkInput.setGeometry(QtCore.QRect(900, 195, 113, 21))
         self.contactThkInput.setObjectName(_fromUtf8("contactThkInput"))
         self.contactThkButton = QtGui.QPushButton(self.evapBackground)
-        self.contactThkButton.setGeometry(QtCore.QRect(1040, 190, 101, 21))
+        self.contactThkButton.setGeometry(QtCore.QRect(1040, 195, 101, 21))
         self.contactThkButton.setObjectName(_fromUtf8("contactThkButton"))
         self.contactThkLabel = QtGui.QLabel(self.evapBackground)
-        self.contactThkLabel.setGeometry(QtCore.QRect(730, 190, 150, 21))
+        self.contactThkLabel.setGeometry(QtCore.QRect(730, 195, 150, 21))
         self.contactThkLabel.setStyleSheet(_fromUtf8("#contactThkLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1020,7 +1020,7 @@ class Ui_MainWindow(object):
 "}"))
         self.startAuto.setObjectName(_fromUtf8("startAuto"))
         self.contactThkUnits = QtGui.QLabel(self.evapBackground)
-        self.contactThkUnits.setGeometry(QtCore.QRect(1210, 190, 47, 21))
+        self.contactThkUnits.setGeometry(QtCore.QRect(1210, 195, 47, 21))
         self.contactThkUnits.setStyleSheet(_fromUtf8("#contactThkUnits{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1029,7 +1029,7 @@ class Ui_MainWindow(object):
 "}"))
         self.contactThkUnits.setObjectName(_fromUtf8("contactThkUnits"))
         self.contactAngleUnits = QtGui.QLabel(self.evapBackground)
-        self.contactAngleUnits.setGeometry(QtCore.QRect(1210, 140, 47, 21))
+        self.contactAngleUnits.setGeometry(QtCore.QRect(1210, 150, 47, 21))
         self.contactAngleUnits.setStyleSheet(_fromUtf8("#contactAngleUnits{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1089,7 +1089,7 @@ class Ui_MainWindow(object):
         self.line_21.setFrameShape(QtGui.QFrame.HLine)
         self.line_21.setObjectName(_fromUtf8("line_21"))
         self.thermTimeUnits = QtGui.QLabel(self.evapBackground)
-        self.thermTimeUnits.setGeometry(QtCore.QRect(530, 190, 47, 21))
+        self.thermTimeUnits.setGeometry(QtCore.QRect(530, 150, 47, 21))
         self.thermTimeUnits.setStyleSheet(_fromUtf8("#thermTimeUnits{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1098,13 +1098,13 @@ class Ui_MainWindow(object):
 "}"))
         self.thermTimeUnits.setObjectName(_fromUtf8("thermTimeUnits"))
         self.thermTimeInput = QtGui.QLineEdit(self.evapBackground)
-        self.thermTimeInput.setGeometry(QtCore.QRect(230, 190, 113, 21))
+        self.thermTimeInput.setGeometry(QtCore.QRect(230, 150, 113, 21))
         self.thermTimeInput.setObjectName(_fromUtf8("thermTimeInput"))
         self.thermTimeButton = QtGui.QPushButton(self.evapBackground)
-        self.thermTimeButton.setGeometry(QtCore.QRect(370, 190, 101, 21))
+        self.thermTimeButton.setGeometry(QtCore.QRect(370, 150, 101, 21))
         self.thermTimeButton.setObjectName(_fromUtf8("thermTimeButton"))
         self.thermTimeStatusLabel = QtGui.QLabel(self.evapBackground)
-        self.thermTimeStatusLabel.setGeometry(QtCore.QRect(470, 190, 47, 21))
+        self.thermTimeStatusLabel.setGeometry(QtCore.QRect(470, 150, 47, 21))
         self.thermTimeStatusLabel.setStyleSheet(_fromUtf8("#thermTimeStatusLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1113,7 +1113,7 @@ class Ui_MainWindow(object):
 "}"))
         self.thermTimeStatusLabel.setObjectName(_fromUtf8("thermTimeStatusLabel"))
         self.thermTimeLabel = QtGui.QLabel(self.evapBackground)
-        self.thermTimeLabel.setGeometry(QtCore.QRect(20, 190, 201, 21))
+        self.thermTimeLabel.setGeometry(QtCore.QRect(20, 150, 201, 21))
         self.thermTimeLabel.setStyleSheet(_fromUtf8("#thermTimeLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1122,7 +1122,7 @@ class Ui_MainWindow(object):
 "}"))
         self.thermTimeLabel.setObjectName(_fromUtf8("thermTimeLabel"))
         self.nomPressFormat_2 = QtGui.QLabel(self.evapBackground)
-        self.nomPressFormat_2.setGeometry(QtCore.QRect(920, 490, 81, 21))
+        self.nomPressFormat_2.setGeometry(QtCore.QRect(920, 500, 81, 21))
         self.nomPressFormat_2.setStyleSheet(_fromUtf8("#nomPressFormat_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1131,7 +1131,7 @@ class Ui_MainWindow(object):
 "}"))
         self.nomPressFormat_2.setObjectName(_fromUtf8("nomPressFormat_2"))
         self.nomPress_2 = QtGui.QLabel(self.evapBackground)
-        self.nomPress_2.setGeometry(QtCore.QRect(750, 530, 141, 21))
+        self.nomPress_2.setGeometry(QtCore.QRect(750, 540, 141, 21))
         self.nomPress_2.setStyleSheet(_fromUtf8("#nomPress_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1140,10 +1140,10 @@ class Ui_MainWindow(object):
 "}"))
         self.nomPress_2.setObjectName(_fromUtf8("nomPress_2"))
         self.nomPressInput_2 = QtGui.QLineEdit(self.evapBackground)
-        self.nomPressInput_2.setGeometry(QtCore.QRect(910, 530, 113, 21))
+        self.nomPressInput_2.setGeometry(QtCore.QRect(910, 540, 113, 21))
         self.nomPressInput_2.setObjectName(_fromUtf8("nomPressInput_2"))
         self.nomPressLabel_2 = QtGui.QLabel(self.evapBackground)
-        self.nomPressLabel_2.setGeometry(QtCore.QRect(1140, 520, 151, 41))
+        self.nomPressLabel_2.setGeometry(QtCore.QRect(1140, 530, 151, 41))
         self.nomPressLabel_2.setStyleSheet(_fromUtf8("#nomPressLabel_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1152,7 +1152,7 @@ class Ui_MainWindow(object):
 "}"))
         self.nomPressLabel_2.setObjectName(_fromUtf8("nomPressLabel_2"))
         self.nomPressButton_2 = QtGui.QPushButton(self.evapBackground)
-        self.nomPressButton_2.setGeometry(QtCore.QRect(1060, 530, 81, 21))
+        self.nomPressButton_2.setGeometry(QtCore.QRect(1060, 540, 81, 21))
         self.nomPressButton_2.setObjectName(_fromUtf8("nomPressButton_2"))
         self.boatShutterButton_2 = QtGui.QPushButton(self.evapBackground)
         self.boatShutterButton_2.setGeometry(QtCore.QRect(1060, 390, 66, 66))
@@ -1234,6 +1234,42 @@ class Ui_MainWindow(object):
 "qproperty-wordWrap: true;\n"
 "}"))
         self.voltageStatus_2.setObjectName(_fromUtf8("voltageStatus_2"))
+        self.thermTimeButton_2 = QtGui.QPushButton(self.evapBackground)
+        self.thermTimeButton_2.setGeometry(QtCore.QRect(370, 195, 101, 21))
+        self.thermTimeButton_2.setObjectName(_fromUtf8("thermTimeButton_2"))
+        self.thermTimeUnits_2 = QtGui.QLabel(self.evapBackground)
+        self.thermTimeUnits_2.setGeometry(QtCore.QRect(530, 195, 47, 21))
+        self.thermTimeUnits_2.setStyleSheet(_fromUtf8("#thermTimeUnits_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignLeft\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.thermTimeUnits_2.setObjectName(_fromUtf8("thermTimeUnits_2"))
+        self.thermTimeStatusLabel_2 = QtGui.QLabel(self.evapBackground)
+        self.thermTimeStatusLabel_2.setGeometry(QtCore.QRect(470, 195, 47, 21))
+        self.thermTimeStatusLabel_2.setStyleSheet(_fromUtf8("#thermTimeStatusLabel_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.thermTimeStatusLabel_2.setObjectName(_fromUtf8("thermTimeStatusLabel_2"))
+        self.thermTimeInput_2 = QtGui.QLineEdit(self.evapBackground)
+        self.thermTimeInput_2.setGeometry(QtCore.QRect(230, 195, 113, 21))
+        self.thermTimeInput_2.setObjectName(_fromUtf8("thermTimeInput_2"))
+        self.thermTimeLabel_2 = QtGui.QLabel(self.evapBackground)
+        self.thermTimeLabel_2.setGeometry(QtCore.QRect(20, 195, 201, 21))
+        self.thermTimeLabel_2.setStyleSheet(_fromUtf8("#thermTimeLabel_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.thermTimeLabel_2.setObjectName(_fromUtf8("thermTimeLabel_2"))
+        self.zeroThkButton = QtGui.QPushButton(self.evapBackground)
+        self.zeroThkButton.setGeometry(QtCore.QRect(1060, 500, 81, 23))
+        self.zeroThkButton.setObjectName(_fromUtf8("zeroThkButton"))
         self.line_31 = QtGui.QFrame(self.EvapControl)
         self.line_31.setGeometry(QtCore.QRect(0, 310, 1294, 3))
         self.line_31.setStyleSheet(_fromUtf8("#line_31{\n"
@@ -1300,7 +1336,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.DataCollector), _translate("MainWindow", "Data Collector", None))
         self.setPointButton.setText(_translate("MainWindow", "Change Setpoint", None))
         self.evapStartButton.setText(_translate("MainWindow", "Start Evaporating", None))
-        self.setPointLabel.setText(_translate("MainWindow", "0", None))
+        self.setPointLabel.setText(_translate("MainWindow", "5", None))
         self.Feedback.setText(_translate("MainWindow", "PID Settings", None))
         self.rateUnits.setText(_translate("MainWindow", "Å/s", None))
         self.propButton.setText(_translate("MainWindow", "Set Kp", None))
@@ -1345,7 +1381,7 @@ class Ui_MainWindow(object):
         self.angleStatus.setText(_translate("MainWindow", "105", None))
         self.angleButton.setText(_translate("MainWindow", "Set Angle", None))
         self.angleLabel.setText(_translate("MainWindow", "Contact Angle:", None))
-        self.contactThkStatus.setText(_translate("MainWindow", "400", None))
+        self.contactThkStatus.setText(_translate("MainWindow", "250", None))
         self.contactThkButton.setText(_translate("MainWindow", "Set Thickness", None))
         self.contactThkLabel.setText(_translate("MainWindow", "Contact Thickness:", None))
         self.startAuto.setText(_translate("MainWindow", "START", None))
@@ -1354,22 +1390,27 @@ class Ui_MainWindow(object):
         self.headThkUnits.setText(_translate("MainWindow", "Å", None))
         self.headThkButton.setText(_translate("MainWindow", "Set Thickness", None))
         self.headThkLabel.setText(_translate("MainWindow", "Head On Thickness:", None))
-        self.headThkStatus.setText(_translate("MainWindow", "250", None))
+        self.headThkStatus.setText(_translate("MainWindow", "170", None))
         self.thermTimeUnits.setText(_translate("MainWindow", "min", None))
         self.thermTimeButton.setText(_translate("MainWindow", "Set Time", None))
-        self.thermTimeStatusLabel.setText(_translate("MainWindow", "25", None))
-        self.thermTimeLabel.setText(_translate("MainWindow", "Thermalization Time: ", None))
+        self.thermTimeStatusLabel.setText(_translate("MainWindow", "15", None))
+        self.thermTimeLabel.setText(_translate("MainWindow", "Thermalization Time 1: ", None))
         self.nomPressFormat_2.setText(_translate("MainWindow", "x.xxEsxx", None))
         self.nomPress_2.setText(_translate("MainWindow", "Pressure Setpoint:", None))
         self.nomPressLabel_2.setText(_translate("MainWindow", "N/A", None))
         self.nomPressButton_2.setText(_translate("MainWindow", "Set Pressure", None))
         self.thermPrsUnits.setText(_translate("MainWindow", "mbar", None))
         self.thermPrsLabel.setText(_translate("MainWindow", "Thermalization Pressure: ", None))
-        self.thermPrsStatusLabel.setText(_translate("MainWindow", "1.00E-03", None))
+        self.thermPrsStatusLabel.setText(_translate("MainWindow", "5.00E-03", None))
         self.thermPrsButton.setText(_translate("MainWindow", "Set Pressure", None))
         self.nomPressFormat_3.setText(_translate("MainWindow", "Input Format:       x.xxEsxx", None))
         self.voltageLabel_2.setText(_translate("MainWindow", "Voltage:", None))
         self.voltageStatus_2.setText(_translate("MainWindow", "Not Initialized", None))
+        self.thermTimeButton_2.setText(_translate("MainWindow", "Set Time", None))
+        self.thermTimeUnits_2.setText(_translate("MainWindow", "min", None))
+        self.thermTimeStatusLabel_2.setText(_translate("MainWindow", "6", None))
+        self.thermTimeLabel_2.setText(_translate("MainWindow", "Thermalization Time 2: ", None))
+        self.zeroThkButton.setText(_translate("MainWindow", "Zero Thickness", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.EvapControl), _translate("MainWindow", "Evaporation", None))
 
 from dataCollectorWidget import dataCollectorWidget
