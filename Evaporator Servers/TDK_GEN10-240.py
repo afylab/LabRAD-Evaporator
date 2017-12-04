@@ -163,7 +163,7 @@ class PowerSupplyServer(DeviceServer):
                 print 'Initiating Query: ' + input
                 self.busy = True
                 dev=self.selectedDevice(c)
-                #print 'Writing: ' + input
+                print 'Writing: ' + input
                 yield dev.write(input)
                 ans = ''
                 tzero = time.clock()
@@ -177,16 +177,16 @@ class PowerSupplyServer(DeviceServer):
                             ans_final = ans_final + char
                     
                     ans = ans_final
-                    #print ans
-                    #print len(ans)
-                    #try:
-                    #    print 'Printing 3rd to last char: ' + ans[-3]
-                    #except:
-                    #    pass
+                    print ans
+                    print len(ans)
+                    try:
+                        print 'Printing 3rd to last char: ' + ans[-3]
+                    except:
+                        pass
                     if len(ans)>3 and ans[-3] == '$':
-                        #print 'Checking stuff'
-                        #print ans[-2:]
-                        #print self.checksum(ans[:-3])
+                        print 'Checking stuff'
+                        print ans[-2:]
+                        print self.checksum(ans[:-3])
                         if ans[-2:] == self.checksum(ans[:-3]):
                             print 'Returning: ' + ans
                             self.busy = False
@@ -198,7 +198,7 @@ class PowerSupplyServer(DeviceServer):
                             print 'Checksum error: ' + ans + ', Length: ' + str(len(ans)) + ', ASCII: ' +  ans_num
                             self.busy = False
                             returnValue('ChecksumError')
-                    elif (time.clock() - tzero) > 2:
+                    elif (time.clock() - tzero) > 5:
                         ans_num = ''
                         for char in ans:
                             ans_num = ans_num + str(ord(char)) + ','

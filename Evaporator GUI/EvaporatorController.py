@@ -48,6 +48,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.Kint = 0.001
         self.Kderiv = 0
         self.PID = PID(0,0.001,0,500,-500,0.7,0.45)
+        self.PID.setPoint(5.0)
         self.evaporating = False
         
         #initalize plots
@@ -975,6 +976,8 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         if self.evapInProgress:
             self.textEdit2.setText('Calibrating evaporation voltage.')
             print 'Calibrating evaporation voltage.'
+            #make sure thickness is zeroed
+            yield self.ftm.zero_rates_thickness()
             yield self.toggleShutter(None)
             yield self.toggleEvap(None)
             #If this thickness is reached, then then evaporator stops evaporating. Units of angstroms.  
@@ -1017,7 +1020,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
 
             #Wait a second before checking to see if rotation is finished. Avoids bug of stepper server not having updated
             #to rotating status by the time the program checks to see if it's rotating
-            self.evapTimer.singleShot(1000,self.pauseUntilRotated1())
+            self.evapTimer.singleShot(1000,self.pauseUntilRotated1)
             
     @inlineCallbacks
     def pauseUntilRotated1(self):
@@ -1032,7 +1035,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def startTherm1(self):
         if self.evapInProgress:  
             #Go to higher pressure to thermalize
-            yield self.setNomPressure(cntx, self.thermPrs)
+            yield self.setNomPressure(None, self.thermPrs)
             
             self.minutesRemaining = self.thermTime1
             self.waitXMinutes()
@@ -1044,7 +1047,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.minutesRemaining = self.minutesRemaining - 1
             self.evapTimer.singleShot(60000,self.pumpOutChamber)
         elif self.minutesRemaining > 1 and self.evapInProgress:
-            self.textEdit2.setText('Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
+            self.textEdit2.setText('Initial thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.')
             print 'Thermalization of tip in progress. ' + str(self.minutesRemaining) + ' minutes remaining until complete.'
             self.minutesRemaining = self.minutesRemaining - 1
             self.evapTimer.singleShot(60000,self.waitXMinutes)
@@ -1061,10 +1064,10 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def autoEvapPhase4(self):
         if self.evapInProgress:
             if self.contactThk != 0:
+                self.PID.setIntegrator(0)
                 self.PID.setKd(0)
                 self.PID.setKp(0)
                 self.PID.setKi(0)
-                self.PID.setIntegrator(0)
                 self.derivStatus.setText(str(0))
                 self.propStatus.setText(str(0))
                 self.intStatus.setText(str(0))
@@ -1094,13 +1097,13 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def autoEvapPhase6(self):
         if self.evapInProgress:
             #Set PID parameters back to achieve as constant an evaporation rate as possible
-            self.PID.setKd(0)
-            self.PID.setKp(0)
-            self.PID.setKi(0.001)
             self.PID.setIntegrator(0)
-            self.derivStatus.setText(str(0))
-            self.propStatus.setText(str(0))
-            self.intStatus.setText(str(0.001))
+            self.PID.setKd(self.Kderiv)
+            self.PID.setKp(self.Kprop)
+            self.PID.setKi(self.Kint)
+            self.derivStatus.setText(str(self.Kderiv))
+            self.propStatus.setText(str(self.Kprop))
+            self.intStatus.setText(str(self.Kint))
             self.textEdit2.setText("Evaporating first contact. PID enabled.")
             print "Evaporating first contact. PID enabled."
             self.waitForEvap1()
@@ -1127,7 +1130,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.textEdit2.setText("Base voltage updated to " + str(self.evapVoltage)[0:6] + ". Rotating " 
             + str(angle) + " degrees to head on evaporation.")
             print "Base voltage updated to " + str(self.evapVoltage) + ". Rotating " + str(angle) + " degrees to head on evaporation."
-            self.evapTimer.singleShot(1000,self.pauseUntilRotated2())
+            self.evapTimer.singleShot(1000,self.pauseUntilRotated2)
         
     @inlineCallbacks
     def pauseUntilRotated2(self):
@@ -1142,7 +1145,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def startTherm2(self):
         if self.evapInProgress:  
             #Go to higher pressure to thermalize
-            yield self.setNomPressure(cntx, self.thermPrs)
+            yield self.setNomPressure(None, self.thermPrs)
             
             self.minutesRemaining = self.thermTime2
             self.waitXMinutes2()
@@ -1205,13 +1208,14 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def autoEvapPhase10(self):
         if self.evapInProgress:
             #Set PID parameters back to achieve as constant an evaporation rate as possible
-            self.PID.setKd(0)
-            self.PID.setKp(0)
-            self.PID.setKi(0.001)
             self.PID.setIntegrator(0)
-            self.derivStatus.setText(str(0))
-            self.propStatus.setText(str(0))
-            self.intStatus.setText(str(0.001))
+            self.PID.setKd(self.Kderiv)
+            self.PID.setKp(self.Kprop)
+            self.PID.setKi(self.Kint)
+            self.derivStatus.setText(str(self.Kderiv))
+            self.propStatus.setText(str(self.Kprop))
+            self.intStatus.setText(str(self.Kint))
+            
             self.textEdit2.setText("Evaporating head on. PID on.")
             print "Evaporating head on. PID on."
             self.waitForEvap2()
@@ -1254,7 +1258,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def startTherm3(self):
         if self.evapInProgress:  
             #Go to higher pressure to thermalize
-            yield self.setNomPressure(cntx, self.thermPrs)
+            yield self.setNomPressure(None, self.thermPrs)
             
             self.minutesRemaining = self.thermTime2
             self.waitXMinutes3()
@@ -1316,13 +1320,14 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
     def autoEvapPhase14(self):
         if self.evapInProgress:
             #Set PID parameters back to achieve as constant an evaporation rate as possible
-            self.PID.setKd(0)
-            self.PID.setKp(0)
-            self.PID.setKi(0.001)
             self.PID.setIntegrator(0)
-            self.derivStatus.setText(str(0))
-            self.propStatus.setText(str(0))
-            self.intStatus.setText(str(0.001))
+            self.PID.setKd(self.Kderiv)
+            self.PID.setKp(self.Kprop)
+            self.PID.setKi(self.Kint)
+            self.derivStatus.setText(str(self.Kderiv))
+            self.propStatus.setText(str(self.Kprop))
+            self.intStatus.setText(str(self.Kint))
+            
             self.textEdit2.setText("Evaporating second contact. PID on.")
             print "Evaporating second contact. PID on."
             self.waitForEvap3()
@@ -1406,10 +1411,12 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         
         self.setPointButton.setEnabled(False)
         self.thermTimeButton.setEnabled(False)
+        self.thermTimeButton_2.setEnabled(False)
         self.thermPrsButton.setEnabled(False)
         self.angleButton.setEnabled(False)
         self.contactThkButton.setEnabled(False)
         self.headThkButton.setEnabled(False)
+        self.zeroThkButton.setEnabled(False)
         
         self.propButton.setEnabled(False)
         self.intButton.setEnabled(False)
@@ -1450,10 +1457,12 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         
         self.setPointButton.setEnabled(True)
         self.thermTimeButton.setEnabled(True)
+        self.thermTimeButton_2.setEnabled(True)
         self.thermPrsButton.setEnabled(True)
         self.angleButton.setEnabled(True)
         self.contactThkButton.setEnabled(True)
         self.headThkButton.setEnabled(True)
+        self.zeroThkButton.setEnabled(True)
         
         self.propButton.setEnabled(True)
         self.intButton.setEnabled(True)
