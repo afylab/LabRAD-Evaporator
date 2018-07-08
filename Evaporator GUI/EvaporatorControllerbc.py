@@ -59,11 +59,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         self.thk_data = None
         self.dep_data = None
         self.volt_data = None
-
-        self.tmp_data = None
-        #self.turbovolt_data = None
-        self.freq_data = None
-        self.cur_data = None
         
         #Initialize power supply and pumps as off. 
         self.powerSupplyState = 'Off'
@@ -206,42 +201,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             yield self.dv_volt.addListener(listener=self.add_dataset_volt, source=None, ID=self.ID_NEWSET)
             yield self.dv_volt.signal__data_available(self.ID_NEWDATA)
             yield self.dv_volt.addListener(listener=self.update_volt, source=None, ID=self.ID_NEWDATA)
-
-            #Create a cxn_tmp for monitoring temperature
-            self.cxn_tmp = yield connectAsync(name = 'Evaporator GUI: Temperature')
-            self.dv_tmp = self.cxn_tmp.data_vault
-            yield self.dv_tmp.signal__new_dataset(self.ID_NEWSET)
-            yield self.dv_tmp.addListener(listener=self.add_dataset_tmp, source=None, ID=self.ID_NEWSET)
-            yield self.dv_tmp.signal__data_available(self.ID_NEWDATA)
-            yield self.dv_tmp.addListener(listener=self.update_tmp, source=None, ID=self.ID_NEWDATA)
-
-            #Create a cxn_turbovolt for monitoring turbo voltage for front pannel. 
-            #self.cxn_turbovolt = yield connectAsync(name = 'Evaporator GUI: Turbo Voltage')
-            #self.dv_turbovolt = self.cxn_turbovolt.data_vault
-            #yield self.dv_turbovolt.signal__new_dataset(self.ID_NEWSET)
-           # yield self.dv_turbovolt.addListener(listener=self.add_dataset_turbovolt, source=None, ID=self.ID_NEWSET)
-           # yield self.dv_turbovolt.signal__data_available(self.ID_NEWDATA)
-           # yield self.dv_turbovolt.addListener(listener=self.update_turbovolt, source=None, ID=self.ID_NEWDATA)
-
-            #Create a cxn_freq for monitoring frequency for front pannel. 
-            self.cxn_freq = yield connectAsync(name = 'Evaporator GUI: Frequency')
-            self.dv_freq = self.cxn_freq.data_vault
-            yield self.dv_freq.signal__new_dataset(self.ID_NEWSET)
-            yield self.dv_freq.addListener(listener=self.add_dataset_freq, source=None, ID=self.ID_NEWSET)
-            yield self.dv_freq.signal__data_available(self.ID_NEWDATA)
-            yield self.dv_freq.addListener(listener=self.update_freq, source=None, ID=self.ID_NEWDATA)
             
-            #Create a cxn_cur for monitoring current for front pannel. 
-            self.cxn_cur = yield connectAsync(name = 'Evaporator GUI: Current')
-            self.dv_cur = self.cxn_cur.data_vault
-            yield self.dv_cur.signal__new_dataset(self.ID_NEWSET)
-            yield self.dv_cur.addListener(listener=self.add_dataset_cur, source=None, ID=self.ID_NEWSET)
-            yield self.dv_cur.signal__data_available(self.ID_NEWDATA)
-            yield self.dv_cur.addListener(listener=self.update_cur, source=None, ID=self.ID_NEWDATA)
-            
-
-
-
             #Have the data collector connect
             self.dataCollectorWidget.connect()
             
@@ -267,9 +227,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             self.tdk.rmt_set('REM')
             self.ftm = self.cxn.ftm_server
             self.ftm.select_device()
-
-            self.turbo450 = self.cxn.turbo450
-            self.turbo450.select_device()
             
             nom_prs = yield self.rvc.get_nom_prs()
             self.nomPressLabel.setText(nom_prs)
@@ -301,11 +258,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         yield self.dv_thk.cd(self.directory_path)
         yield self.dv_dep.cd(self.directory_path)
         yield self.dv_volt.cd(self.directory_path)
-
-        yield self.dv_tmp.cd(self.directory_path)
-        yield self.dv_freq.cd(self.directory_path)
-        yield self.dv_cur.cd(self.directory_path)
-
         self.dataCollectorWidget.setDirectory(self.directory_path)
         
         self.textEdit.setPlainText('Successfully natigated to vault\\' + self.directory_path[1] + "\\"
@@ -519,7 +471,7 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
             
         if len(self.dep_data[:,0]) > 1000:
             over = len(self.dep_data[:,0]) - 1000
-            self.dep_data = np.delete(self.dep_data,np.arange(over),0)
+            self.prs_data = np.delete(self.dep_data,np.arange(over),0)
             
     def add_dataset_thk(self, cntx, signal):
         if signal[8:] == 'Thickness vs. Time':
@@ -573,76 +525,6 @@ class MainWindow(QtGui.QMainWindow, EvaporatorUI.Ui_MainWindow):
         if len(self.volt_data[:,0]) > 1000:
             over = len(self.volt_data[:,0]) - 1000
             self.volt_data = np.delete(self.volt_data,np.arange(over),0)
-
-
-    def add_dataset_tmp(self, cntx, signal): 
-        if signal[8:] == 'Temperature vs. Time':
-            self.dv_tmp.open(signal)
-            self.tmp_data = [[]]
-            print 'Temperature is now being monitored'
-
-    @inlineCallbacks
-    def update_tmp(self, cntx, signal):
-        #Get new data point
-        new_data = yield self.dv_tmp.get()
-        data_string = str(new_data[0,1])
-        self.temperatureStatus.setText(data_string[0:8])
-        self.temperatureStatus_2.setText(data_string[0:8])
-        
-        if self.tmp_data == [[]]:
-            self.tmp_data = new_data
-        else:
-            self.tmp_data = np.append(self.tmp_data,new_data,axis=0)
-            
-        if len(self.tmp_data[:,0]) > 1000:
-            over = len(self.tmp_data[:,0]) - 1000
-            self.tmp_data = np.delete(self.tmp_data,np.arange(over),0)
-            
-    def add_dataset_freq(self, cntx, signal): 
-        if signal[8:] == 'Frequency vs. Time':
-            self.dv_freq.open(signal)
-            self.freq_data = [[]]
-            print 'Frequency is now being monitored'
-        
-    @inlineCallbacks
-    def update_freq(self, cntx, signal):
-        #Get new data point
-        new_data = yield self.dv_freq.get()
-        data_string = str(new_data[0,1])
-        self.frequencyStatus.setText(data_string[0:8])
-        self.frequencyStatus_2.setText(data_string[0:8])
-        
-        if self.freq_data == [[]]:
-            self.freq_data = new_data
-        else:
-            self.freq_data = np.append(self.freq_data,new_data,axis=0)
-            
-        if len(self.freq_data[:,0]) > 1000:
-            over = len(self.freq_data[:,0]) - 1000
-            self.freq_data = np.delete(self.freq_data,np.arange(over),0)
-
-    def add_dataset_cur(self, cntx, signal): 
-        if signal[8:] == 'Current vs. Time':
-            self.dv_cur.open(signal)
-            self.cur_data = [[]]
-            print 'Current is now being monitored'
-        
-    @inlineCallbacks
-    def update_cur(self, cntx, signal):
-        #Get new data point
-        new_data = yield self.dv_cur.get()
-        data_string = str(new_data[0,1])
-        self.currentStatus.setText(data_string[0:8])
-        self.currentStatus_2.setText(data_string[0:8])
-        
-        if self.cur_data == [[]]:
-            self.cur_data = new_data
-        else:
-            self.cur_data = np.append(self.cur_data,new_data,axis=0)
-            
-        if len(self.cur_data[:,0]) > 1000:
-            over = len(self.cur_data[:,0]) - 1000
-            self.cur_data = np.delete(self.cur_data,np.arange(over),0)
 
 #----------------------------------------------------------------------------------------------#
             

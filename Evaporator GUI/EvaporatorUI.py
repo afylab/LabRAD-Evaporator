@@ -347,7 +347,7 @@ class Ui_MainWindow(object):
         self.line_12.setFrameShape(QtGui.QFrame.HLine)
         self.line_12.setObjectName(_fromUtf8("line_12"))
         self.line_13 = QtGui.QFrame(self.graphBackground)
-        self.line_13.setGeometry(QtCore.QRect(900, 260, 300, 3))
+        self.line_13.setGeometry(QtCore.QRect(900, 425, 300, 3))
         self.line_13.setStyleSheet(_fromUtf8("#line_13{\n"
 "color: white\n"
 "}"))
@@ -356,7 +356,7 @@ class Ui_MainWindow(object):
         self.line_13.setFrameShape(QtGui.QFrame.HLine)
         self.line_13.setObjectName(_fromUtf8("line_13"))
         self.line_14 = QtGui.QFrame(self.graphBackground)
-        self.line_14.setGeometry(QtCore.QRect(900, 41, 1, 220))
+        self.line_14.setGeometry(QtCore.QRect(900, 41, 1, 385))
         self.line_14.setStyleSheet(_fromUtf8("#line_14{\n"
 "color: white;\n"
 "}"))
@@ -365,7 +365,7 @@ class Ui_MainWindow(object):
         self.line_14.setFrameShape(QtGui.QFrame.VLine)
         self.line_14.setObjectName(_fromUtf8("line_14"))
         self.line_15 = QtGui.QFrame(self.graphBackground)
-        self.line_15.setGeometry(QtCore.QRect(1200, 41, 1, 221))
+        self.line_15.setGeometry(QtCore.QRect(1200, 41, 1, 386))
         self.line_15.setStyleSheet(_fromUtf8("#line_15{\n"
 "color: white;\n"
 "}"))
@@ -398,10 +398,10 @@ class Ui_MainWindow(object):
         self.textEdit.setGeometry(QtCore.QRect(290, 40, 200, 63))
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.nomPressInput = QtGui.QLineEdit(self.graphBackground)
-        self.nomPressInput.setGeometry(QtCore.QRect(910, 350, 113, 21))
+        self.nomPressInput.setGeometry(QtCore.QRect(910, 500, 113, 21))
         self.nomPressInput.setObjectName(_fromUtf8("nomPressInput"))
         self.nomPressLabel = QtGui.QLabel(self.graphBackground)
-        self.nomPressLabel.setGeometry(QtCore.QRect(1130, 340, 151, 41))
+        self.nomPressLabel.setGeometry(QtCore.QRect(1130, 490, 151, 41))
         self.nomPressLabel.setStyleSheet(_fromUtf8("#nomPressLabel{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -410,7 +410,7 @@ class Ui_MainWindow(object):
 "}"))
         self.nomPressLabel.setObjectName(_fromUtf8("nomPressLabel"))
         self.nomPress = QtGui.QLabel(self.graphBackground)
-        self.nomPress.setGeometry(QtCore.QRect(750, 350, 141, 21))
+        self.nomPress.setGeometry(QtCore.QRect(750, 500, 141, 21))
         self.nomPress.setStyleSheet(_fromUtf8("#nomPress{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -419,10 +419,10 @@ class Ui_MainWindow(object):
 "}"))
         self.nomPress.setObjectName(_fromUtf8("nomPress"))
         self.nomPressButton = QtGui.QPushButton(self.graphBackground)
-        self.nomPressButton.setGeometry(QtCore.QRect(1040, 350, 81, 21))
+        self.nomPressButton.setGeometry(QtCore.QRect(1040, 500, 81, 21))
         self.nomPressButton.setObjectName(_fromUtf8("nomPressButton"))
         self.nomPressFormat = QtGui.QLabel(self.graphBackground)
-        self.nomPressFormat.setGeometry(QtCore.QRect(930, 310, 81, 21))
+        self.nomPressFormat.setGeometry(QtCore.QRect(930, 460, 81, 21))
         self.nomPressFormat.setStyleSheet(_fromUtf8("#nomPressFormat{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -475,6 +475,150 @@ class Ui_MainWindow(object):
 "qproperty-wordWrap: true;\n"
 "}"))
         self.voltageLabel.setObjectName(_fromUtf8("voltageLabel"))
+        self.temperatureLabel = QtGui.QLabel(self.graphBackground)
+        self.temperatureLabel.setGeometry(QtCore.QRect(890, 260, 150, 50))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.temperatureLabel.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.temperatureLabel.setFont(font)
+        self.temperatureLabel.setStyleSheet(_fromUtf8("#voltageLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.temperatureLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.temperatureLabel.setObjectName(_fromUtf8("temperatureLabel"))
+        self.currentLabel = QtGui.QLabel(self.graphBackground)
+        self.currentLabel.setGeometry(QtCore.QRect(890, 370, 150, 50))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.currentLabel.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.currentLabel.setFont(font)
+        self.currentLabel.setStyleSheet(_fromUtf8("#voltageLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.currentLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.currentLabel.setObjectName(_fromUtf8("currentLabel"))
+        self.frequencyLabel = QtGui.QLabel(self.graphBackground)
+        self.frequencyLabel.setGeometry(QtCore.QRect(890, 315, 150, 50))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.frequencyLabel.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.frequencyLabel.setFont(font)
+        self.frequencyLabel.setStyleSheet(_fromUtf8("#voltageLabel{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.frequencyLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.frequencyLabel.setObjectName(_fromUtf8("frequencyLabel"))
+        self.temperatureStatus = QtGui.QLabel(self.graphBackground)
+        self.temperatureStatus.setGeometry(QtCore.QRect(1060, 260, 100, 51))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.temperatureStatus.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.temperatureStatus.setFont(font)
+        self.temperatureStatus.setStyleSheet(_fromUtf8("#voltageStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.temperatureStatus.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.temperatureStatus.setObjectName(_fromUtf8("temperatureStatus"))
+        self.frequencyStatus = QtGui.QLabel(self.graphBackground)
+        self.frequencyStatus.setGeometry(QtCore.QRect(1060, 315, 100, 51))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.frequencyStatus.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.frequencyStatus.setFont(font)
+        self.frequencyStatus.setStyleSheet(_fromUtf8("#voltageStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.frequencyStatus.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.frequencyStatus.setObjectName(_fromUtf8("frequencyStatus"))
+        self.currentStatus = QtGui.QLabel(self.graphBackground)
+        self.currentStatus.setGeometry(QtCore.QRect(1060, 370, 100, 51))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.currentStatus.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.currentStatus.setFont(font)
+        self.currentStatus.setStyleSheet(_fromUtf8("#voltageStatus{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.currentStatus.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.currentStatus.setObjectName(_fromUtf8("currentStatus"))
         self.tabWidget.addTab(self.GraphicalInterface, _fromUtf8(""))
         self.Plotting = QtGui.QWidget()
         self.Plotting.setStyleSheet(_fromUtf8(""))
@@ -774,7 +918,7 @@ class Ui_MainWindow(object):
 "}"))
         self.deposRate.setObjectName(_fromUtf8("deposRate"))
         self.note = QtGui.QLabel(self.evapBackground)
-        self.note.setGeometry(QtCore.QRect(480, 530, 221, 81))
+        self.note.setGeometry(QtCore.QRect(480, 580, 221, 81))
         self.note.setStyleSheet(_fromUtf8("#note{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -896,7 +1040,7 @@ class Ui_MainWindow(object):
 "}"))
         self.Auto.setObjectName(_fromUtf8("Auto"))
         self.thicknessStatus_2 = QtGui.QLabel(self.evapBackground)
-        self.thicknessStatus_2.setGeometry(QtCore.QRect(590, 410, 100, 51))
+        self.thicknessStatus_2.setGeometry(QtCore.QRect(590, 380, 100, 51))
         self.thicknessStatus_2.setStyleSheet(_fromUtf8("#thicknessStatus_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -905,7 +1049,7 @@ class Ui_MainWindow(object):
 "}"))
         self.thicknessStatus_2.setObjectName(_fromUtf8("thicknessStatus_2"))
         self.rateStatus_2 = QtGui.QLabel(self.evapBackground)
-        self.rateStatus_2.setGeometry(QtCore.QRect(590, 365, 100, 51))
+        self.rateStatus_2.setGeometry(QtCore.QRect(590, 345, 100, 51))
         self.rateStatus_2.setStyleSheet(_fromUtf8("#rateStatus_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -914,7 +1058,7 @@ class Ui_MainWindow(object):
 "}"))
         self.rateStatus_2.setObjectName(_fromUtf8("rateStatus_2"))
         self.rateLabel_2 = QtGui.QLabel(self.evapBackground)
-        self.rateLabel_2.setGeometry(QtCore.QRect(420, 365, 150, 50))
+        self.rateLabel_2.setGeometry(QtCore.QRect(420, 345, 150, 50))
         self.rateLabel_2.setStyleSheet(_fromUtf8("#rateLabel_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -923,7 +1067,7 @@ class Ui_MainWindow(object):
 "}"))
         self.rateLabel_2.setObjectName(_fromUtf8("rateLabel_2"))
         self.thicknessLabel_2 = QtGui.QLabel(self.evapBackground)
-        self.thicknessLabel_2.setGeometry(QtCore.QRect(420, 410, 150, 50))
+        self.thicknessLabel_2.setGeometry(QtCore.QRect(420, 380, 150, 50))
         self.thicknessLabel_2.setStyleSheet(_fromUtf8("#thicknessLabel_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -932,7 +1076,7 @@ class Ui_MainWindow(object):
 "}"))
         self.thicknessLabel_2.setObjectName(_fromUtf8("thicknessLabel_2"))
         self.pressureStatus_2 = QtGui.QLabel(self.evapBackground)
-        self.pressureStatus_2.setGeometry(QtCore.QRect(590, 320, 100, 51))
+        self.pressureStatus_2.setGeometry(QtCore.QRect(590, 310, 100, 51))
         self.pressureStatus_2.setStyleSheet(_fromUtf8("#pressureStatus_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -941,7 +1085,7 @@ class Ui_MainWindow(object):
 "}"))
         self.pressureStatus_2.setObjectName(_fromUtf8("pressureStatus_2"))
         self.pressureLabel_2 = QtGui.QLabel(self.evapBackground)
-        self.pressureLabel_2.setGeometry(QtCore.QRect(420, 320, 150, 50))
+        self.pressureLabel_2.setGeometry(QtCore.QRect(420, 310, 150, 50))
         self.pressureLabel_2.setStyleSheet(_fromUtf8("#pressureLabel_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1080,7 +1224,7 @@ class Ui_MainWindow(object):
         self.line_34.setFrameShape(QtGui.QFrame.VLine)
         self.line_34.setObjectName(_fromUtf8("line_34"))
         self.line_21 = QtGui.QFrame(self.evapBackground)
-        self.line_21.setGeometry(QtCore.QRect(470, 510, 240, 3))
+        self.line_21.setGeometry(QtCore.QRect(470, 570, 240, 3))
         self.line_21.setStyleSheet(_fromUtf8("#line_21{\n"
 "color: white\n"
 "}"))
@@ -1217,7 +1361,7 @@ class Ui_MainWindow(object):
 "}"))
         self.nomPressFormat_3.setObjectName(_fromUtf8("nomPressFormat_3"))
         self.voltageLabel_2 = QtGui.QLabel(self.evapBackground)
-        self.voltageLabel_2.setGeometry(QtCore.QRect(420, 455, 150, 50))
+        self.voltageLabel_2.setGeometry(QtCore.QRect(420, 415, 150, 50))
         self.voltageLabel_2.setStyleSheet(_fromUtf8("#voltageLabel_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1226,7 +1370,7 @@ class Ui_MainWindow(object):
 "}"))
         self.voltageLabel_2.setObjectName(_fromUtf8("voltageLabel_2"))
         self.voltageStatus_2 = QtGui.QLabel(self.evapBackground)
-        self.voltageStatus_2.setGeometry(QtCore.QRect(590, 455, 100, 51))
+        self.voltageStatus_2.setGeometry(QtCore.QRect(590, 415, 100, 51))
         self.voltageStatus_2.setStyleSheet(_fromUtf8("#voltageStatus_2{\n"
 "color: white;\n"
 "font: 12pt \"MS Shell Dlg 2\";\n"
@@ -1270,6 +1414,153 @@ class Ui_MainWindow(object):
         self.zeroThkButton = QtGui.QPushButton(self.evapBackground)
         self.zeroThkButton.setGeometry(QtCore.QRect(1060, 500, 81, 23))
         self.zeroThkButton.setObjectName(_fromUtf8("zeroThkButton"))
+        self.temperatureLabel_2 = QtGui.QLabel(self.evapBackground)
+        self.temperatureLabel_2.setGeometry(QtCore.QRect(420, 450, 150, 50))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.temperatureLabel_2.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.temperatureLabel_2.setFont(font)
+        self.temperatureLabel_2.setStyleSheet(_fromUtf8("#voltageLabel_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.temperatureLabel_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.temperatureLabel_2.setObjectName(_fromUtf8("temperatureLabel_2"))
+        self.temperatureStatus_2 = QtGui.QLabel(self.evapBackground)
+        self.temperatureStatus_2.setGeometry(QtCore.QRect(590, 450, 100, 51))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.temperatureStatus_2.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.temperatureStatus_2.setFont(font)
+        self.temperatureStatus_2.setStyleSheet(_fromUtf8("#voltageStatus_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.temperatureStatus_2.setTextFormat(QtCore.Qt.AutoText)
+        self.temperatureStatus_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.temperatureStatus_2.setObjectName(_fromUtf8("temperatureStatus_2"))
+        self.frequencyLabel_2 = QtGui.QLabel(self.evapBackground)
+        self.frequencyLabel_2.setGeometry(QtCore.QRect(420, 485, 150, 50))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.frequencyLabel_2.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.frequencyLabel_2.setFont(font)
+        self.frequencyLabel_2.setStyleSheet(_fromUtf8("#voltageLabel_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.frequencyLabel_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.frequencyLabel_2.setObjectName(_fromUtf8("frequencyLabel_2"))
+        self.frequencyStatus_2 = QtGui.QLabel(self.evapBackground)
+        self.frequencyStatus_2.setGeometry(QtCore.QRect(590, 485, 100, 51))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.frequencyStatus_2.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.frequencyStatus_2.setFont(font)
+        self.frequencyStatus_2.setStyleSheet(_fromUtf8("#voltageStatus_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.frequencyStatus_2.setTextFormat(QtCore.Qt.AutoText)
+        self.frequencyStatus_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.frequencyStatus_2.setObjectName(_fromUtf8("frequencyStatus_2"))
+        self.currentLabel_2 = QtGui.QLabel(self.evapBackground)
+        self.currentLabel_2.setGeometry(QtCore.QRect(420, 520, 150, 50))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.currentLabel_2.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.currentLabel_2.setFont(font)
+        self.currentLabel_2.setStyleSheet(_fromUtf8("#voltageLabel_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.currentLabel_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.currentLabel_2.setObjectName(_fromUtf8("currentLabel_2"))
+        self.currentStatus_2 = QtGui.QLabel(self.evapBackground)
+        self.currentStatus_2.setGeometry(QtCore.QRect(590, 520, 100, 51))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.currentStatus_2.setPalette(palette)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.currentStatus_2.setFont(font)
+        self.currentStatus_2.setStyleSheet(_fromUtf8("#voltageStatus_2{\n"
+"color: white;\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"qproperty-alignment: \'AlignVCenter | AlignRight\';\n"
+"qproperty-wordWrap: true;\n"
+"}"))
+        self.currentStatus_2.setTextFormat(QtCore.Qt.AutoText)
+        self.currentStatus_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.currentStatus_2.setObjectName(_fromUtf8("currentStatus_2"))
         self.line_31 = QtGui.QFrame(self.EvapControl)
         self.line_31.setGeometry(QtCore.QRect(0, 310, 1294, 3))
         self.line_31.setStyleSheet(_fromUtf8("#line_31{\n"
@@ -1292,7 +1583,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1321,6 +1612,12 @@ class Ui_MainWindow(object):
         self.shutterWarning.setText(_translate("MainWindow", "Make sure that shutter position matches GUI after reloading lead.", None))
         self.voltageStatus.setText(_translate("MainWindow", "Not Initialized", None))
         self.voltageLabel.setText(_translate("MainWindow", "Voltage:", None))
+        self.temperatureLabel.setText(_translate("MainWindow", "Temperature:", None))
+        self.currentLabel.setText(_translate("MainWindow", "Current:", None))
+        self.frequencyLabel.setText(_translate("MainWindow", "Frequency:", None))
+        self.temperatureStatus.setText(_translate("MainWindow", "Not Initialized", None))
+        self.frequencyStatus.setText(_translate("MainWindow", "Not Initialized", None))
+        self.currentStatus.setText(_translate("MainWindow", "Not Initialized", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.GraphicalInterface), _translate("MainWindow", "Graphical Interface", None))
         self.numPointsLabel.setText(_translate("MainWindow", "Number of Points:", None))
         self.Live_Plotter.setText(_translate("MainWindow", "Live Plotter", None))
@@ -1411,6 +1708,12 @@ class Ui_MainWindow(object):
         self.thermTimeStatusLabel_2.setText(_translate("MainWindow", "6", None))
         self.thermTimeLabel_2.setText(_translate("MainWindow", "Thermalization Time 2: ", None))
         self.zeroThkButton.setText(_translate("MainWindow", "Zero Thickness", None))
+        self.temperatureLabel_2.setText(_translate("MainWindow", "Temperature:", None))
+        self.temperatureStatus_2.setText(_translate("MainWindow", "Not Initialized", None))
+        self.frequencyLabel_2.setText(_translate("MainWindow", "Frequency:", None))
+        self.frequencyStatus_2.setText(_translate("MainWindow", "Not Initialized", None))
+        self.currentLabel_2.setText(_translate("MainWindow", "Current:", None))
+        self.currentStatus_2.setText(_translate("MainWindow", "Not Initialized", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.EvapControl), _translate("MainWindow", "Evaporation", None))
 
 from dataCollectorWidget import dataCollectorWidget
