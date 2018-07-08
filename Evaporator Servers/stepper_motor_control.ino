@@ -56,17 +56,17 @@ void loop(){
 }
 
 void turn(){
-  int stp; int dir; int x=0;
+  int stp; int dir; float x=0;
   String d = m.substring(1,m.length());
   String motor = ""; String direct = "";
   char stepper = m.charAt(0);
   if(stepper == 'A'){
-    stp = (int)A[0]; dir = (int)A[1]; x = (d.toInt() * 8) / 1.8;
+    stp = (int)A[0]; dir = (int)A[1]; x = (d.toFloat() * 8) / 1.8;
   }
   else if (stepper == 'B') {
-    stp = (int)B[0]; dir = (int)B[1]; x = (d.toInt() * 8 * 60) / 1.8; 
+    stp = (int)B[0]; dir = (int)B[1]; x = (d.toFloat() * 8 * 60) / 1.8; 
   }
-  int y=1;
+  float y=1;
   if(m.endsWith("C")){digitalWrite(dir, HIGH);}
   else if(m.endsWith("A")){digitalWrite(dir,LOW); }
   for(y= 1; y<x;y++) {
@@ -85,4 +85,5 @@ void turn(){
     Serial.read();
   }
 }
+
 

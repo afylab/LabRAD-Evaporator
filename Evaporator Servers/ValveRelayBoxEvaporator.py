@@ -57,7 +57,9 @@ class ValveRelayWrapper(DeviceWrapper):
         self.ctx = server.context()
         self.port = port
         p = self.packet()
-        p.open(port)
+        #p.open(port)
+        #Testing no pulse serial connect
+        p.open(port, True)
         p.baudrate(BAUD)
         p.bytesize(BYTESIZE)
         p.stopbits(STOPBITS)
