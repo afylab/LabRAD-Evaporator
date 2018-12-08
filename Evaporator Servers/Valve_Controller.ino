@@ -9,7 +9,6 @@ void setup() {
    digitalWrite(Controller[i], LOW);
  }
    Serial.begin(9600);
-
 }
 
 void loop() { 
@@ -37,66 +36,51 @@ void valve(){
     Serial.write("Valve and Relay Control\r\n");
   }  
   else if (m.startsWith("o") && m.endsWith("t")){
-    digitalWrite(2, HIGH);
+    digitalWrite(14, HIGH);
     valvestat[0] = 1;
     Serial.println("Turbo Valve Open\r\n");
-    Serial.print("Turbo,");Serial.print(valvestat[0]);Serial.print(" Chamber,");Serial.print(valvestat[1]);Serial.print(" Gate,");Serial.println(valvestat[2]);
   }
   else if (m.startsWith("c") && m.endsWith("t")){
-    digitalWrite(2, LOW);
+    digitalWrite(14, LOW);
     valvestat[0] = 0;
     Serial.println("Turbo Valve Closed\r\n");
-    Serial.print("Turbo,");Serial.print(valvestat[0]);Serial.print(" Chamber,");Serial.print(valvestat[1]);Serial.print(" Gate,");Serial.println(valvestat[2]);
   }  
   else if (m.startsWith("o") && m.endsWith("c")){
-    digitalWrite(3, HIGH);
+    digitalWrite(16, HIGH);
     valvestat[1] = 1;
     Serial.println("Chamber Valve Open\r\n");
-    Serial.print("Turbo,");Serial.print(valvestat[0]);Serial.print(" Chamber,");Serial.print(valvestat[1]);Serial.print(" Gate,");Serial.println(valvestat[2]);
   }
   else if (m.startsWith("c") && m.endsWith("c")){
-    digitalWrite(3, LOW);
+    digitalWrite(16, LOW);
     valvestat[1] = 0;
     Serial.println("Chamber Valve Closed\r\n");
-    Serial.print("Turbo,");Serial.print(valvestat[0]);Serial.print(" Chamber,");Serial.print(valvestat[1]);Serial.print(" Gate,");Serial.println(valvestat[2]);
   }  
   else if (m.startsWith("o") && m.endsWith("g")){
-    digitalWrite(4, HIGH);
+    digitalWrite(15, HIGH);
     valvestat[2] = 1;
     Serial.println("Gate Valve Open\r\n");
-    Serial.print("Turbo,");Serial.print(valvestat[0]);Serial.print(" Chamber,");Serial.print(valvestat[1]);Serial.print(" Gate,");Serial.println(valvestat[2]);
   }
   else if (m.startsWith("c") && m.endsWith("g")){
-    digitalWrite(4, LOW);
+    digitalWrite(15, LOW);
     valvestat[2] = 0;
     Serial.println("Gate Valve Closed\r\n");
-    Serial.print("Turbo,");Serial.print(valvestat[0]);Serial.print(" Chamber,");Serial.print(valvestat[1]);Serial.print(" Gate,");Serial.println(valvestat[2]);
   }  
-   else if (m.startsWith("o") && m.endsWith("4")){
-    digitalWrite(5, HIGH);
-    Serial.println("Valve 4 Open\r\n");
+   else if (m.startsWith("t") && m.endsWith("p")){
+    digitalWrite(3, HIGH);
+    Serial.println("Turbo Turned On\r\n");
   }
-  else if (m.startsWith("c") && m.endsWith("4")){
-    digitalWrite(5, LOW);
-    Serial.println("Valve 4 Closed\r\n");
+  else if (m.startsWith("t") && m.endsWith("s")){
+    digitalWrite(3, LOW);
+    Serial.println("Turbo Turned Off\r\n");
   }  
-    else if (m.startsWith("o") && m.endsWith("5")){
-    digitalWrite(6, HIGH);
-    Serial.println("Valve 5 Open\r\n");
+    else if (m.startsWith("s") && m.endsWith("p")){
+    digitalWrite(4, HIGH);
+    Serial.println("Scroll Pump On\r\n");
   }
-  else if (m.startsWith("c") && m.endsWith("5")){
-    digitalWrite(6, LOW);
-    Serial.println("Valve 5 Closed\r\n");
-  } 
-   else if (m.startsWith("o") && m.endsWith("6")){
-    digitalWrite(7, HIGH);
-    Serial.println("Valve 6 Open\r\n");
-  }
-  else if (m.startsWith("c") && m.endsWith("6")){
-    digitalWrite(7, LOW);
-    Serial.println("Valve 6 Closed\r\n");
+  else if (m.startsWith("s") && m.endsWith("s")){
+    digitalWrite(4, LOW);
+    Serial.println("Scroll Pump Off\r\n");
   } 
   m = "";
       
   }  
-
